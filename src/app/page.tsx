@@ -1,7 +1,14 @@
-import Image from 'next/image';
+import Events from '@/components/Events';
+import Hero from '@/components/Hero';
+import Sponsor from '@/components/Sponsor';
+
 
 export default function Home() {
   return (
-    <main> Techtrix 2024</main>
+    <main>
+      <Hero />
+      <Events />
+      <Sponsor />
+    </main>
   )
 }
