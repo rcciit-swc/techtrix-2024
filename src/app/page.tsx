@@ -1,10 +1,16 @@
+import Events from '@/components/Events';
+import Hero from '@/components/Hero';
+import Sponsor from '@/components/Sponsor';
+
 
 
  const Home = () => {
   return (
-   <main>
-    Techtrix 2024
-   </main>
+    <main>
+      <Hero />
+      <Events />
+      <Sponsor />
+    </main>
   )
 }
  export default Home;
