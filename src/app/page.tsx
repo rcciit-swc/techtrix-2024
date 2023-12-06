@@ -1,16 +1,14 @@
-import Events from '@/components/Events';
-import Hero from '@/components/Hero';
-import Sponsor from '@/components/Sponsor';
+import Events from "@/components/Events";
+import Hero from "@/components/Hero";
+import Sponsor from "@/components/Sponsor";
 
-
-
- const Home = () => {
+const Home = () => {
   return (
     <main>
       <Hero />
       <Events />
       <Sponsor />
     </main>
-  )
-}
- export default Home;
+  );
+};
+export default Home;
