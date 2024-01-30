@@ -13,7 +13,7 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
     <div
       className={`${
         index == 0 ? "w-80 h-80 lg:w-full lg:h-full" : "w-80 h-80"
-      } flex flex-col relative hover:border-orange-400 hover:border-y-8 duration-500 rounded-2xl cursor-pointer `}
+      } flex flex-col relative hover:invert hover:border-orange-400 hover:border-y-8 duration-500 rounded-2xl cursor-pointer `}
     >
       <div
         className={`absolute inset-0 rounded-2xl`}
@@ -48,7 +48,9 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
         </div>
         {index == 0 && (
           <div className="flex flex-row items-center justify-between border-2 px-2 cursor-pointer rounded-full hover:border-yellow-400 duration-500 hover:scale-105">
-            <h1 className="text-white text-xl font-semibold pl-2 hover:text-orange-300 cursor-pointer">explore</h1>
+            <h1 className="text-white text-xl font-semibold pl-2 hover:text-orange-300 cursor-pointer">
+              explore
+            </h1>
             <Image
               src={event.icon!}
               width={0}
