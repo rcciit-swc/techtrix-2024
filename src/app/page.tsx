@@ -4,7 +4,7 @@ import Sponsor from "@/components/Sponsor";
 
 const Home = () => {
   return (
-    <main>
+    <main className="oveflow-x-hidden flex flex-col gap-10">
       <Hero />
       <Events />
       <Sponsor />

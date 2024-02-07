@@ -16,7 +16,7 @@ const SponsorButton = ({
 }) => {
   return (
     <div
-      className={`flex flex-row items-center justify-between w-[50%] hover:invert  bg-${background} border-2  lg:px-2 cursor-pointer rounded-full  duration-500 hover:scale-[101%]`}
+      className={`flex flex-row items-center justify-between w-[50%]  hover:invert  bg-${background} border-2  lg:px-2 cursor-pointer rounded-full  duration-500 hover:scale-[101%]`}
     >
       <h1
         className={`text-${textColor} text-[8px] md:text-[10px] lg:text-xl font-semibold pl-2  cursor-pointer`}
@@ -72,7 +72,7 @@ const Sponsor = () => {
             src="/assets/sponsors/gadget.svg"
             width={0}
             height={0}
-            className="w-[40%] -top-16 -right-6 md:-top-20 lg:-top-24 xl:-top-40 2xl:-top-48 md:-right-10 lg:-right-14   items-center absolute cursor-pointer duration-500 hover:scale-105"
+            className="w-[40%] -top-16 -right-4 md:-top-20 lg:-top-24 xl:-top-40 2xl:-top-48 md:-right-10 lg:-right-14   items-center absolute cursor-pointer duration-500 hover:scale-105"
             alt="frame"
           />
           <div className="flex flex-col  absolute top-[22%]    min-[1700px]:top-[30%] left-[10%] w-[60%]">
