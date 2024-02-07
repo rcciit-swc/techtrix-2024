@@ -1,5 +1,5 @@
 import EventCard from "./home/EventCard";
-import { eventcards } from "../../utils/constants/events";
+import { eventcards } from "@/utils/constants/events";
 import Heading from "./Heading";
 
 const Events = () => {
