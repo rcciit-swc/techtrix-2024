@@ -22,25 +22,28 @@ export const addEvent = async (event: eventInputType) => {
         desc: event.description,
       })
       .select();
-    const emails = event?.coordinators?.map((coordinator) => coordinator.email);
+      const emails:any = [];
+    event?.coordinators?.map((coordinator) => emails.push(coordinator.email));
     const { data: users, error: userError } = await supabase
       .from("users")
       .select("id")
       .in("email", emails);
 
-    const userIds = users?.map((user) => user.id);
-    const { data: coordinatorData, error: coordinatorError } = await supabase
-      .from("roles")
-      .insert(
-        userIds!.map((id) => ({
-          id,
-          role: "event_coordinator",
-          event_id: eventData![0].id,
-        }))
-      )
-      .select();
+      const userIds:any = []
+     users?.map((user) =>userIds.push( user.id));
+    console.log(userIds);
+     const { data: coordinatorData, error: coordinatorError } = await supabase
+       .from("roles")
+       .insert(
+         userIds!.map((id:any) => ({
+           id,
+           role: "event_coordinator",
+           event_id: eventData![0].id,
+         }))
+       )
+       .select();
     console.log(data);
-    console.log(coordinatorData);
+     console.log(coordinatorData);
     console.log(eventData);
   } catch (e) {
     console.log(e);
