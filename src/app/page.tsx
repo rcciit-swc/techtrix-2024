@@ -1,6 +1,5 @@
-import Events from "@/components/Events";
-import Hero from "@/components/Hero";
-import Sponsor from "@/components/Sponsor";
+import { Events, Hero, Sponsor } from "@/components/home";
+
 
 const Home = () => {
   return (

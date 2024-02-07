@@ -1,8 +1,8 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { Syncopate } from "next/font/google";
 import "./globals.css";
+import SessionProvider from "@/components/SessionProvider";
+import { Footer, Navbar } from "@/components/home";
 
 const syncopate = Syncopate({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -22,6 +22,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <SessionProvider />
       </body>
     </html>
   );
