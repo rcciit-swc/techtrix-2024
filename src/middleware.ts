@@ -1,19 +1,36 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+import { NextResponse } from "next/server";
 
-import type { NextRequest } from 'next/server'
-import type { Database } from './types/supabase'
+import type { NextRequest } from "next/server";
+import type { Database } from "./types/supabase";
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient<Database>({ req, res });
 
-  // Create a Supabase client configured to use cookies
-  const supabase = createMiddlewareClient<Database>({ req, res })
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const url = new URL(req.url);
 
-  // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession()
+  if (url.pathname.startsWith("/admin")) {
+    const userRoles = await supabase
+      .from("roles")
+      .select()
+      .eq("id", session?.user?.id!);
 
-  return res
+    if (
+      !userRoles?.data?.[0]?.role?.includes("event_coordinator") &&
+      !userRoles?.data?.[0]?.role?.includes("super_admin")
+    ) {
+      return NextResponse.redirect(
+        new URL("/?error=permission_error", req.url)
+      );
+    }
+
+    return NextResponse.next();
+  }
+  return res;
 }
 
 // Ensure the middleware is only called for relevant paths.
@@ -25,6 +42,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
-}
+};
