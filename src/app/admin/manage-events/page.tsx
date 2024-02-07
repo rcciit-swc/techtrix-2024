@@ -1,6 +1,7 @@
 "use client";
 import { Heading } from "@/components/home";
 import { coordinatorType, eventInputType } from "@/types/events";
+import { addEvent } from "@/utils/functions";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -43,6 +44,8 @@ const page = () => {
     category: "",
     date: "",
     time: "",
+    minTeamSize: 1,
+    maxTeamSize: 1,
     venue: "",
     coordinators: [],
     price: "",
@@ -52,7 +55,7 @@ const page = () => {
   });
   console.log(inputs);
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
@@ -136,6 +139,20 @@ const page = () => {
             type="text"
           />
           <FormElement
+            name="Min Team Size"
+            value={inputs.minTeamSize.toString()}
+            id="minTeamSize"
+            onChange={(e: any) => handleInputChange(e)}
+            type="number"
+          />
+          <FormElement
+            name="Max Team Size"
+            value={inputs.maxTeamSize.toString()}
+            id="maxTeamSize"
+            onChange={(e: any) => handleInputChange(e)}
+            type="number"
+          />
+          <FormElement
             name="Venue"
             value={inputs.venue}
             id="venue"
@@ -217,6 +234,12 @@ const page = () => {
             </button>
           </div>
         </div>
+        <button
+          onClick={() => addEvent(inputs)}
+          className="text-xl border-2 border-black w-1/3 mx-auto rounded-full px-2 py-1 text-black"
+        >
+          Submit
+        </button>
       </div>
 
       <CoordinatorForm
