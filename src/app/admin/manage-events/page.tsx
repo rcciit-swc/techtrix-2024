@@ -2,7 +2,7 @@
 import { Heading } from "@/components/home";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 const FormElement = ({
@@ -262,16 +262,17 @@ const CoordinatorForm = ({
 }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [email, setEmail] = useState("");
   const handleSubmit = () => {
     if (name && phone) {
-      onAddCoordinator({ name, phone });
+      onAddCoordinator({ name, phone,email });
       setName("");
       setPhone("");
       onClose();
     }
   };
 
+ 
   return (
     <>
       {isOpen && (
@@ -284,6 +285,13 @@ const CoordinatorForm = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Name"
+                className="border-black px-2 py-1 rounded-xl"
+              />
+                <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
                 className="border-black px-2 py-1 rounded-xl"
               />
               <input

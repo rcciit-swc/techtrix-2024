@@ -1,5 +1,6 @@
 export interface coordinatorType{
     name:string,
+    email:string,
     phone:string,
 }
 export interface eventInputType {
