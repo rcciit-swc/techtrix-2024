@@ -3,78 +3,44 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-const navRoutes = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Events",
-    path: "/events",
-  },
-  {
-    name: "Gallery",
-    path: "/gallery",
-  },
-  {
-    name: "Team",
-    path: "/team",
-  },
-  {
-    name: "Contact Us",
-    path: "/contacts",
-  },
-];
-// const Navbar = () => {
-//   return (
-//     <div className="flex flex-row items-center justify-between px-10 py-2">
-//       <img src="/rcc 1.png" className="w-24" alt="" />
-//       <div className="flex flex-row items-center gap-12">
-//         {navRoutes.map((route, index) => {
-//           return (
-//             <Link
-//               key={index}
-//               href={route.path}
-//               className="text-xl font-semibold text-black hover:bg-black py-1 px-1 hover:text-white"
-//             >
-//               {route.name}
-//             </Link>
-//           );
-//         })}
-//       </div>
-//       <div className="flex flex-row items-center gap-5">
-//         <button className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 hover:text-white font-bold text-black px-10 py-2">
-//           Login
-//         </button>
-//         <button className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2">
-//           Sign Up
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
 
-// export default Navbar;
+import { navRoutes } from "@/utils/constants/navRoutes";
+import  {login}  from "@/utils/functions";
+import { supabase, useUser } from "@/lib";
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [userImg, setUserImg] = useState("");
-
+  const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
   const router = useRouter();
   const pathname = usePathname();
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(undefined);
+    router.push("/");
+  };
   useEffect(() => {
+    const readUserSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      console.log(data);
+      if (data) {
+        setUserImg(data?.session?.user.user_metadata?.avatar_url);
+      }
+    };
     const handleScroll = () => {
       setScrolling(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-
+    readUserSession();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -136,13 +102,31 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
-              <div className="flex flex-row items-center gap-5 ml-10">
-                <button className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 hover:text-white font-bold text-black px-10 py-2">
-                  Login
+              <div className="flex flex-row items-center gap-5  md:ml-10 ">
+                {user && (
+                  <Image
+                    src={userImg}
+                    alt="user"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                )}
+                <button
+                  onClick={() => {
+                    {
+                      user ? handleLogout() : login();
+                    }
+                  }}
+                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 hover:text-white font-bold text-black px-10 py-2"
+                >
+                  {user ? "Logout" : "Login"}
                 </button>
-                <button className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2">
-                  Sign Up
-                </button>
+                {!user && (
+                  <button className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2">
+                    Sign Up
+                  </button>
+                )}
               </div>
             </ul>
           </div>

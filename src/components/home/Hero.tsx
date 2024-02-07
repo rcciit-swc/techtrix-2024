@@ -1,6 +1,3 @@
-import "../app/globals.css";
-import Image from "next/image";
-
 const Hero = () => {
   return (
     <div className="w-[100%] mx-auto relative  flex flex-row  justify-start max-lg:mt-[50px]">
