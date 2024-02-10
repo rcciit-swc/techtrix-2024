@@ -57,6 +57,7 @@ const page = () => {
     rules: "",
     imagePath: "",
   });
+  const [error, setError] = useState("");
   console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
@@ -95,6 +96,31 @@ const page = () => {
   const closeCoordinatorForm = () => {
     setIsCoordinatorFormOpen(false);
   };
+
+  const validate = () => {
+    if (
+      inputs.name === "" &&
+      inputs.category === "" &&
+      !inputs.minTeamSize &&
+      !inputs.maxTeamSize &&
+      inputs.price === "" &&
+      inputs.description === "" &&
+      inputs.imagePath === ""
+    ) {
+      return true;
+    }
+    return false;
+  };
+  const submitEvent = () =>  {
+   const review =  validate();
+   if(review){
+    setError("Enter the mandatory fields !");
+   }
+    else{
+      addEvent(inputs)
+    }
+  
+  }
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
       <Heading text="Manage Events" />
@@ -240,8 +266,10 @@ const page = () => {
             </button>
           </div>
         </div>
+        <p className="text-red-500 font-semibold text-lg">{error}</p>
+        
         <button
-          onClick={() => addEvent(inputs)}
+          onClick={submitEvent}
           className=" md:text-xl border-2 font-semibold border-black w-1/2 md:w-1/3 mx-auto rounded-full px-2 py-1 text-black"
         >
           Submit

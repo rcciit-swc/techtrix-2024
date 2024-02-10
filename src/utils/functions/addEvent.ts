@@ -4,6 +4,9 @@ import { eventInputType } from "@/types/events";
 export const addEvent = async (event: eventInputType) => {
   console.log(event);
   try {
+    if(event.name === "" || event.category === "" || event.description === "" || event.imagePath === "" || event.maxTeamSize === 0 || event.minTeamSize === 0) {
+      return;
+    }
     const { data, error } = await supabase
       .from("event_categories")
       .insert({ name: event.category, year: 2024, fest_name: "Techtrix" })
