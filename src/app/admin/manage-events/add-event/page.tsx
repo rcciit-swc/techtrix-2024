@@ -31,7 +31,7 @@ const FormElement = ({
         onChange={onChange}
         name={id}
         id={id}
-        className="border-black px-2 py-1 rounded-xl "
+        className="border-black px-2 py-1 max-md:w-full rounded-xl "
       />
     </div>
   );
@@ -96,7 +96,7 @@ const page = () => {
     setIsCoordinatorFormOpen(false);
   };
   return (
-    <div className="flex flex-col items-center justify-center gap-5 w-[80%] mx-auto overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
       <Heading text="Manage Events" />
       <div className="mx-auto border-2 border-black rounded-xl bg-gray-100 flex flex-col  flex-wrap gap-10 w-full px-2 py-5  md:px-10 md:py-10">
         <div className=" flex flex-row items-center gap-8 md:gap-20 flex-wrap justify-start w-full  ">
@@ -171,9 +171,9 @@ const page = () => {
             type="text"
           />
         </div>
-        <div className="w-full flex flex-row max-md:flex-wrap items-center gap-5">
-          <div className="md:w-1/2 flex flex-col gap-5">
-            <div className="flex flex-row  items-center gap-1 w-full md:gap-5 flex-wrap justify-start">
+        <div className="w-full flex flex-col lg:flex-row max-md:flex-wrap items-center gap-5">
+          <div className="w-full lg:w-1/2 flex flex-col gap-5">
+            <div className="flex flex-col items-start gap-1 w-full md:gap-5 flex-wrap justify-start">
               <label
                 htmlFor={"description"}
                 className="font-semibold md:text-xl"
@@ -183,11 +183,12 @@ const page = () => {
               <ReactQuill
                 theme="snow"
                 value={inputs.description}
+                className="w-full border-2 border-black"
                 onChange={(value) => handleQuillChange(value, "description")}
               />
             </div>
 
-            <div className="flex flex-row  items-center gap-1 md:gap-5 flex-wrap justify-start">
+            <div className="flex flex-col items-start gap-1 w-full md:gap-5 flex-wrap justify-start">
               <label
                 htmlFor={"description"}
                 className="font-semibold md:text-xl"
@@ -197,11 +198,12 @@ const page = () => {
               <ReactQuill
                 theme="snow"
                 value={inputs.rules}
+                className="w-full border-2 border-black"
                 onChange={(value) => handleQuillChange(value, "rules")}
               />
             </div>
           </div>
-          <div className="md:w-1/2 text-center flex flex-col gap-3">
+          <div className="w-full lg:w-1/2 text-center flex flex-col gap-3">
             {inputs.coordinators.length == 0 ? (
               <h1>No Coordinators Added yet !</h1>
             ) : (

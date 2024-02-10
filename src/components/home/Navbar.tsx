@@ -6,9 +6,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { navRoutes } from "@/utils/constants/navRoutes";
-import  {login}  from "@/utils/functions";
+import { login } from "@/utils/functions";
 import { supabase, useUser } from "@/lib";
-
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,7 +54,7 @@ const Navbar = () => {
           <div className="flex cursor-pointer items-center font-[Poppins] text-2xl font-bold text-gray-800">
             <span className="mr-1 pt-2 text-3xl text-indigo-600">
               <Link href={"/"}>
-                <img src="/rcc 1.png" className="w-16 md:w-14 lg:w-24" alt="" />
+                <img src="/rcc 1.png" className="w-16 md:w-14 lg:w-20" alt="" />
               </Link>
             </span>
           </div>
@@ -121,15 +120,23 @@ const Navbar = () => {
                   }}
                   className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-xl md:text-xs lg:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"
                 >
-                  {user ? 
-                  <>
-                  <IoIosLogOut size={24} className="inline-block lg:hidden" />
-                  <h1 className="lg:block hidden">Logout</h1>
-                  </>
-                  : "Login"}
+                  {user ? (
+                    <>
+                      <IoIosLogOut
+                        size={24}
+                        className="inline-block lg:hidden"
+                      />
+                      <h1 className="lg:block hidden">Logout</h1>
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </button>
                 {!user && (
-                  <button onClick={login} className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2">
+                  <button
+                    onClick={login}
+                    className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2"
+                  >
                     Sign Up
                   </button>
                 )}
