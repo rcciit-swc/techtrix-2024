@@ -36,7 +36,7 @@ const SponsorButton = ({
 const Sponsor = () => {
   return (
     <>
-      <div className=" flex flex-col  items-center w-[90%] md:w-[50%] lg:w-[70%] 2xl:w-[60%] mx-auto justify-center mt-10 mb-5">
+      <div className=" flex flex-col  items-center w-[95%] md:w-[80%] lg:w-[70%] 2xl:w-[60%] mx-auto justify-center mt-10 mb-5">
         <Heading text="Sponsors" />
         <div className="mt-14 md:mt-24   relative">
           <Image
@@ -50,7 +50,7 @@ const Sponsor = () => {
             src="/assets/sponsors/gadget.svg"
             width={0}
             height={0}
-            className="w-[40%] -top-16 -right-4 md:-top-20 lg:-top-24 xl:-top-40 2xl:-top-48 md:-right-10 lg:-right-14   items-center absolute cursor-pointer duration-500 hover:scale-105"
+            className="w-[40%] -top-16 -right-2 md:-top-20 lg:-top-24 xl:-top-40 2xl:-top-48 md:-right-10 lg:-right-14   items-center absolute cursor-pointer duration-500 hover:scale-105"
             alt="frame"
           />
           <div className="flex flex-col  absolute top-[22%]    min-[1700px]:top-[30%] left-[10%] w-[60%]">

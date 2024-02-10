@@ -38,7 +38,10 @@ const FormElement = ({
 };
 
 const page = () => {
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }),[]);
+  const ReactQuill = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
   const [inputs, setInputs] = useState<eventInputType>({
     name: "",
     description: "",
