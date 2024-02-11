@@ -24,7 +24,7 @@ export async function middleware(req: NextRequest) {
       !userRoles?.data?.[0]?.role?.includes("super_admin")
     ) {
       return NextResponse.redirect(
-        new URL("/?error=permission_error", req.url)
+        new URL("/?error=permission_error", req.url),
       );
     }
 

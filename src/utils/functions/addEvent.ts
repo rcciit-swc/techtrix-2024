@@ -1,6 +1,5 @@
 import { supabase } from "@/lib";
 import { eventInputType } from "@/types/events";
-import { getCategories } from "./getCategories";
 
 export const addEvent = async (event: eventInputType) => {
   console.log(event);
@@ -57,7 +56,7 @@ export const addEvent = async (event: eventInputType) => {
           id,
           role: "event_coordinator",
           event_id: eventData![0].id,
-        }))
+        })),
       )
       .select();
     console.log(category);

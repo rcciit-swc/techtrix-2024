@@ -21,7 +21,7 @@ const AddCoordinator = ({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | any
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
@@ -30,7 +30,6 @@ const AddCoordinator = ({
     }));
   };
 
-  
   console.log(inputs);
 
   useEffect(() => {

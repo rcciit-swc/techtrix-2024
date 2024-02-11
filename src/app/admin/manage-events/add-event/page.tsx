@@ -14,7 +14,7 @@ const page = () => {
   const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
+    [],
   );
   const [categories, setCategories] = useState<any>([]);
   const [inputs, setInputs] = useState<eventInputType>({
@@ -35,7 +35,7 @@ const page = () => {
   const [error, setError] = useState("");
   console.log(inputs);
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
