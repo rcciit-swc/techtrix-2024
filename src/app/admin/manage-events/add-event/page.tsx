@@ -1,43 +1,15 @@
 "use client";
+import FormElement from "@/components/admin/FormElement";
 import { Heading } from "@/components/home";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
 import dynamic from "next/dynamic";
-import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-const FormElement = ({
-  name,
-  value,
-  type,
-  id,
-  onChange,
-}: {
-  name: string;
-  value: string;
-  type: string;
-  id: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-}) => {
-  return (
-    <div className="flex flex-row  items-center gap-1 md:gap-5 flex-wrap justify-start">
-      <label htmlFor={id} className="font-semibold text-base md:text-xl">
-        {name} :
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        name={id}
-        id={id}
-        className="border-black px-2 py-1 max-md:w-full rounded-xl "
-      />
-    </div>
-  );
-};
 
 const page = () => {
+  const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
     []
@@ -111,16 +83,15 @@ const page = () => {
     }
     return false;
   };
-  const submitEvent = () =>  {
-   const review =  validate();
-   if(review){
-    setError("Enter the mandatory fields !");
-   }
-    else{
-      addEvent(inputs)
+  const submitEvent = () => {
+    const review = validate();
+    if (review) {
+      setError("Enter the mandatory fields !");
+    } else {
+      addEvent(inputs);
+      router.push("/admin/manage-events");
     }
-  
-  }
+  };
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
       <Heading text="Manage Events" />
@@ -182,13 +153,13 @@ const page = () => {
             onChange={(e: any) => handleInputChange(e)}
             type="number"
           />
-          <FormElement
+          {/* <FormElement
             name="Venue"
             value={inputs.venue}
             id="venue"
             onChange={(e: any) => handleInputChange(e)}
             type="text"
-          />
+          /> */}
           <FormElement
             name="Image Path"
             value={inputs.imagePath}
@@ -264,10 +235,14 @@ const page = () => {
             >
               ADD COORDINATOR
             </button>
+            <h1 className="text-red-600 font-semibold text-xs">
+              This feature is optional ! You can add coordinators seperately
+              later.
+            </h1>
           </div>
         </div>
         <p className="text-red-500 font-semibold text-lg">{error}</p>
-        
+
         <button
           onClick={submitEvent}
           className=" md:text-xl border-2 font-semibold border-black w-1/2 md:w-1/3 mx-auto rounded-full px-2 py-1 text-black"

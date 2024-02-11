@@ -6,8 +6,11 @@ import { FaPlus } from "react-icons/fa6";
 import Link from "next/link";
 import EventPreview from "@/components/admin/EventPreview";
 import { getEvents } from "@/utils/functions/getEvents";
+import AddCoordinator from "@/components/admin/AddCoordinator";
 
 const page = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
   const [events, setEvents] = useState<any>([]);
   useEffect(() => {
     const fetchEvents = async () => {
@@ -20,7 +23,7 @@ const page = () => {
     <div className="flex flex-col items-center mx-auto gap-5">
       <Heading text="Manage Events" />
       <div className="flex  md:flex-row w-full md:w-[90%]  gap-2 mx-auto items-center justify-center flex-wrap">
-        <div className="w-full px-2 md:w-[80%] flex flex-row items-center gap-2">
+        <div className="w-full px-2 md:w-[60%] flex flex-row items-center gap-2">
           <input
             type="text"
             placeholder="Search for Events"
@@ -33,9 +36,14 @@ const page = () => {
           <FaPlus />
           <Link href={"/admin/manage-events/add-event"}>Add Event</Link>
         </button>
+        <button onClick={()=>setIsOpen(true)} className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl ">
+          <FaPlus />
+         Add Coordinator
+        </button>
 
         <EventPreview events={events} />
       </div>
+      {isOpen ? <AddCoordinator isOpen={isOpen} onClose={onClose} /> : null}
     </div>
   );
 };

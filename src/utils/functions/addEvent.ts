@@ -4,7 +4,14 @@ import { eventInputType } from "@/types/events";
 export const addEvent = async (event: eventInputType) => {
   console.log(event);
   try {
-    if(event.name === "" || event.category === "" || event.description === "" || event.imagePath === "" || event.maxTeamSize === 0 || event.minTeamSize === 0) {
+    if (
+      event.name === "" ||
+      event.category === "" ||
+      event.description === "" ||
+      event.imagePath === "" ||
+      event.maxTeamSize === 0 ||
+      event.minTeamSize === 0
+    ) {
       return;
     }
     const { data, error } = await supabase
@@ -19,6 +26,10 @@ export const addEvent = async (event: eventInputType) => {
         min_team_member: event.minTeamSize,
         max_team_member: event.maxTeamSize,
         event_name: event.name,
+        time: event.time,
+        date: event.date,
+        rules: event.rules,
+        prize: event.prize,
         event_image_url: event.imagePath,
         registration_fees: event.price,
         year: data![0].year,
