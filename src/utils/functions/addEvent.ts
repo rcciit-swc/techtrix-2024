@@ -14,15 +14,18 @@ export const addEvent = async (event: eventInputType) => {
     ) {
       return;
     }
-    const { data, error } = await supabase
+
+    const category = await supabase
       .from("event_categories")
-      .insert({ name: event.category, year: 2024, fest_name: "Techtrix" })
-      .select();
+      .select("id")
+      .eq("name", event.category);
+
+    const { data } = category;
     const { data: eventData, error: eventError } = await supabase
       .from("events")
       .insert({
         event_category_id: data![0].id,
-        fest_name: data![0].fest_name,
+        fest_name: "Techtrix",
         min_team_member: event.minTeamSize,
         max_team_member: event.maxTeamSize,
         event_name: event.name,
@@ -32,7 +35,7 @@ export const addEvent = async (event: eventInputType) => {
         prize: event.prize,
         event_image_url: event.imagePath,
         registration_fees: event.price,
-        year: data![0].year,
+        year: 2024,
         desc: event.description,
       })
       .select();
@@ -53,10 +56,10 @@ export const addEvent = async (event: eventInputType) => {
           id,
           role: "event_coordinator",
           event_id: eventData![0].id,
-        }))
+        })),
       )
       .select();
-    console.log(data);
+    console.log(category);
     console.log(coordinatorData);
     console.log(eventData);
   } catch (e) {

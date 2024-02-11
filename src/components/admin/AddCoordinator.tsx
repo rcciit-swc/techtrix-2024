@@ -4,6 +4,7 @@ import FormElement from "./FormElement";
 import SelectInput from "./SelectInput";
 import { supabase } from "@/lib";
 import { addCoordinator } from "@/utils/functions/addCoordinator";
+import { getCategories } from "@/utils/functions/getCategories";
 
 const AddCoordinator = ({
   isOpen,
@@ -20,7 +21,7 @@ const AddCoordinator = ({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | any
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
