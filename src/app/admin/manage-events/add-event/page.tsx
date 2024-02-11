@@ -3,8 +3,9 @@ import { Heading } from "@/components/home";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
 import dynamic from "next/dynamic";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
+
 const FormElement = ({
   name,
   value,
