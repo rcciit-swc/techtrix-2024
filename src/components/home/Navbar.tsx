@@ -102,7 +102,7 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
-              <div className="flex flex-row items-center gap-5  md:ml-10 ">
+              {/* <div className="flex flex-row items-center gap-5  md:ml-10 ">
                 {user && (
                   <Image
                     src={userImg}
@@ -140,7 +140,7 @@ const Navbar = () => {
                     Sign Up
                   </button>
                 )}
-              </div>
+              </div> */}
             </ul>
           </div>
         </div>
