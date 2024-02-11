@@ -18,14 +18,8 @@ const SelectInput = ({
       <label htmlFor="event" className="font-semibold text-md md:text-xl ">
         {name} :
       </label>
-
-      <select
-        name={id}
-        id={id}
-        className="py-2 px-2"
-        onSelect={onChange}
-        
-      >
+      <select name={id} id={id} className="py-2 px-2" onChange={onChange}>
+        <option id={id} value=""></option>
         {options.map((option: any, index: number) => {
           return (
             <option key={index} id={id} value={option}>
