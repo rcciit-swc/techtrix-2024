@@ -27,6 +27,7 @@ const AddCoordinator = ({
       ...prevInputs,
       [name]: value,
     }));
+    console.log(name,value)
   };
 
   console.log(inputs);
