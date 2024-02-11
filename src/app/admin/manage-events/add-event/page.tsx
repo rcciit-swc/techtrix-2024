@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
@@ -349,4 +349,4 @@ const CoordinatorForm = ({
   );
 };
 
-export default page;
+export default Page;

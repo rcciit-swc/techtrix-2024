@@ -26,7 +26,7 @@ const Navbar = () => {
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
-      console.log(data);
+      // console.log(data);
       if (data) {
         setUserImg(data?.session?.user.user_metadata?.avatar_url);
       }

@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={syncopate.className}>
         <Navbar />
         {children}
-        <Footer />
+        {/* <Footer /> */}
         <SessionProvider />
       </body>
     </html>

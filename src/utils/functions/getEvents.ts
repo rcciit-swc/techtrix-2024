@@ -6,7 +6,7 @@ export const getEvents = async () => {
       .from("events")
       .select("*,event_categories(name)")
       .eq("fest_name", "Techtrix");
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (e) {
     console.log(e);

@@ -8,7 +8,7 @@ import EventPreview from "@/components/admin/EventPreview";
 import { getEvents } from "@/utils/functions/getEvents";
 import AddCoordinator from "@/components/admin/AddCoordinator";
 
-const page = () => {
+const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const [events, setEvents] = useState<any>([]);
@@ -51,4 +51,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
