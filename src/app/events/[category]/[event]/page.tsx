@@ -6,6 +6,7 @@ import { getCoordinators } from '@/utils/functions/getCoordinators';
 import { PuffLoader } from 'react-spinners';
 import RulesModal from '@/components/admin/RulesModal';
 import Image from 'next/image';
+import EventRegForm from '@/components/events/EventRegForm';
 const page = () => {
     const event = useParams().event;
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,8 @@ const page = () => {
       getInfo();
     },[event])
     const {roles} = eventInfo;
-    const onClose = () => setIsOpen(false);
+    const [regOpen,setRegOpen] = useState(false);
+    const onClose = () => {setIsOpen(false) ; setRegOpen(false);}
 
     useEffect(()=>{
       if(isOpen){
@@ -72,7 +74,7 @@ const page = () => {
         <div className='flex flex-col items-center gap-10'>
             <img src={eventInfo.event_image_url} alt="" className='w-80 h-80' width={0} height={0} />
             <button
-          onClick={() => {}}
+          onClick={() => {setRegOpen(true)}}
           className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
         >
           Register Soon !
@@ -82,6 +84,7 @@ const page = () => {
         }
       </div>
       <RulesModal isOpen={isOpen} onClose={onClose} rules={eventInfo.rules} />
+      <EventRegForm isOpen={regOpen} onClose={onClose} />
   </div>
   )
 }
