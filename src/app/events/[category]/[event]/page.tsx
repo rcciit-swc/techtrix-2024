@@ -1,12 +1,13 @@
 "use client";
 import { useParams } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import { getEventInfo } from '@/utils/functions/getEventsInfo';
+
 import { getCoordinators } from '@/utils/functions/getCoordinators';
 import { PuffLoader } from 'react-spinners';
 import RulesModal from '@/components/admin/RulesModal';
 import Image from 'next/image';
 import EventRegForm from '@/components/events/EventRegForm';
+import { getEventInfo } from '@/utils/functions/getEventsInfo';
 const page = () => {
     const event = useParams().event;
     const [isOpen, setIsOpen] = useState(false);

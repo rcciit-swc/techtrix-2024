@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
 import { useParams } from "next/navigation";
+import { getEventInfo } from "@/utils/functions/getEventsInfo";
 
 const EventRegForm = ({
     isOpen,
@@ -27,9 +28,17 @@ const EventRegForm = ({
             transactionSSfileName: selectedFile.name,
         }));
     };
-    
-    const minTeamMember = 1;
-    const maxTeamMember = 3;
+    const [eventInfo,setEventInfo] = useState<any>();
+    useMemo(()=>{
+        const getEvent = async ()=>{
+            const res = await getEventInfo(event);
+            setEventInfo(res![0])
+        }
+        getEvent();
+        console.log(eventInfo)
+    },[event])
+    const minTeamMember = eventInfo?.min_team_member!;
+    const maxTeamMember = eventInfo?.max_team_member!;
     const [participants, setParticipants] = useState<any>(
       generateBlankParticipants(minTeamMember)
     );
@@ -71,6 +80,24 @@ const EventRegForm = ({
         setParticipants(updatedParticipants);
       };
 
+      const validateInput = (inputName: string, inputValue: string) => {
+        const errors: { [key: string]: string } = {};
+        const regexPatterns: { [key: string]: RegExp } = {
+          teamName: /^[a-zA-Z\s]+$/,
+          transactionId: /^\d{6}$/,
+          teamLeadPhone: /^\d{10}$/,
+          teamLeadEmail: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        };
+    
+        if (!regexPatterns[inputName].test(inputValue)) {
+          errors[inputName] = "Invalid input";
+        }
+    
+        return errors;
+      };
+
+
+     
     return (
       <>
         {isOpen && (
@@ -162,8 +189,9 @@ const EventRegForm = ({
                 Close
               </button>
               <button
+              
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                onClick={()=>eventReg(inputs,participants,file,event)}
+                onClick={()=> eventReg(inputs, participants, file, event)}
               >
                 Submit
               </button>
