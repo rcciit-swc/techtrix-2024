@@ -25,7 +25,6 @@ const page = () => {
     time: "",
     minTeamSize: 1,
     maxTeamSize: 1,
-    venue: "",
     coordinators: [],
     price: "",
     prize: "",
