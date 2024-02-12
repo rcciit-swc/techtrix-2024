@@ -21,7 +21,7 @@ export default function CategoryLayout({
 }) {
   return (
     <>
-      <EventWrapper title={params.category} description="Hi">
+      <EventWrapper title={params.category} description="Challenge the algorithms, master the machines">
         {children}
       </EventWrapper>
       <SessionProvider />
