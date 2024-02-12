@@ -5,6 +5,7 @@ import { getEventInfo } from '@/utils/functions/getEventsInfo';
 import { getCoordinators } from '@/utils/functions/getCoordinators';
 import { PuffLoader } from 'react-spinners';
 import RulesModal from '@/components/admin/RulesModal';
+import Image from 'next/image';
 const page = () => {
     const event = useParams().event;
     const [isOpen, setIsOpen] = useState(false);
@@ -69,7 +70,7 @@ const page = () => {
         </div>
         
         <div className='flex flex-col items-center gap-10'>
-            <img src={eventInfo.event_image_url} alt="" className='w-80' />
+            <img src={eventInfo.event_image_url} alt="" className='w-80 h-80' width={0} height={0} />
             <button
           onClick={() => {}}
           className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
