@@ -14,7 +14,7 @@ const EventWrapper = ({children,title,description}:{
     <div className='mx-auto w-full'>
     <div style={{background:styles.background}} className=' lg:w-[80%] flex flex-col items-start justify-center mx-auto h-auto px-5  py-10 md:px-20 md:py-24 rounded-2xl'>
             <div className='relative  w-[100%]  justify-center flex flex-col gap-10 items-start'>
-                <div className='flex flex-col lg:px-16 items-start gap-5'>
+                <div className='flex flex-col lg:px-24 items-start gap-5'>
                 <h1 className='font-bold text-3xl md:text-4xl lg:text-5xl text-white'>{title}</h1>
                 <h1 className='text-white font-semibold text-xl lg:text-2xl'>{description}</h1>
                 </div>
