@@ -11,7 +11,6 @@ import { PuffLoader } from 'react-spinners';
 
 const EventCard =({event}:{event:any})=>{
     const router = useRouter();
-    console.log(event)
     const [coordinators,setCoordinators] = useState<any>([]);
     useMemo(async()=>{
        const res = await getCoordinators(event.id!);

@@ -32,7 +32,6 @@ const page = () => {
     imagePath: "",
   });
   const [error, setError] = useState("");
-  console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
