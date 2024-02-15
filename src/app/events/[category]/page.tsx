@@ -19,10 +19,10 @@ const EventCard = ({ event }: { event: any }) => {
   return (
     <div
       // onClick={()=>router.push(`/events/${event?.category_name}/${event?.event_name}`)}
-      className="flex flex-col items-start gap-5 p-5 md:py-20 md:px-10 w-full h-auto  lg:w-[550px] lg:h-[500px] border-4 border-white rounded-2xl"
+      className="flex flex-col items-start gap-10 p-5 md:py-20 md:px-10 w-full h-auto  lg:w-[550px] lg:h-[500px] border-4 border-white rounded-2xl"
     >
       <div className="w-full md:w-[80%]">
-        <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
+        <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-5xl">
           {event?.event_name!}
         </h1>
         <div
@@ -30,7 +30,7 @@ const EventCard = ({ event }: { event: any }) => {
           dangerouslySetInnerHTML={{ __html: event?.desc }}
         ></div>
       </div>
-      {coordinators.length > 0 ? (
+      {/* {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {
           return (
             <div key={index} className="flex flex-col items-start gap-2">
@@ -53,7 +53,7 @@ const EventCard = ({ event }: { event: any }) => {
         <h1 className="text-red-600 font-semibold">
           No Coordinators added yet !
         </h1>
-      )}
+      )} */}
       {/* <h1 className='font-semibold text-lg cursor-pointer'>Tap to view more {"-->"}</h1> */}
       <h1 className="font-semibold text-xl cursor-pointer text-center w-full">
         COMING SOON
