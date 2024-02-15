@@ -36,9 +36,12 @@ const page = () => {
           <FaPlus />
           <Link href={"/admin/manage-events/add-event"}>Add Event</Link>
         </button>
-        <button onClick={()=>setIsOpen(true)} className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl ">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl "
+        >
           <FaPlus />
-         Add Coordinator
+          Add Coordinator
         </button>
 
         <EventPreview events={events} />

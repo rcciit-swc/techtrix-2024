@@ -132,14 +132,14 @@ const Navbar = () => {
                     "Login"
                   )}
                 </button>
-                {!user && (
+                {/* {!user && (
                   <button
                     onClick={login}
                     className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2"
                   >
                     Sign Up
                   </button>
-                )}
+                )} */}
               </div>
             </ul>
           </div>

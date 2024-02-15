@@ -4,6 +4,7 @@ import FormElement from "./FormElement";
 import SelectInput from "./SelectInput";
 import { supabase } from "@/lib";
 import { addCoordinator } from "@/utils/functions/addCoordinator";
+import { getCategories } from "@/utils/functions/getCategories";
 
 const AddCoordinator = ({
   isOpen,
@@ -20,7 +21,7 @@ const AddCoordinator = ({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | any
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
@@ -29,8 +30,6 @@ const AddCoordinator = ({
     }));
     console.log(name,value)
   };
-
-  console.log(inputs);
 
   useEffect(() => {
     const getEventDetails = async () => {
@@ -63,11 +62,11 @@ const AddCoordinator = ({
                 X
               </h2>
             </div>
-            <h1 className="text-red-600 font-semibold text-xs mb-2">
+            {/* <h1 className="text-red-600 font-semibold text-xs mb-2">
               {
                 "This feature is currently under production, please don't use it !"
               }
-            </h1>
+            </h1> */}
 
             <div className="flex flex-col items-start gap-2 my-2">
               <SelectInput

@@ -1,8 +1,10 @@
 "use client";
 import FormElement from "@/components/admin/FormElement";
+import SelectInput from "@/components/admin/SelectInput";
 import { Heading } from "@/components/home";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
+import { getCategories } from "@/utils/functions/getCategories";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
@@ -12,8 +14,9 @@ const page = () => {
   const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
+    [],
   );
+  const [categories, setCategories] = useState<any>([]);
   const [inputs, setInputs] = useState<eventInputType>({
     name: "",
     description: "",
@@ -22,7 +25,6 @@ const page = () => {
     time: "",
     minTeamSize: 1,
     maxTeamSize: 1,
-    venue: "",
     coordinators: [],
     price: "",
     prize: "",
@@ -30,9 +32,8 @@ const page = () => {
     imagePath: "",
   });
   const [error, setError] = useState("");
-  console.log(inputs);
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
@@ -92,17 +93,32 @@ const page = () => {
       router.push("/admin/manage-events");
     }
   };
+  useMemo(() => {
+    const getEventCategories = async () => {
+      const res = await getCategories();
+      setCategories(res?.map((category: any) => category.name));
+    };
+    getEventCategories();
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
       <Heading text="Manage Events" />
       <div className="mx-auto border-2 border-black rounded-xl bg-gray-100 flex flex-col  flex-wrap gap-10 w-full px-2 py-5  md:px-10 md:py-10">
         <div className=" flex flex-row items-center gap-8 md:gap-20 flex-wrap justify-start w-full  ">
-          <FormElement
+          {/* <FormElement
             name="Category"
             value={inputs.category}
             id="category"
             onChange={(e: any) => handleInputChange(e)}
             type="text"
+          /> */}
+
+          <SelectInput
+            name="Category"
+            id="category"
+            value={inputs.category}
+            onChange={(e) => handleInputChange(e)}
+            options={categories}
           />
           <FormElement
             name="Event Name"
