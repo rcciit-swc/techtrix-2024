@@ -70,28 +70,28 @@ const page = () => {
     setIsCoordinatorFormOpen(false);
   };
 
-  const validate = () => {
-    if (
-      inputs.name === "" &&
-      inputs.category === "" &&
-      !inputs.minTeamSize &&
-      !inputs.maxTeamSize &&
-      inputs.price === "" &&
-      inputs.description === "" &&
-      inputs.imagePath === ""
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const validate = () => {
+  //   if (
+  //     inputs.name === "" &&
+  //     inputs.category === "" &&
+  //     !inputs.minTeamSize &&
+  //     !inputs.maxTeamSize &&
+  //     inputs.price === "" &&
+  //     inputs.description === "" &&
+  //     inputs.imagePath === ""
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
   const submitEvent = () => {
-    const review = validate();
-    if (review) {
-      setError("Enter the mandatory fields !");
-    } else {
+    // const review = validate();
+    // if (review) {
+    //   setError("Enter the mandatory fields !");
+    // } else {
       addEvent(inputs);
       router.push("/admin/manage-events");
-    }
+    // }
   };
   useMemo(() => {
     const getEventCategories = async () => {
