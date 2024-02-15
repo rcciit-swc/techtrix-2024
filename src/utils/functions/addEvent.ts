@@ -56,7 +56,7 @@ export const addEvent = async (event: eventInputType) => {
           id,
           role: "event_coordinator",
           event_id: eventData![0].id,
-        })),
+        }))
       )
       .select();
     console.log(category);

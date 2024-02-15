@@ -30,8 +30,6 @@ const AddCoordinator = ({
     }));
   };
 
-  console.log(inputs);
-
   useEffect(() => {
     const getEventDetails = async () => {
       const res = await supabase
@@ -63,11 +61,11 @@ const AddCoordinator = ({
                 X
               </h2>
             </div>
-            <h1 className="text-red-600 font-semibold text-xs mb-2">
+            {/* <h1 className="text-red-600 font-semibold text-xs mb-2">
               {
                 "This feature is currently under production, please don't use it !"
               }
-            </h1>
+            </h1> */}
 
             <div className="flex flex-col items-start gap-2 my-2">
               <SelectInput

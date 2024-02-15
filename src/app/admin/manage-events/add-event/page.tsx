@@ -25,7 +25,6 @@ const page = () => {
     time: "",
     minTeamSize: 1,
     maxTeamSize: 1,
-    venue: "",
     coordinators: [],
     price: "",
     prize: "",
@@ -33,7 +32,6 @@ const page = () => {
     imagePath: "",
   });
   const [error, setError] = useState("");
-  console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
