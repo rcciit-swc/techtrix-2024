@@ -19,6 +19,7 @@ export default function CategoryLayout({
   children: React.ReactNode;
     params: any;
 }) {
+  console.log(params);
   return (
     <>
       <EventWrapper title={params.category} description="Challenge the algorithms, master the machines">

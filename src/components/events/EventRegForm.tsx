@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
 import { useParams } from "next/navigation";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
+import { toast } from "sonner";
 
 const EventRegForm = ({
   isOpen,
@@ -110,6 +111,8 @@ const EventRegForm = ({
         );
       if (allFieldsEmpty) {
         await eventReg(inputs, participants, file, event);
+        onClose();
+        toast.success("Registration Successful");
       }
       if (res.errors || res.teamErrors) {
         setGeneralErrors(res.errors);
@@ -142,7 +145,7 @@ const EventRegForm = ({
               </h2>
             </div>
 
-            { (
+            {
               <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <FormElement
                   type="text"
@@ -281,7 +284,7 @@ const EventRegForm = ({
                   </div>
                 )}
               </div>
-            )}
+            }
             <div className="flex flex-row items-center flex-wrap justify-between w-full">
               <button
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
