@@ -22,7 +22,7 @@ const SelectInput = ({
         <option id={id} value=""></option>
         {options.map((option: any, index: number) => {
           return (
-            <option key={index} id={id} value={option}>
+            <option key={index} value={option}>
               {option}
             </option>
           );

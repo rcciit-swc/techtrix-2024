@@ -71,7 +71,7 @@ const page = () => {
               <h1>
                 Time : <span className="font-semibold">{eventInfo.time}</span>
               </h1>
-              {roles.length > 0 ? (
+              {/* {roles.length > 0 ? (
                 roles.map((coordinator: any, index: number) => {
                   return (
                     <div
@@ -97,7 +97,7 @@ const page = () => {
                 <h1 className="text-red-600 font-semibold">
                   No Coordinators added yet !
                 </h1>
-              )}
+              )} */}
 
               <button
                 onClick={() => setIsOpen(true)}
