@@ -132,16 +132,16 @@ const page = () => {
           /> */}
 
           <h1 className="text-lg font-semibold">Category: {inputs.category}</h1>
-          <h1 className="text-red-500">
+          {/* <h1 className="text-red-500">
             Use Only in case if you want to change category
-          </h1>
-          <SelectInput
+          </h1> */}
+          {/* <SelectInput
             name="Category"
             id="category"
             value={inputs.category}
             onChange={(e) => handleInputChange(e)}
             options={categories}
-          />
+          /> */}
           <FormElement
             name="Event Name"
             value={inputs.name}
