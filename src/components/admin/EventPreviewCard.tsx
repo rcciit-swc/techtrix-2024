@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import RulesModal from "./RulesModal";
+import Link from "next/link";
 
 const EventPreviewCard = ({ event }: { event: any }) => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   return (
-    <>
+    <Link href={`/admin/manage-events/${event.id}`}>
       <div className="border-2 border-black rounded-xl flex flex-col-reverse lg:flex-row  items-center lg:items-start px-5 py-5 gap-10 justify-between w-[95%] mx-1 md:w-[80%]">
         <div className="flex flex-col items-start gap-5 font-semibold">
           <h1 className="text-3xl  tracking-wider">{event.event_name}</h1>
@@ -54,7 +55,7 @@ const EventPreviewCard = ({ event }: { event: any }) => {
         />
       </div>
       <RulesModal isOpen={isOpen} onClose={onClose} rules={event.rules} />
-    </>
+    </Link>
   );
 };
 
