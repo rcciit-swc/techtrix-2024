@@ -16,7 +16,7 @@ const EventRegForm = ({
   onClose: () => void;
   eventDetails: any;
 }) => {
-  const event = decodeURIComponent(useParams().event.toLocaleString());
+  const event = eventDetails?.event_name;
   const [inputs, setInputs] = useState<any>({
     teamName: "",
     transactionId: "",

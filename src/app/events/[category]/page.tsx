@@ -1,4 +1,5 @@
 "use client";
+import EventDetails from "@/components/events/EventDetails";
 import EventWrapper from "@/components/events/EventWrapper";
 import { supabase } from "@/lib";
 import { useEventbyCategory } from "@/lib/store/event";
@@ -9,7 +10,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { PuffLoader } from "react-spinners";
 
-const EventCard = ({ event }: { event: any }) => {
+const EventCard = ({ event , onClick }: { event: any , onClick:(e:any)=>void }) => {
   const router = useRouter();
   const [coordinators, setCoordinators] = useState<any>([]);
   useMemo(async () => {
@@ -18,8 +19,8 @@ const EventCard = ({ event }: { event: any }) => {
   }, [event]);
   return (
     <div
-      // onClick={()=>router.push(`/events/${event?.category_name}/${event?.event_name}`)}
-      className="flex flex-col items-start gap-5 p-5 md:py-10 md:px-10 w-full h-auto  lg:w-[550px] justify-center lg:h-[500px] border-4 border-white rounded-2xl"
+        onClick={onClick}
+      className="flex flex-col cursor-pointer items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[550px] justify-center lg:h-[500px] border-4 border-white rounded-2xl"
     >
       <div className="w-full md:w-[100%]">
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
@@ -63,6 +64,7 @@ const EventCard = ({ event }: { event: any }) => {
 };
 
 const page = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,6 +77,9 @@ const page = () => {
     };
     getEvents();
   }, [event]);
+  const handleEventCardClick = (event:any) => {
+    setSelectedEvent(event); // Set the selected event in state
+  };
   eventsbyCategory = useEventbyCategory((state) => state.events!);
   return (
     <>
@@ -83,7 +88,7 @@ const page = () => {
           <PuffLoader className="w-full mx-auto" color="#36d7b7" />
         </div>
       ) : (
-        <div className="flex flex-row items-center justify-evenly gap-10 w-full mx-auto md:px-12 flex-wrap">
+       selectedEvent==null ? <div className="flex flex-row items-center justify-evenly gap-10 w-full mx-auto md:px-12 flex-wrap">
           {eventsbyCategory?.length === 0 ? (
             <h1 className="text-white font-semibold text-center text-xl w-full">
               No events announced yet !
@@ -92,12 +97,16 @@ const page = () => {
             eventsbyCategory?.map((event, index) => {
               return (
                 <>
-                  <EventCard key={index} event={event} />
+                  <EventCard key={index} event={event} onClick={() => handleEventCardClick(event)} />
                 </>
               );
             })
           )}
-        </div>
+        </div> : 
+        <EventDetails
+        eventDetails={selectedEvent}
+        onCloseEvent={() => setSelectedEvent(null)} // Function to close event details
+      />
       )}
     </>
   );
