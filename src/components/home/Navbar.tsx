@@ -94,7 +94,7 @@ const Navbar = () => {
                   key={index}
                 >
                   <li
-                    className={`my-4 pt-2 font-semibold duration-200 ease-linear text-xl md:text-xs lg:text-xl  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                    className={`my-4 pt-2 font-semibold duration-200 ease-linear text-xl md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >
@@ -118,7 +118,7 @@ const Navbar = () => {
                       user ? handleLogout() : login();
                     }
                   }}
-                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-xl md:text-xs lg:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"
+                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-xl md:text-xs lg:text-sm xl:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"
                 >
                   {user ? (
                     <>

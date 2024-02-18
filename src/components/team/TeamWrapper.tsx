@@ -30,7 +30,7 @@ const teamData = [
 ];
 const TeamTab = ({ name }: { name: string }) => {
   return (
-    <div className="bg-black text-white py-2 md:py-3 text-xs md:text-lg px-5 md:px-16 border-2 cursor-pointer border-black hover:bg-white hover:text-black rounded-xl  font-semibold">
+    <div className="bg-black text-white py-2  lg:py-3 text-xs  lg:text-sm xl:text-lg px-5 md:px-10 border-2 cursor-pointer border-black hover:bg-white hover:text-black rounded-xl  font-semibold">
       {name}
     </div>
   );
@@ -39,7 +39,7 @@ const TeamWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col items-center mx-auto gap-5">
       <Heading text="Team: Techtrix 2024" />
-      <div className="flex flex-row items-center gap-2 w-full mx-auto justify-center md:gap-10 flex-wrap ">
+      <div className="flex flex-row items-center gap-2 w-full mx-auto justify-center md:gap-4 lg:gap-10 flex-wrap ">
         {teamData.map((team, index) => {
           return (
             <Link key={index} href={team.path}>
