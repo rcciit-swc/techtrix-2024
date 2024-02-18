@@ -5,21 +5,32 @@ import Link from "next/link";
 const teamData = [
   {
     name: "SWC",
-    path: "/team/swc",
+    path: "/team",
   },
   {
     name: "Tech Team",
-    path: "/team/tech",
+    path: "/team",
   },
-
+  {
+    name: "Graphics Team",
+    path: "/team",
+  },
   {
     name: "Sponsorship Team",
-    path: "/team/sponsorship",
+    path: "/team",
+  },
+  {
+    name: "Coverage Team",
+    path: "/team",
+  },
+  {
+    name: "Coordinators",
+    path: "/team",
   },
 ];
 const TeamTab = ({ name }: { name: string }) => {
   return (
-    <div className="bg-black text-white py-2 md:py-3 text-xs md:text-xl px-5 md:px-16 border-2 cursor-pointer border-black hover:bg-white hover:text-black rounded-xl  font-semibold">
+    <div className="bg-black text-white py-2 md:py-3 text-xs md:text-lg px-5 md:px-16 border-2 cursor-pointer border-black hover:bg-white hover:text-black rounded-xl  font-semibold">
       {name}
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
+import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { getCoordinators } from "@/utils/functions/getCoordinators";
@@ -42,7 +43,7 @@ const EventDetails = ({
     }
   });
   return (
-    <div className="flex flex-col items-center mx-auto w-full">
+    <motion.div  className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (
         <div className="mx-auto max-lg:h-screen w-[100%]">
           <PuffLoader className="w-full mx-auto" color="#36d7b7" />
@@ -144,7 +145,7 @@ const EventDetails = ({
         onClose={onClose}
         eventDetails={eventInfo}
       />
-    </div>
+    </motion.div>
   );
 };
 
