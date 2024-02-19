@@ -44,10 +44,10 @@ const Navbar = () => {
 
   return (
     <>
-      <div className=" left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden">
+      <div className="sticky left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden ">
         <div
           className={`${
-            scrolling || isMenuOpen ? "bg-body" : "bg-transparent"
+            scrolling || isMenuOpen ? "bg-indigo-50" : "bg-white"
           } flex flex-row items-center justify-between gap-20 overflow-hidden py-2 pl-2 pr-4 max-md:border-b md:mb-20 md:flex lg:px-10
           `}
         >
