@@ -18,14 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={syncopate.className}>
-     
         <Navbar />
-        <SmoothScroll>
         {children}
-        </SmoothScroll>
         <Footer />
         <SessionProvider />
-      
       </body>
     </html>
   );

@@ -23,6 +23,7 @@ const EventRegForm = ({
     transactionSSfileName: "",
     teamLeadPhone: "",
     teamLeadEmail: "",
+    teamLeadName: "",
   });
 
   const [file, setFile] = useState<any>(null);
@@ -53,7 +54,7 @@ const EventRegForm = ({
     if (minTeamMember !== undefined && minTeamMember !== null) {
       const blankParticipants = [];
       for (let i = 0; i < minTeamMember; i++) {
-        blankParticipants.push({ phone: "", email: "" });
+        blankParticipants.push({ phone: "", email: "", name: "" });
       }
       setParticipants(blankParticipants);
     }
@@ -71,6 +72,17 @@ const EventRegForm = ({
   const handleEmailChange = (index: number, value: string) => {
     const updatedParticipants = [...participants];
     updatedParticipants[index].email = value;
+    if (index == 0) {
+      updatedParticipants[0].email = inputs.teamLeadEmail;
+    }
+    setParticipants(updatedParticipants);
+  };
+  const handleNameChange = (index: number, value: string) => {
+    const updatedParticipants = [...participants];
+    updatedParticipants[index].name = value;
+    if (index == 0) {
+      updatedParticipants[0].name = inputs.teamLeadName;
+    }
     setParticipants(updatedParticipants);
   };
 
@@ -81,7 +93,7 @@ const EventRegForm = ({
   };
 
   const addParticipant = () => {
-    setParticipants([...participants, { phone: "", email: "" }]);
+    setParticipants([...participants, { phone: "", email: "", name: "" }]);
   };
   const removeParticipant = (index: number) => {
     const updatedParticipants = [...participants];
@@ -167,6 +179,17 @@ const EventRegForm = ({
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadPhone}
                 </h1>
+
+                <FormElement
+                  type="text"
+                  name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
+                  value={inputs.teamLeadName}
+                  id="teamLeadName"
+                  onChange={handleInputChange}
+                />
+                <h1 className="text-red-600 font-semibold text-xs">
+                  {generalErrors.teamLeadName}
+                </h1>
                 <FormElement
                   type="email"
                   name={maxTeamMember > 1 ? "Team Lead Email" : "Email"}
@@ -220,7 +243,7 @@ const EventRegForm = ({
                       >
                         <div className="flex flex-col  items-start gap-2">
                           <label htmlFor="" className="font-semibold">
-                            Person {index + 1}
+                            {index == 0 ? "Team Lead" : `Person ${index + 1}`}
                           </label>
 
                           <div className="flex flex-col items-start gap-3">
@@ -229,7 +252,12 @@ const EventRegForm = ({
                               <input
                                 type="text"
                                 id="email"
-                                value={participant.email}
+                                value={
+                                  index == 0
+                                    ? (participant.email = inputs.teamLeadEmail)
+                                    : participant.email
+                                }
+                                disabled={index == 0 ? true : false}
                                 onChange={(e) =>
                                   handleEmailChange(index, e.target.value)
                                 }
@@ -244,10 +272,39 @@ const EventRegForm = ({
                             </div>
 
                             <div className="flex flex-row flex-wrap gap-2 font-semibold">
+                              <label htmlFor="name">Name :</label>
+                              <input
+                                type="text"
+                                id="name"
+                                disabled={index == 0 ? true : false}
+                                value={
+                                  index == 0
+                                    ? (participant.name = inputs.teamLeadName)
+                                    : participant.name
+                                }
+                                onChange={(e) =>
+                                  handleNameChange(index, e.target.value)
+                                }
+                                className="border-black px-2 py-1 max-md:w-full rounded-lg"
+                                placeholder="Name"
+                              />
+                              {teamErrors && teamErrors[index] && (
+                                <h1 className="text-red-600 font-semibold text-xs">
+                                  {teamErrors[index].name}
+                                </h1>
+                              )}
+                            </div>
+
+                            <div className="flex flex-row flex-wrap gap-2 font-semibold">
                               <label htmlFor="phone">Phone :</label>
                               <input
                                 type="text"
-                                value={participant.phone}
+                                disabled={index == 0 ? true : false}
+                                value={
+                                  index == 0
+                                    ? (participant.phone = inputs.teamLeadPhone)
+                                    : participant.phone
+                                }
                                 onChange={(e) =>
                                   handlePhoneChange(index, e.target.value)
                                 }

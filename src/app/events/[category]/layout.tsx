@@ -26,6 +26,7 @@ export default function CategoryLayout({
         title={params.category}
         description="Challenge the algorithms, master the machines"
       >
+        
         {children}
       </EventWrapper>
       <SessionProvider />

@@ -43,7 +43,7 @@ const EventDetails = ({
     }
   });
   return (
-    <motion.div  className="flex flex-col items-center -mt-10 mx-auto w-full">
+    <motion.div className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (
         <div className="mx-auto max-lg:h-screen w-[100%]">
           <PuffLoader className="w-full mx-auto" color="#36d7b7" />
@@ -82,7 +82,7 @@ const EventDetails = ({
               <h1>
                 Time : <span className="font-semibold">{eventInfo.time}</span>
               </h1>
-              {/* {roles.length > 0 ? (
+              {roles.length > 0 ? (
                 roles.map((coordinator: any, index: number) => {
                   return (
                     <div
@@ -105,10 +105,10 @@ const EventDetails = ({
                   );
                 })
               ) : (
-                <h1 className="text-red-600 font-semibold">
+                <h1 className="text-red-600 text-center font-semibold">
                   No Coordinators added yet !
                 </h1>
-              )} */}
+              )}
 
               <button
                 onClick={() => setIsOpen(true)}

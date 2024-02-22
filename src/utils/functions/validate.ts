@@ -1,6 +1,7 @@
 interface teamError {
   email: string;
   phone: string;
+  name: string;
 }
 
 export const validateReg = (
@@ -58,6 +59,7 @@ export const validateReg = (
     teamErrors[index] = {
       email: "",
       phone: "",
+      name: "",
     };
 
     if (participant.email === "") {
@@ -74,6 +76,10 @@ export const validateReg = (
       teamErrors[index].phone = "Phone is required";
     } else if (!regexPhone.test(participant.phone)) {
       teamErrors[index].phone = "Invalid Phone Number";
+    }
+
+    if (participant.name === "") {
+      teamErrors[index].name = "Name is required";
     }
   });
 

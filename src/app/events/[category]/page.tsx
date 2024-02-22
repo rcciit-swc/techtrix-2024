@@ -41,7 +41,7 @@ const EventCard = ({
           dangerouslySetInnerHTML={{ __html: event?.desc }}
         ></div>
       </div>
-      {/* {coordinators.length > 0 ? (
+      {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {
           return (
             <div key={index} className="flex flex-col items-start gap-2">
@@ -64,11 +64,13 @@ const EventCard = ({
         <h1 className="text-red-600 font-semibold">
           No Coordinators added yet !
         </h1>
-      )} */}
-      {/* <h1 className='font-semibold text-lg cursor-pointer'>Tap to view more {"-->"}</h1> */}
-      <h1 className="font-semibold text-xl cursor-pointer text-center w-full">
-        COMING SOON
+      )}
+      <h1 className="font-semibold text-lg cursor-pointer">
+        Tap to view more {"-->"}
       </h1>
+      {/* <h1 className="font-semibold text-xl cursor-pointer text-center w-full">
+        COMING SOON
+      </h1> */}
     </motion.div>
   );
 };
