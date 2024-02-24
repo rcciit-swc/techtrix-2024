@@ -21,14 +21,14 @@ const AddCoordinator = ({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | any
-    >,
+    >
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
       ...prevInputs,
       [name]: value,
     }));
-    console.log(name,value)
+    console.log(name, value);
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const AddCoordinator = ({
     <>
       {isOpen && (
         <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
-          <div className="bg-gray-100 p-4 rounded-lg  flex flex-col items-start  ">
+          <div className="bg-gray-100 w-[90%] md:w-1/3 p-4 rounded-lg relative   flex flex-col items-start  ">
             <div className="w-full flex flex-row mb-2 items-center justify-between">
               <h2 className="text-lg font-semibold">Coordinator Addition</h2>
 
@@ -68,7 +68,7 @@ const AddCoordinator = ({
               }
             </h1> */}
 
-            <div className="flex flex-col items-start gap-2 my-2">
+            <div className="flex flex-col items-start gap-2 my-2 w-full">
               <SelectInput
                 options={events}
                 onChange={(e) => {

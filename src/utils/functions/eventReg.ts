@@ -19,6 +19,8 @@ export const eventReg = async(team:any,participants:any,file:any,event:any) => {
          await supabase.from('participations').insert({
              team_id:teamId,
              phone:participant.phone,
+             name:participant.name,
+             email:participant.email,
         }).select();
      })
 
