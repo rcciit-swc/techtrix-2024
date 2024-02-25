@@ -56,7 +56,7 @@ const page = () => {
 
   const onClose = () => {
     setOpen(false);
-  }
+  };
   useEffect(() => {
     const filteredResults = registrations.filter(
       (registration: any) =>
@@ -124,63 +124,63 @@ const page = () => {
           </thead>
           <tbody>
             {filteredResults.map((registration: any, index: number) => {
-              
-              
               return (
                 <>
-                <tr
-                  key={index}
-                  className={
-                    registration.transaction_verified
-                      ? "bg-green-100 text-green-500 font-semibold text-center"
-                      : "cursor-pointer bg-red-100 text-red-500 font-semibold text-center hover:bg-red-200 hover:text-red-600"
-                  }
-                >
-                  <td className="border  border-gray-300 px-4 py-2">
-                    {index + 1}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2"
-                  onClick={
-                    () => {
-                      if (!registration.transaction_verified) {
-                        setModalData(registration);
-                       setOpen(true);
-                       
-                      }
+                  <tr
+                    key={index}
+                    className={
+                      registration.transaction_verified
+                        ? "bg-green-100 text-green-500 font-semibold text-center"
+                        : "cursor-pointer bg-red-100 text-red-500 font-semibold text-center hover:bg-red-200 hover:text-red-600"
                     }
-                  }
                   >
-                    {registration.transaction_verified
-                      ? "Verified"
-                      : "Not Verified"}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration.events.event_name}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration.team_type}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration.team_name}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration?.participations[0]?.name!}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration?.team_lead_phone!}
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    {registration.transaction_id}
-                  </td>
-                </tr>
-              
+                    <td className="border  border-gray-300 px-4 py-2">
+                      {index + 1}
+                    </td>
+                    <td
+                      className="border border-gray-300 px-4 py-2"
+                      onClick={() => {
+                        if (!registration.transaction_verified) {
+                          setModalData(registration);
+                          setOpen(true);
+                        }
+                      }}
+                    >
+                      {registration.transaction_verified
+                        ? "Verified"
+                        : "Not Verified"}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration.events.event_name}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration.team_type}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration.team_name}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration?.participations[0]?.name!}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration?.team_lead_phone!}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {registration.transaction_id}
+                    </td>
+                  </tr>
                 </>
               );
             })}
           </tbody>
         </table>
       </div>
-      <ApproveModal isOpen={open} onClose={onClose} data={modalData} />
+      <ApproveModal
+        isOpen={open}
+        onClose={onClose}
+        data={modalData}
+        setRegistrations={setRegistrations}
+      />
     </div>
   );
 };
