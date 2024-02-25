@@ -1,40 +1,34 @@
-"use client"
+"use client";
 import { useState } from "react";
-import Image from "next/image";
-
-
+import { IoLocationSharp } from "react-icons/io5";
+import { BsPeopleFill } from "react-icons/bs";
 import Committee from "./Committee";
 import Location from "./Location";
-import { Heading } from "../home";
 
 const Block = () => {
   const [selected, setSelected] = useState(true);
   return (
-    <div className="relative mx-auto min-h-screen overflow-x-hidden pt-20">
-      <Heading text="Contact Us" />
-
-      <div className="mx-auto w-[90%] lg:w-1/2 ">
-        <div className="flex flex-row gap-1">
-          <Image
-            onClick={() => setSelected(true)}
-            src={"/assets/contacts/location.svg"}
-            className="w-20 rounded-md border border-b-0 p-2 lg:w-20 "
-            height={0}
-            width={0}
-            alt="location"
-          />
-          <Image
-            onClick={() => setSelected(false)}
-            src={"/assets/contacts/people.svg"}
-            className="w-20 rounded-md border p-2 "
-            height={0}
-            width={0}
-            alt="location"
-          />
+    <div className="flex flex-col items-start mx-auto w-[90%] lg:w-1/2">
+      <div className="flex flex-row items-center gap-3">
+        <div
+          className={`${
+            selected && "bg-black text-white"
+          } border-2 px-5 py-3 hover:bg-slate-200 hover:text-black cursor-pointer rounded-xl`}
+          onClick={() => setSelected(true)}
+        >
+          <IoLocationSharp size={24} />
         </div>
-        <div className="rounded-md border px-5 py-10 lg:px-10 lg:py-20">
-          {selected ? <Location /> : <Committee />}
+        <div
+          className={`${
+            !selected && "bg-black text-white"
+          } border-2 px-5 py-3 hover:bg-slate-200 hover:text-black  cursor-pointer rounded-xl`}
+          onClick={() => setSelected(false)}
+        >
+          <BsPeopleFill size={24} />
         </div>
+      </div>
+      <div className="rounded-md border border-black px-5 py-10 lg:px-10 lg:py-20 w-full">
+        {selected ? <Location /> : <Committee />}
       </div>
     </div>
   );

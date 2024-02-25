@@ -68,14 +68,14 @@ export const CommitteeDetails = [
           phone: "+91 8017328234",
         },
         {
-          name: "Tridibes Pal",
-          role: " Assistant General Secretary, Sports",
-          phone: "+91 8327656606",
-        },
-        {
           name: "Shourya Shikhar Ghosh",
           role: " Assistant General Secretary, Tech",
           phone: "+91 9732020301",
+        },
+        {
+          name: "Tridibes Pal",
+          role: " Assistant General Secretary, Sports",
+          phone: "+91 8327656606",
         },
         {
           name: "Sankalpa Aich",
