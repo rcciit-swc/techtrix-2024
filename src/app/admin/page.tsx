@@ -1,4 +1,5 @@
 "use client";
+import ApproveModal from "@/components/admin/ApproveModal";
 import FormElement from "@/components/admin/FormElement";
 import { getRegistrations } from "@/utils/functions/getRegistrations";
 import React, { useEffect, useState } from "react";
@@ -7,6 +8,8 @@ const page = () => {
   const [registrations, setRegistrations] = useState<any>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [filteredResults, setFilteredResults] = useState<any>([]);
+  const [modalData, setModalData] = useState<any>(null);
+  const [open, setOpen] = useState(false);
   const [inputs, setInputs] = useState({
     phone: "",
     transactionId: "",
@@ -51,6 +54,9 @@ const page = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
+  const onClose = () => {
+    setOpen(false);
+  }
   useEffect(() => {
     const filteredResults = registrations.filter(
       (registration: any) =>
@@ -63,7 +69,7 @@ const page = () => {
     setFilteredResults(filteredResults);
   }, [inputs, registrations]);
   return (
-    <div className="w-full mx-auto flex flex-col items-center gap-5 ">
+    <div className="w-full mx-auto overflow-x-hidden flex flex-col items-center gap-5 ">
       <h1 className="font-semibold text-4xl text-center">Admin Dashboard</h1>
       <div className="flex flex-row items-center gap-5 w-[90%] md:w-full justify-center  flex-wrap">
         <FormElement
@@ -118,7 +124,10 @@ const page = () => {
           </thead>
           <tbody>
             {filteredResults.map((registration: any, index: number) => {
+              
+              
               return (
+                <>
                 <tr
                   key={index}
                   className={
@@ -130,7 +139,17 @@ const page = () => {
                   <td className="border  border-gray-300 px-4 py-2">
                     {index + 1}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-4 py-2"
+                  onClick={
+                    () => {
+                      if (!registration.transaction_verified) {
+                        setModalData(registration);
+                       setOpen(true);
+                       
+                      }
+                    }
+                  }
+                  >
                     {registration.transaction_verified
                       ? "Verified"
                       : "Not Verified"}
@@ -154,11 +173,14 @@ const page = () => {
                     {registration.transaction_id}
                   </td>
                 </tr>
+              
+                </>
               );
             })}
           </tbody>
         </table>
       </div>
+      <ApproveModal isOpen={open} onClose={onClose} data={modalData} />
     </div>
   );
 };
