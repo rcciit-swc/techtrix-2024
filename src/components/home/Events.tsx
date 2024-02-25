@@ -19,7 +19,7 @@ const Events = () => {
               index == 0 ? " row-span-1 md:row-span-2" : "row-span-1"
             } `}
           >
-            <Link href={index==0 ? `/` :`/events/${event.pathName}` }
+            <Link href={index==0 ? `/events` :`/events/${event.pathName}` }
             ><EventCard event={event} index={index} /></Link>
           </div>
         ))}

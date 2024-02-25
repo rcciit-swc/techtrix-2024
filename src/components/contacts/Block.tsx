@@ -27,7 +27,7 @@ const Block = () => {
           <BsPeopleFill size={24} />
         </div>
       </div>
-      <div className="rounded-md border border-black px-5 py-10 lg:px-10 lg:py-20 w-full">
+      <div className="rounded-md border border-black bg-indigo-50 px-5 py-10 lg:px-10 lg:py-20 w-full">
         {selected ? <Location /> : <Committee />}
       </div>
     </div>

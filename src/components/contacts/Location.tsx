@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { IoLocationSharp } from "react-icons/io5";
 
 const Location = () => {
   return (
@@ -9,7 +10,8 @@ const Location = () => {
       </h1>
       <div className="mx-auto flex w-[90%] flex-col gap-10 ">
         <div>
-          <div className="text-md flex flex-row gap-2 lg:px-8 mb-3 font-semibold">
+          <div className="text-md flex flex-row items-center gap-2 lg:px-8 mb-3 font-semibold">
+          <IoLocationSharp size={24} />
             <p>
               Canal S Rd, Beleghata, Kolkata, West Bengal 700015
               <br />
