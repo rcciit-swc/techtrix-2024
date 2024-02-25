@@ -6,11 +6,13 @@ const FormElement = ({
   type,
   id,
   onChange,
+  width
 }: {
   name: string;
   value: string;
   type: string;
   id: string;
+  width?: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
@@ -26,7 +28,7 @@ const FormElement = ({
         onChange={onChange}
         name={id}
         id={id}
-        className="border-black px-2 py-1 max-md:w-full rounded-xl "
+        className={`w-${width} border-black border px-2 py-1 max-md:w-full rounded-xl `}
       />
     </div>
   );
