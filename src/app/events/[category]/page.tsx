@@ -27,9 +27,7 @@ const EventCard = ({
   }, [event]);
   return (
     <motion.div
-      initial={{ scale: 1 }} // Set initial scale to 1 (normal size)
-      whileHover={{ scale: 1.05 }}
-      // Increase scale slightly on hover
+      initial={{ scale: 1 }} 
       onClick={onClick}
       className="flex flex-col cursor-pointer items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[550px] justify-center lg:h-[500px] border-4 border-white rounded-2xl"
     >

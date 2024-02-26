@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
       .select()
       .eq("id", session?.user.id);
 
-    // if user is already in the profile page, dont redirect again
+    
     if (
       !checkUserDetails(userDetails?.data?.[0]) &&
       url.pathname !== "/registration"

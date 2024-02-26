@@ -69,6 +69,7 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     await login();
+  
   };
   return (
     <>
