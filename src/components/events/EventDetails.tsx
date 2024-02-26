@@ -9,6 +9,8 @@ import RulesModal from "../admin/RulesModal";
 import Image from "next/image";
 import EventRegForm from "./EventRegForm";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
+import { useUser } from "@/lib";
+import { login } from "@/utils/functions";
 const EventDetails = ({
   eventDetails,
   onCloseEvent,
@@ -42,6 +44,7 @@ const EventDetails = ({
       document.body.style.overflow = "auto";
     }
   });
+  const user = useUser((state) => state.user);
   return (
     <motion.div className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (
@@ -129,6 +132,10 @@ const EventDetails = ({
               <button
                 disabled={!eventInfo.is_open}
                 onClick={() => {
+                  if(!user){
+                    login();
+                    
+                  }
                   setRegOpen(true);
                 }}
                 className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "

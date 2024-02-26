@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { navRoutes } from "@/utils/constants/navRoutes";
 import { login } from "@/utils/functions";
 import { supabase, useUser } from "@/lib";
+import { checkUserDetails } from "@/utils/functions/checkUserDetails";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(undefined);
-    router.push("/");
+    router.refresh();
   };
   useEffect(() => {
     const readUserSession = async () => {
@@ -37,11 +38,15 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     readUserSession();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [user]);
 
+  const handleLogin = async () => {
+    await login();
+  };
   return (
     <>
       <div className="sticky left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden ">
@@ -115,7 +120,9 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     {
-                      user ? handleLogout() : login();
+                      user
+                        ? handleLogout()
+                        : handleLogin()
                     }
                   }}
                   className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-sm md:text-xs lg:text-sm xl:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"

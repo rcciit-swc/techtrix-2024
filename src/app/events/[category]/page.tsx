@@ -10,6 +10,7 @@ import { getCoordinators } from "@/utils/functions/getCoordinators";
 import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { PuffLoader } from "react-spinners";
+import parse from "html-react-parser";
 
 const EventCard = ({
   event,
@@ -24,6 +25,7 @@ const EventCard = ({
     const res = await getCoordinators(event.id!);
     setCoordinators(res!);
   }, [event]);
+  console.log(parse(event?.desc!));
   return (
     <motion.div
       initial={{ scale: 1 }} // Set initial scale to 1 (normal size)
@@ -36,10 +38,7 @@ const EventCard = ({
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
           {event?.event_name!}
         </h1>
-        <div
-          className="font-semibold"
-          dangerouslySetInnerHTML={{ __html: event?.desc }}
-        ></div>
+        <div className="text-black text-sm">{parse(event?.desc!)}</div>
       </div>
       {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {

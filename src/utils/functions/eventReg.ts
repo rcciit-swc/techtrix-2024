@@ -47,7 +47,7 @@ export const eventReg = async(team:any,participants:any,file:any,event:any) => {
     const { data: uploadFile, error: uploadError } = await supabase.storage
     .from("fests")
     .upload(
-      `Techtrix/2024/${eventId}/transactions/${teamId}.png`,
+      `Techtrix/2024/${eventId}/transactions/${file.name!}`,
       file!,
     );
     console.log(uploadFile)
