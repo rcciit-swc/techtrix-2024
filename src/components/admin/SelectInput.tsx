@@ -14,15 +14,20 @@ const SelectInput = ({
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   return (
-    <div className="flex flex-row flex-wrap items-center gap-2 w-full">
-      <label htmlFor="event" className="font-semibold text-md md:text-xl ">
+    <div className="flex flex-row flex-wrap items-center gap-2 relative">
+      <label htmlFor="event" className="font-semibold text-sm md:text-xl ">
         {name} :
       </label>
-      <select name={id} id={id} className="py-2 px-2" onChange={onChange}>
+      <select
+        name={id}
+        id={id}
+        className="py-2 px-2 w-full rounded-xl"
+        onChange={onChange}
+      >
         <option id={id} value=""></option>
         {options.map((option: any, index: number) => {
           return (
-            <option key={index} id={id} value={option}>
+            <option key={index} value={option}>
               {option}
             </option>
           );

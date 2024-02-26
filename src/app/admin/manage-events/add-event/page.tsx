@@ -25,7 +25,6 @@ const Page = () => {
     time: "",
     minTeamSize: 1,
     maxTeamSize: 1,
-    venue: "",
     coordinators: [],
     price: "",
     prize: "",
@@ -33,7 +32,6 @@ const Page = () => {
     imagePath: "",
   });
   const [error, setError] = useState("");
-  console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
@@ -72,28 +70,28 @@ const Page = () => {
     setIsCoordinatorFormOpen(false);
   };
 
-  const validate = () => {
-    if (
-      inputs.name === "" &&
-      inputs.category === "" &&
-      !inputs.minTeamSize &&
-      !inputs.maxTeamSize &&
-      inputs.price === "" &&
-      inputs.description === "" &&
-      inputs.imagePath === ""
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const validate = () => {
+  //   if (
+  //     inputs.name === "" &&
+  //     inputs.category === "" &&
+  //     !inputs.minTeamSize &&
+  //     !inputs.maxTeamSize &&
+  //     inputs.price === "" &&
+  //     inputs.description === "" &&
+  //     inputs.imagePath === ""
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
   const submitEvent = () => {
-    const review = validate();
-    if (review) {
-      setError("Enter the mandatory fields !");
-    } else {
+    // const review = validate();
+    // if (review) {
+    //   setError("Enter the mandatory fields !");
+    // } else {
       addEvent(inputs);
       router.push("/admin/manage-events");
-    }
+    // }
   };
   useMemo(() => {
     const getEventCategories = async () => {

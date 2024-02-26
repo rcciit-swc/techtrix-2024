@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { navRoutes } from "@/utils/constants/navRoutes";
 import { login } from "@/utils/functions";
 import { supabase, useUser } from "@/lib";
+import { checkUserDetails } from "@/utils/functions/checkUserDetails";
+import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,44 +19,73 @@ const Navbar = () => {
   const setUser = useUser((state) => state.setUser);
   const router = useRouter();
   const pathname = usePathname();
-
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
+    useState(false);
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(undefined);
-    router.push("/");
+    router.refresh();
   };
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
+<<<<<<< HEAD
       // console.log(data);
+=======
+>>>>>>> 234cb9e193872075585ae7876d306f2d4d0744be
       if (data) {
         setUserImg(data?.session?.user.user_metadata?.avatar_url);
       }
+
+      const { data: roleData } = await supabase
+        .from("roles")
+        .select()
+        .match({ id: data?.session?.user?.id });
+
+      if (roleData) {
+        if (roleData?.[0]?.role === "event_coordinator") {
+          setShowCoordinatorDashboard(true);
+          return;
+        }
+        if (roleData?.[0]?.role === "super_admin") {
+          setShowCoordinatorDashboard(true);
+          setShowAdminDashboard(true);
+          return;
+        }
+      }
     };
+
     const handleScroll = () => {
       setScrolling(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
+
     readUserSession();
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [user]);
 
+  const handleLogin = async () => {
+    await login();
+  };
   return (
     <>
-      <div className=" left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden">
+      <div className="sticky left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden ">
         <div
           className={`${
-            scrolling || isMenuOpen ? "bg-body" : "bg-transparent"
-          } flex flex-row items-center justify-between gap-20 overflow-hidden py-2 pl-2 pr-4 max-md:border-b md:mb-20 md:flex lg:px-10
+            scrolling || isMenuOpen ? "bg-indigo-50" : "bg-white"
+          } flex flex-row items-center justify-between gap-20 overflow-hidden py-1 pl-2 pr-4 max-md:border-b md:mb-14 md:flex lg:px-10
           `}
         >
           <div className="flex cursor-pointer items-center font-[Poppins] text-2xl font-bold text-gray-800">
             <span className="mr-1 pt-2 text-3xl text-indigo-600">
               <Link href={"/"}>
-                <img src="/rcc 1.png" className="w-16 md:w-14 lg:w-20" alt="" />
+                <img src="/rcc 1.png" className="w-12 md:w-14 lg:w-20" alt="" />
               </Link>
             </span>
           </div>
@@ -83,18 +114,20 @@ const Navbar = () => {
             </div>
 
             <ul
-              className={`fixed top-20  z-[90] w-full border-black rounded-b-xl  max-md:border-b-2  bg-gray-50 pb-12 pl-4 transition-all duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:bg-transparent md:pb-0 md:pl-0  ${
+              className={`fixed top-16  z-[90] w-full border-black rounded-b-xl  max-md:border-b-2  bg-gray-50 pb-6 pl-4 transition-all duration-500 ease-in md:static md:z-auto md:flex md:w-auto md:items-center md:bg-transparent md:pb-0 md:pl-0  ${
                 isMenuOpen ? "block right-0" : " right-[-790px]"
               }`}
             >
               {navRoutes.map((link, index) => (
                 <Link
                   href={link.path}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
                   key={index}
                 >
                   <li
-                    className={`my-4 pt-2 font-semibold duration-200 ease-linear text-xl md:text-xs lg:text-xl  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >
@@ -102,7 +135,45 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
-              {/* <div className="flex flex-row items-center gap-5  md:ml-10 ">
+              {/* {showDashboard && (
+                <Link href={"/dashboard"}>
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/dashboard" && "text-white bg-black"
+                    }`}
+                  >
+                    Dashboard
+                  </li>
+                </Link>
+              )}
+              {showCoordinatorDashboard && (
+                <Link href={"/coordinator"}>
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/coordinator" && "text-white bg-black"
+                    }`}
+                  >
+                    Coordinator
+                  </li>
+                </Link>
+              )} */}
+              {showAdminDashboard && (
+                <Link
+                  href={"/admin"}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/admin" && "text-white bg-black"
+                    }`}
+                  >
+                    Admin
+                  </li>
+                </Link>
+              )}
+              <div className="flex flex-row items-center gap-5  md:ml-10 ">
                 {user && (
                   <Image
                     src={userImg}
@@ -115,10 +186,10 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     {
-                      user ? handleLogout() : login();
+                      user ? handleLogout() : handleLogin();
                     }
                   }}
-                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-xl md:text-xs lg:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"
+                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-sm md:text-xs lg:text-sm xl:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"
                 >
                   {user ? (
                     <>
@@ -132,15 +203,15 @@ const Navbar = () => {
                     "Login"
                   )}
                 </button>
-                {!user && (
+                {/* {!user && (
                   <button
                     onClick={login}
                     className="border-2 border-gray-500 rounded-full hover:invert duration-300 bg-black font-bold text-white px-10 py-2"
                   >
                     Sign Up
                   </button>
-                )}
-              </div> */}
+                )} */}
+              </div>
             </ul>
           </div>
         </div>

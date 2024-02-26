@@ -13,7 +13,7 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
     <div
       className={`${
         index == 0 ? "w-80 h-80 lg:w-full lg:h-full" : "w-80 h-80"
-      } flex flex-col relative hover:invert hover:border-orange-400 hover:border-y-8 duration-500 rounded-2xl cursor-pointer `}
+      } flex flex-col relative rounded-2xl cursor-pointer `}
     >
       <div
         className={`absolute inset-0 rounded-2xl`}

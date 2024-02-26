@@ -9,6 +9,6 @@ export const getEvents = async () => {
     // console.log(data);
     return data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
