@@ -6,13 +6,15 @@ const FormElement = ({
   type,
   id,
   onChange,
-  width
+  width,
+  disabled
 }: {
   name: string;
   value: string;
   type: string;
   id: string;
   width?: string;
+  disabled?: boolean;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
@@ -27,8 +29,9 @@ const FormElement = ({
         value={value}
         onChange={onChange}
         name={id}
+        disabled={disabled}
         id={id}
-        className={`w-${width} border-black border px-2 py-1 max-md:w-full rounded-xl `}
+        className={`w-[${width}] border-black border px-2 py-1 max-md:w-full rounded-xl `}
       />
     </div>
   );
