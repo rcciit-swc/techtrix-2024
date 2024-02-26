@@ -6,6 +6,7 @@ import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
 import { Toaster, toast } from "sonner";
+import RegFormElement from "./RegFormElement";
 
 const EventRegForm = ({
   isOpen,
@@ -149,7 +150,7 @@ const EventRegForm = ({
           <div
             className={`bg-gray-100 p-4 rounded-lg ${
               maxTeamMember > 1 ? "h-[80vh] md:h-[60vh]" : "h-auto"
-            }  w-[95%] flex flex-col items-start lg:w-[40%] `}
+            }  w-[95%] flex flex-col items-start lg:w-1/2 lg:px-32 lg:py-8`}
           >
             <div className="w-full flex flex-row mb-2 items-center justify-between">
               <h2 className="text-sm lg:text-lg font-semibold">
@@ -157,7 +158,7 @@ const EventRegForm = ({
               </h2>
               <h2
                 onClick={onClose}
-                className="bg-black md:py-2 md:px-3 px-2 py-1 hover:bg-white hover:text-black border-2 border-black  text-white text-sm font-semibold rounded-full cursor-pointer"
+                className="bg-black md:py-2 md:px-3 px-2 py-1 -mr-3 hover:bg-white hover:text-black border-2 border-black  text-white text-sm font-semibold rounded-full cursor-pointer"
               >
                 X
               </h2>
@@ -165,65 +166,70 @@ const EventRegForm = ({
 
             {
               <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
-                <FormElement
+                <RegFormElement
                   type="text"
                   name={maxTeamMember > 1 ? "Team Name" : "Name"}
                   value={inputs.teamName}
                   id="teamName"
                   onChange={handleInputChange}
+                  width="100%"
                 />
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamName}
                 </h1>
-                <FormElement
+                <RegFormElement
                   type="number"
                   name={maxTeamMember > 1 ? "Team Lead Phone" : "Phone"}
                   value={inputs.teamLeadPhone}
                   id="teamLeadPhone"
                   onChange={handleInputChange}
+                  width="100%"
                 />
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadPhone}
                 </h1>
 
                 {maxTeamMember > 1 && (
-                  <FormElement
+                  <RegFormElement
                     type="text"
                     name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
                     value={inputs.teamLeadName}
                     id="teamLeadName"
                     onChange={handleInputChange}
+                    width="100%"
                   />
                 )}
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadName}
                 </h1>
-                <FormElement
+                <RegFormElement
                   type="email"
                   name={maxTeamMember > 1 ? "Team Lead Email" : "Email"}
                   value={inputs.teamLeadEmail}
                   id="teamLeadEmail"
                   onChange={handleInputChange}
+                  width="100%"
                 />
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadEmail}
                 </h1>
-                <FormElement
+                <RegFormElement
                   type="text"
                   name="Transaction Id"
                   value={inputs.transactionId}
                   id="transactionId"
                   onChange={handleInputChange}
+                  width="100%"
                 />
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.transactionId}
                 </h1>
-                <div className="flex flex-row gap-2 flex-wrap items-center">
+                <div className="flex flex-row gap-2 flex-wrap text-sm items-center">
                   <label
                     htmlFor="transactionSSfileName"
                     className="font-semibold"
                   >
-                    Payment Screenshot
+                    Payment Screenshot :
                   </label>
                   <input
                     type="file"
@@ -247,7 +253,7 @@ const EventRegForm = ({
                     {participants.map((participant: any, index: number) => (
                       <div
                         key={index}
-                        className="flex flex-row   items-center gap-10 flex-wrap border-2 border-black px-10 py-2 rounded-lg"
+                        className="flex flex-row   items-center gap-10 flex-wrap border-2 text-sm  px-10 py-2 pb-5 border-gray-200 rounded-lg"
                       >
                         <div className="flex flex-col  items-start gap-2">
                           <label htmlFor="" className="font-semibold">
@@ -293,8 +299,7 @@ const EventRegForm = ({
                                 onChange={(e) =>
                                   handleNameChange(index, e.target.value)
                                 }
-                                className="border-black px-2 py-1 max-md:w-full rounded-lg"
-                                placeholder="Name"
+                                className={`w-full border-b border-black px-2 py-1 max-md:w-full focus:border-b bg-transparent `}
                               />
                               {teamErrors && teamErrors[index] && (
                                 <h1 className="text-red-600 font-semibold text-xs">
@@ -316,8 +321,7 @@ const EventRegForm = ({
                                 onChange={(e) =>
                                   handlePhoneChange(index, e.target.value)
                                 }
-                                className="border-black px-2 py-1 max-md:w-full rounded-lg"
-                                placeholder="Phone"
+                                className={`w-full border-b border-black px-2 py-1 max-md:w-full focus:border-b bg-transparent `}
                               />
                               {teamErrors && teamErrors[index] && (
                                 <h1 className="text-red-600 font-semibold text-xs">
@@ -358,7 +362,8 @@ const EventRegForm = ({
                 Close
               </button>
               <button
-                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+              disabled={true}
+                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white cursor-not-allowed" // hover:bg-white hover:text-black
                 onClick={handleSubmit}
               >
                 Submit

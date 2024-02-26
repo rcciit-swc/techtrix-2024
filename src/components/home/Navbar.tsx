@@ -21,7 +21,8 @@ const Navbar = () => {
   const pathname = usePathname();
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [showCoordinatorDashboard, setShowCoordinatorDashboard] = useState(false);
+  const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
+    useState(false);
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(undefined);
@@ -52,8 +53,6 @@ const Navbar = () => {
       }
     };
 
-  
-
     const handleScroll = () => {
       setScrolling(window.scrollY > 0);
     };
@@ -69,7 +68,6 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     await login();
-  
   };
   return (
     <>
@@ -125,7 +123,7 @@ const Navbar = () => {
                   key={index}
                 >
                   <li
-                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >

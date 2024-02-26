@@ -29,7 +29,7 @@ const EventCard = ({
     <motion.div
       initial={{ scale: 1 }} 
       onClick={onClick}
-      className="flex flex-col cursor-pointer items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[550px] justify-center lg:h-[500px] border-4 border-white rounded-2xl"
+      className="flex flex-col cursor-pointer items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px] justify-center lg:h-[550px] border-4 border-white rounded-2xl"
     >
       <div className="w-full md:w-[100%]">
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">

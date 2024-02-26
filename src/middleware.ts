@@ -5,25 +5,18 @@ import { checkUserDetails } from "./utils/functions/checkUserDetails";
 
 export async function middleware(request: NextRequest) {
   const res = NextResponse.next();
-
   const supabase = createMiddlewareClient({ req: request, res });
-
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
   const url = new URL(request.url);
-
-  // case: user is trying to access a protected page without logging in
-  // redirect to landing page
   if (!session) {
     if (url.pathname.startsWith("/admin") || url.pathname === "/registration") {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }
-  // case: user is logged in
-  // check if user has completed profile
-  // if not, redirect to profile page
+
   else {
     const userDetails = await supabase
       .from("users")

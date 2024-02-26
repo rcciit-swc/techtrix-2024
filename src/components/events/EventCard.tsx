@@ -10,11 +10,10 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
   const title = event.title.split(" ");
 
   return (
-    
     <div
       className={`
         w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] xl:w-[450px] xl:h-[450px]
-       flex flex-col relative hover:invert hover:border-orange-400 hover:border-y-8 duration-500 rounded-2xl cursor-pointer `}
+       flex flex-col relative  rounded-2xl cursor-pointer `}
     >
       <div
         className={`absolute inset-0 rounded-2xl`}
@@ -25,10 +24,11 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
         style={conicGradientStyle}
       ></div>
 
+      {/* <img src={event.image} alt="" className="z-[10]" /> */}
       <div className="absolute w-full  bottom-[5%] px-5">
         <div
           className={` flex flex-col px-5 gap-2 items-start pb-5 text-white  font-bold 
-             text-2xl lg:text-4xl"
+             text-2xl lg:text-4xl
           } `}
         >
           {title.map((word: any, index: number) => (
