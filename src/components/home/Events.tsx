@@ -1,9 +1,13 @@
+"use client";
 import { eventcards } from "@/utils/constants/events";
 import EventCard from "./EventCard";
 
 import Heading from "./Heading";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Events = () => {
+  const router = useRouter();
   return (
     <div className="w-[80%] mx-auto gap-6  flex-col flex justify-center items-center">
       <Heading text="Events" />
@@ -15,7 +19,8 @@ const Events = () => {
               index == 0 ? " row-span-1 md:row-span-2" : "row-span-1"
             } `}
           >
-            <EventCard event={event} index={index} />
+            <Link href={index==0 ? `/events` :`/events/${event.pathName}` }
+            ><EventCard event={event} index={index} /></Link>
           </div>
         ))}
       </div>

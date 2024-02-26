@@ -21,8 +21,8 @@ export const addCoordinator = async (inputs: any) => {
       })
       .select();
 
-    console.log(coordinator);
+    // console.log(coordinator);
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };

@@ -8,6 +8,7 @@ import EventPreview from "@/components/admin/EventPreview";
 import { getEvents } from "@/utils/functions/getEvents";
 import AddCoordinator from "@/components/admin/AddCoordinator";
 
+
 const page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);

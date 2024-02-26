@@ -3,13 +3,12 @@ import { Syncopate } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "@/components/SessionProvider";
 import { Footer, Navbar } from "@/components/home";
+import { generateMetadata } from "@/utils/metadata";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const syncopate = Syncopate({ weight: ["400", "700"], subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Techtrix-2024",
-  description: "Techtrix-2024",
-};
+export const metadata: Metadata = generateMetadata();
 
 export default function RootLayout({
   children,

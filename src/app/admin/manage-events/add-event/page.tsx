@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
@@ -25,7 +25,6 @@ const page = () => {
     time: "",
     minTeamSize: 1,
     maxTeamSize: 1,
-    venue: "",
     coordinators: [],
     price: "",
     prize: "",
@@ -33,7 +32,6 @@ const page = () => {
     imagePath: "",
   });
   const [error, setError] = useState("");
-  console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
@@ -72,28 +70,28 @@ const page = () => {
     setIsCoordinatorFormOpen(false);
   };
 
-  const validate = () => {
-    if (
-      inputs.name === "" &&
-      inputs.category === "" &&
-      !inputs.minTeamSize &&
-      !inputs.maxTeamSize &&
-      inputs.price === "" &&
-      inputs.description === "" &&
-      inputs.imagePath === ""
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const validate = () => {
+  //   if (
+  //     inputs.name === "" &&
+  //     inputs.category === "" &&
+  //     !inputs.minTeamSize &&
+  //     !inputs.maxTeamSize &&
+  //     inputs.price === "" &&
+  //     inputs.description === "" &&
+  //     inputs.imagePath === ""
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
   const submitEvent = () => {
-    const review = validate();
-    if (review) {
-      setError("Enter the mandatory fields !");
-    } else {
+    // const review = validate();
+    // if (review) {
+    //   setError("Enter the mandatory fields !");
+    // } else {
       addEvent(inputs);
       router.push("/admin/manage-events");
-    }
+    // }
   };
   useMemo(() => {
     const getEventCategories = async () => {
@@ -349,4 +347,4 @@ const CoordinatorForm = ({
   );
 };
 
-export default page;
+export default Page;

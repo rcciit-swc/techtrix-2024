@@ -6,9 +6,9 @@ export const getCategories = async () => {
       .from("event_categories")
       .select("id ,name")
       .eq("fest_name", "Techtrix");
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };

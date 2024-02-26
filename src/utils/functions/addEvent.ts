@@ -2,18 +2,18 @@ import { supabase } from "@/lib";
 import { eventInputType } from "@/types/events";
 
 export const addEvent = async (event: eventInputType) => {
-  console.log(event);
+  // console.log(event);
   try {
-    if (
-      event.name === "" ||
-      event.category === "" ||
-      event.description === "" ||
-      event.imagePath === "" ||
-      event.maxTeamSize === 0 ||
-      event.minTeamSize === 0
-    ) {
-      return;
-    }
+    // if (
+    //   event.name === "" ||
+    //   event.category === "" ||
+    //   event.description === "" ||
+    //   event.imagePath === "" ||
+    //   event.maxTeamSize === 0 ||
+    //   event.minTeamSize === 0
+    // ) {
+    //   return;
+    // }
 
     const category = await supabase
       .from("event_categories")
@@ -48,7 +48,7 @@ export const addEvent = async (event: eventInputType) => {
 
     const userIds: any = [];
     users?.map((user) => userIds.push(user.id));
-    console.log(userIds);
+    // console.log(userIds);
     const { data: coordinatorData, error: coordinatorError } = await supabase
       .from("roles")
       .insert(
@@ -56,13 +56,13 @@ export const addEvent = async (event: eventInputType) => {
           id,
           role: "event_coordinator",
           event_id: eventData![0].id,
-        })),
+        }))
       )
       .select();
-    console.log(category);
-    console.log(coordinatorData);
-    console.log(eventData);
+    // console.log(category);
+    // console.log(coordinatorData);
+    // console.log(eventData);
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
