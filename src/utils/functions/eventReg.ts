@@ -57,7 +57,6 @@ export const eventReg = async (
         team_id: individualData![0].team_id!,
         phone: team.teamLeadPhone,
         name: team.teamLeadName,
-        email: team.teamLeadEmail,
       })
       .select();
     if (individualError || participantError) {
