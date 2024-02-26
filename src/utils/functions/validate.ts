@@ -1,12 +1,12 @@
 interface teamError {
-  email: string;
+  // email: string;
   phone: string;
   name: string;
 }
-
 export const validateReg = (
   inputs: any,
   participants: any,
+  maxTeamMember: number,
   file: any
 ) => {
   const errors = {
@@ -17,7 +17,7 @@ export const validateReg = (
     teamLeadEmail: "",
     file: "",
   };
-  const uniqueEmails = new Set<string>();
+  // const uniqueEmails = new Set<string>();
   const uniquePhones = new Set<string>();
   const teamErrors: teamError[] = [];
 
@@ -55,33 +55,35 @@ export const validateReg = (
   } else if (!regexEmail.test(inputs.teamLeadEmail)) {
     errors.teamLeadEmail = "Invalid Email";
   }
-  participants.forEach((participant: any, index: number) => {
-    teamErrors[index] = {
-      email: "",
-      phone: "",
-      name: "",
-    };
+  if (maxTeamMember > 1) {
+    participants.forEach((participant: any, index: number) => {
+      teamErrors[index] = {
+        // email: "",
+        phone: "",
+        name: "",
+      };
 
-    if (participant.email === "") {
-      teamErrors[index].email = "Email is required";
-    } else if (!regexEmail.test(participant.email)) {
-      teamErrors[index].email = "Invalid Email";
-    } else if (uniqueEmails.has(participant.email)) {
-      teamErrors[index].email = `Email is already used in the team`;
-    } else {
-      uniqueEmails.add(participant.email);
-    }
+      // if (participant.email === "") {
+      //   teamErrors[index].email = "Email is required";
+      // } else if (!regexEmail.test(participant.email)) {
+      //   teamErrors[index].email = "Invalid Email";
+      // } else if (uniqueEmails.has(participant.email)) {
+      //   teamErrors[index].email = `Email is already used in the team`;
+      // } else {
+      //   uniqueEmails.add(participant.email);
+      // }
 
-    if (participant.phone === "") {
-      teamErrors[index].phone = "Phone is required";
-    } else if (!regexPhone.test(participant.phone)) {
-      teamErrors[index].phone = "Invalid Phone Number";
-    }
+      if (participant.phone === "") {
+        teamErrors[index].phone = "Phone is required";
+      } else if (!regexPhone.test(participant.phone)) {
+        teamErrors[index].phone = "Invalid Phone Number";
+      }
 
-    if (participant.name === "") {
-      teamErrors[index].name = "Name is required";
-    }
-  });
+      if (participant.name === "") {
+        teamErrors[index].name = "Name is required";
+      }
+    });
+  }
 
   return { errors, teamErrors };
 };

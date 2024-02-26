@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 
 const EventRegForm = ({
   isOpen,
@@ -16,7 +16,8 @@ const EventRegForm = ({
   onClose: () => void;
   eventDetails: any;
 }) => {
-  const event = eventDetails?.event_name;
+  console.log(eventDetails);
+  const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
     teamName: "",
     transactionId: "",
@@ -67,6 +68,9 @@ const EventRegForm = ({
       ...prevInputs,
       [name]: value,
     }));
+    if (maxTeamMember == 1) {
+      inputs.teamLeadName = inputs.teamName;
+    }
   };
 
   const handleEmailChange = (index: number, value: string) => {
@@ -93,7 +97,7 @@ const EventRegForm = ({
   };
 
   const addParticipant = () => {
-    setParticipants([...participants, { phone: "", email: "", name: "" }]);
+    setParticipants([...participants, { phone: "", name: "" }]);
   };
   const removeParticipant = (index: number) => {
     const updatedParticipants = [...participants];
@@ -106,33 +110,35 @@ const EventRegForm = ({
   let teamMemberCountError = "";
   const handleSubmit = async () => {
     try {
-      const res = validateReg(inputs, participants, file);
-      if (
-        participants.length < minTeamMember &&
-        participants.length > maxTeamMember
-      ) {
-        teamMemberCountError = `Team Members should be between ${minTeamMember} and ${maxTeamMember}`;
-        return;
-      }
-
+      const res = validateReg(inputs, participants, maxTeamMember, file);
+      // if (
+      //   participants.length < minTeamMember &&
+      //   participants.length > maxTeamMember
+      // ) {
+      //   teamMemberCountError = `Team Members should be between ${minTeamMember} and ${maxTeamMember}`;
+      //   return;
+      // }
+      console.log(res);
       const allFieldsEmpty =
         Object.values(res.errors).every((value) => value === "") &&
         res.teamErrors.every(
           (participant: any) =>
-            participant.email === "" && participant.phone === ""
+            participant.name === "" && participant.phone === ""
         );
       if (allFieldsEmpty) {
-        await eventReg(inputs, participants, file, event);
-        onClose();
+        await eventReg(inputs, participants, file, eventId);
         toast.success("Registration Successful");
+        onClose();
       }
       if (res.errors || res.teamErrors) {
         setGeneralErrors(res.errors);
         setTeamErrors(res.teamErrors);
+        toast.error("Fill all the fields accurately !");
         return;
       }
     } catch (err) {
       console.log(err);
+      toast.error("Registration Failed !");
     }
   };
 
@@ -180,13 +186,15 @@ const EventRegForm = ({
                   {generalErrors.teamLeadPhone}
                 </h1>
 
-                <FormElement
-                  type="text"
-                  name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
-                  value={inputs.teamLeadName}
-                  id="teamLeadName"
-                  onChange={handleInputChange}
-                />
+                {maxTeamMember > 1 && (
+                  <FormElement
+                    type="text"
+                    name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
+                    value={inputs.teamLeadName}
+                    id="teamLeadName"
+                    onChange={handleInputChange}
+                  />
+                )}
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadName}
                 </h1>
@@ -247,7 +255,7 @@ const EventRegForm = ({
                           </label>
 
                           <div className="flex flex-col items-start gap-3">
-                            <div className="flex flex-row flex-wrap gap-2 font-semibold">
+                            {/* <div className="flex flex-row flex-wrap gap-2 font-semibold">
                               <label htmlFor="email">Email :</label>
                               <input
                                 type="text"
@@ -269,7 +277,7 @@ const EventRegForm = ({
                                   {teamErrors[index].email}
                                 </h1>
                               )}
-                            </div>
+                            </div> */}
 
                             <div className="flex flex-row flex-wrap gap-2 font-semibold">
                               <label htmlFor="name">Name :</label>
@@ -357,6 +365,7 @@ const EventRegForm = ({
               </button>
             </div>
           </div>
+          <Toaster position="bottom-right" richColors />
         </div>
       )}
     </>

@@ -11,6 +11,7 @@ import EventRegForm from "./EventRegForm";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { useUser } from "@/lib";
 import { login } from "@/utils/functions";
+import { Toaster, toast } from "sonner";
 const EventDetails = ({
   eventDetails,
   onCloseEvent,

@@ -9,6 +9,7 @@ import { navRoutes } from "@/utils/constants/navRoutes";
 import { login } from "@/utils/functions";
 import { supabase, useUser } from "@/lib";
 import { checkUserDetails } from "@/utils/functions/checkUserDetails";
+import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +19,9 @@ const Navbar = () => {
   const setUser = useUser((state) => state.setUser);
   const router = useRouter();
   const pathname = usePathname();
-
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [showCoordinatorDashboard, setShowCoordinatorDashboard] = useState(false);
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(undefined);
@@ -27,16 +30,36 @@ const Navbar = () => {
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
-      console.log(data);
       if (data) {
         setUserImg(data?.session?.user.user_metadata?.avatar_url);
       }
+
+      const { data: roleData } = await supabase
+        .from("roles")
+        .select()
+        .match({ id: data?.session?.user?.id });
+
+      if (roleData) {
+        if (roleData?.[0]?.role === "event_coordinator") {
+          setShowCoordinatorDashboard(true);
+          return;
+        }
+        if (roleData?.[0]?.role === "super_admin") {
+          setShowCoordinatorDashboard(true);
+          setShowAdminDashboard(true);
+          return;
+        }
+      }
     };
+
+  
+
     const handleScroll = () => {
       setScrolling(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
+
     readUserSession();
 
     return () => {
@@ -95,7 +118,9 @@ const Navbar = () => {
               {navRoutes.map((link, index) => (
                 <Link
                   href={link.path}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
                   key={index}
                 >
                   <li
@@ -107,6 +132,44 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
+              {/* {showDashboard && (
+                <Link href={"/dashboard"}>
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/dashboard" && "text-white bg-black"
+                    }`}
+                  >
+                    Dashboard
+                  </li>
+                </Link>
+              )}
+              {showCoordinatorDashboard && (
+                <Link href={"/coordinator"}>
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/coordinator" && "text-white bg-black"
+                    }`}
+                  >
+                    Coordinator
+                  </li>
+                </Link>
+              )} */}
+              {showAdminDashboard && (
+                <Link
+                  href={"/admin"}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <li
+                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
+                      pathname === "/admin" && "text-white bg-black"
+                    }`}
+                  >
+                    Admin
+                  </li>
+                </Link>
+              )}
               <div className="flex flex-row items-center gap-5  md:ml-10 ">
                 {user && (
                   <Image
@@ -120,9 +183,7 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     {
-                      user
-                        ? handleLogout()
-                        : handleLogin()
+                      user ? handleLogout() : handleLogin();
                     }
                   }}
                   className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-sm md:text-xs lg:text-sm xl:text-xl hover:text-white font-bold text-black px-5 lg:px-10 py-2"

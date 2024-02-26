@@ -25,7 +25,6 @@ const EventCard = ({
     const res = await getCoordinators(event.id!);
     setCoordinators(res!);
   }, [event]);
-  console.log(parse(event?.desc!));
   return (
     <motion.div
       initial={{ scale: 1 }} // Set initial scale to 1 (normal size)
