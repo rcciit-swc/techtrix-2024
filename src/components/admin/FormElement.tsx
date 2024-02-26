@@ -7,7 +7,7 @@ const FormElement = ({
   id,
   onChange,
   width,
-  disabled
+  disabled,
 }: {
   name: string;
   value: string;
@@ -16,7 +16,7 @@ const FormElement = ({
   width?: string;
   disabled?: boolean;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }) => {
   return (
@@ -28,6 +28,7 @@ const FormElement = ({
         type={type}
         value={value}
         onChange={onChange}
+        required
         name={id}
         disabled={disabled}
         id={id}

@@ -11,6 +11,7 @@ import EventRegForm from "./EventRegForm";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { useUser } from "@/lib";
 import { login } from "@/utils/functions";
+import { Toaster, toast } from "sonner";
 const EventDetails = ({
   eventDetails,
   onCloseEvent,
@@ -122,19 +123,20 @@ const EventDetails = ({
             </div>
 
             <div className="flex flex-col items-center gap-10">
-              <img
-                src={eventInfo.event_image_url}
-                alt=""
-                className="w-80 h-80"
-                width={0}
-                height={0}
-              />
+              {eventInfo?.event_image_url && (
+                <img
+                  src={eventInfo.event_image_url}
+                  alt=""
+                  className="w-80 h-80"
+                  width={0}
+                  height={0}
+                />
+              )}
               <button
                 disabled={!eventInfo.is_open}
                 onClick={() => {
-                  if(!user){
+                  if (!user) {
                     login();
-                    
                   }
                   setRegOpen(true);
                 }}
