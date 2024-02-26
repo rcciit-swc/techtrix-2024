@@ -52,9 +52,9 @@ export const updateEvent = async (event: eventInputType,eventId:string)=>{
             }))
           )
           .select();
-        console.log(data);
+        // console.log(data);
        }
        catch(error){
-           console.log(error);
+          //  console.log(error);
        }
 }

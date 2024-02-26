@@ -4,7 +4,7 @@ import FormElement from "@/components/admin/FormElement";
 import { getRegistrations } from "@/utils/functions/getRegistrations";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [registrations, setRegistrations] = useState<any>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [filteredResults, setFilteredResults] = useState<any>([]);
@@ -44,7 +44,7 @@ const page = () => {
         setFilteredResults(data);
         setRegistrations(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchData();
@@ -185,4 +185,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

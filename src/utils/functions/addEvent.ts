@@ -2,7 +2,7 @@ import { supabase } from "@/lib";
 import { eventInputType } from "@/types/events";
 
 export const addEvent = async (event: eventInputType) => {
-  console.log(event);
+  // console.log(event);
   try {
     // if (
     //   event.name === "" ||
@@ -48,7 +48,7 @@ export const addEvent = async (event: eventInputType) => {
 
     const userIds: any = [];
     users?.map((user) => userIds.push(user.id));
-    console.log(userIds);
+    // console.log(userIds);
     const { data: coordinatorData, error: coordinatorError } = await supabase
       .from("roles")
       .insert(
@@ -59,10 +59,10 @@ export const addEvent = async (event: eventInputType) => {
         }))
       )
       .select();
-    console.log(category);
-    console.log(coordinatorData);
-    console.log(eventData);
+    // console.log(category);
+    // console.log(coordinatorData);
+    // console.log(eventData);
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };

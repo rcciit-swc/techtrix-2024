@@ -10,6 +10,6 @@ export const getCoordinators = async(event:any) => {
         return data;
     }
     catch(e){
-        console.log(e);
+        // console.log(e);
     }
 };

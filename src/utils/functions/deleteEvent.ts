@@ -6,5 +6,5 @@ export const deleteEvent = async (eventId:any)=>{
     .from('events')
     .delete()
     .eq('id',eventId )
-    console.log("Event Deleted Successfully !")
+    // console.log("Event Deleted Successfully !")
 }

@@ -6,9 +6,9 @@ export const getEventInfo = async (name:any) => {
             .from("events")
             .select("*,roles(users(name,phone))")
             .eq("event_name",name);
-        console.log(data);
+        // console.log(data);
         return data;
     } catch (e) {
-        console.log(e);
+        // console.log(e);
     }
 }

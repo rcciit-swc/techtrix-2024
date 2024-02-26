@@ -16,6 +16,6 @@ export const getCategoryEvents = async(category:any)=>{
         return events;
     }
     catch(e){
-        console.log(e);
+        // console.log(e);
     }
 }

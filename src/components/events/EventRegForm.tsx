@@ -17,7 +17,7 @@ const EventRegForm = ({
   onClose: () => void;
   eventDetails: any;
 }) => {
-  console.log(eventDetails);
+  // console.log(eventDetails);
   const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
     teamName: "",
@@ -119,7 +119,7 @@ const EventRegForm = ({
       //   teamMemberCountError = `Team Members should be between ${minTeamMember} and ${maxTeamMember}`;
       //   return;
       // }
-      console.log(res);
+      // console.log(res);
       const allFieldsEmpty =
         Object.values(res.errors).every((value) => value === "") &&
         res.teamErrors.every(
@@ -138,7 +138,7 @@ const EventRegForm = ({
         return;
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error("Registration Failed !");
     }
   };

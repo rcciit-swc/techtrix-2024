@@ -10,7 +10,7 @@ export const getRegistrations = async () => {
       }
       
     })
-    console.log(filteredData)
+   //  console.log(filteredData)
     filteredData?.forEach((res:any) => {
        if(res.events.max_team_member > 1){
           res['team_type'] = 'Team';

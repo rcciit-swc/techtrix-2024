@@ -60,12 +60,12 @@ export const eventReg = async (
       })
       .select();
     if (individualError || participantError) {
-      console.log(individualError, participantError);
+      // console.log(individualError, participantError);
     }
-    console.log(individualData, participantData);
+    // console.log(individualData, participantData);
   }
   const { data: uploadFile, error: uploadError } = await supabase.storage
     .from("fests")
     .upload(`Techtrix/2024/${eventId}/transactions/${file.name!}`, file!);
-  console.log(uploadFile);
+  // console.log(uploadFile);
 };

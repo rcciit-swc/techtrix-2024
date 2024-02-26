@@ -13,6 +13,6 @@ export const regUser = async (inputs: any,userId:string) => {
       }).eq("id",userId).select();
     return data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };

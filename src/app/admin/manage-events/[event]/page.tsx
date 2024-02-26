@@ -13,7 +13,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "sonner";
 
-const page = () => {
+const Page = () => {
   const eventId = useParams().event.toLocaleString();
   const [event, setEvent] = useState<any>([]);
   useEffect(() => {
@@ -54,7 +54,7 @@ const page = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getCategories();
-      console.log(data);
+      // console.log(data);
       setCategories(data?.map((category: any) => category.name));
     };
     fetchCategories();
@@ -84,7 +84,7 @@ const page = () => {
       [name]: value,
     }));
   };
-  console.log(inputs);
+  // console.log(inputs);
   const handleQuillChange = (value: string, name: string) => {
     setInputs((prevInputs) => ({
       ...prevInputs,
@@ -369,4 +369,4 @@ const CoordinatorForm = ({
   );
 };
 
-export default page;
+export default Page;

@@ -16,7 +16,7 @@ const UserRegForm = () => {
   });
 
   const router = useRouter();
-  console.log(inputs);
+  // console.log(inputs);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
   ) => {
@@ -48,7 +48,7 @@ const UserRegForm = () => {
       toast.success("Form submitted successfully.");
       router.push("/events");
     } catch (error) {
-      console.log("Error occurred", { error });
+      // console.log("Error occurred", { error });
     }
   };
   return (

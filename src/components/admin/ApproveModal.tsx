@@ -35,18 +35,18 @@ const ApproveModal = ({
           fileName: data.transaction_ss_filename,
         });
         if (image) {
-          console.log(image);
+          // console.log(image);
           setImageUrl(image.publicUrl);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchData();
   }, [data]);
 
   const handleAccept = async () => {
-    console.log(data.team_id)
+    // console.log(data.team_id)
     const response = await approveReg(data.team_id);
     if (!response) {
       onClose();
@@ -55,7 +55,7 @@ const ApproveModal = ({
       setLoaded(false);
       return;
     }
-    console.log(response)
+    // console.log(response)
     if (response) {
       toast.success("Team Verified");
       const updatedData = await getRegistrations();

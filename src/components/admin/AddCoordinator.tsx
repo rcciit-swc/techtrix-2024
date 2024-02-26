@@ -28,7 +28,7 @@ const AddCoordinator = ({
       ...prevInputs,
       [name]: value,
     }));
-    console.log(name, value);
+    // console.log(name, value);
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const AddCoordinator = ({
 
   const submitCoordinator = async () => {
     if (inputs.email === "" || inputs.event === "")
-      console.log("Fill all fields !");
+      // console.log("Fill all fields !");
     addCoordinator(inputs);
   };
   return (
