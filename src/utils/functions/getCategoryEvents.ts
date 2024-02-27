@@ -2,7 +2,6 @@ import { supabase } from "@/lib";
 
 export const getCategoryEvents = async(category:any)=>{
     try{
-      
         const categoryDetails = await supabase
         .from("event_categories")
         .select("events(*)")

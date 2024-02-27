@@ -76,10 +76,11 @@ const page = () => {
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
-  const event = useParams();
+  const param:any = useParams();
+  const event = decodeURIComponent(param?.category!);
   useMemo(() => {
     const getEvents = async () => {
-      const res = await getCategoryEvents(event?.category);
+      const res = await getCategoryEvents(event!);
       setEventbyCategory(res!);
       setLoading(false);
     };
