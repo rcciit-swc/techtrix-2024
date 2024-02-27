@@ -1,10 +1,11 @@
-import { Events, Hero, Sponsor } from "@/components/home";
+import { Events, Hero, Partners, Sponsor } from "@/components/home";
 
 const Home = () => {
   return (
-    <main className="oveflow-x-hidden flex flex-col gap-10">
+    <main className="oveflow-x-hidden flex flex-col gap-16">
       <Hero />
       <Events />
+      <Partners />
       <Sponsor />
     </main>
   );

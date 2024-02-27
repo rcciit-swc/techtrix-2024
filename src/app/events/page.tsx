@@ -17,7 +17,7 @@ const page = () => {
       <div className="flex flex-row items-center gap-20  flex-wrap justify-center">
         {allEvents.map((event, index) => {
           return (
-            <Link key={index} href={`/events/${event.title}`}>
+            <Link key={index} href={`/events/${event.pathName}`}>
               <EventCard event={event} index={index} />
             </Link>
           );

@@ -5,3 +5,4 @@ export { default as Events } from "./Events";
 export { default as EventCard } from "./EventCard";
 export { default as Sponsor } from "./Sponsor";
 export { default as Navbar } from "./Navbar";
+export { default as Partners } from "./Partners";
