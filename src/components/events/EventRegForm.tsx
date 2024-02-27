@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
@@ -19,6 +19,7 @@ const EventRegForm = ({
   onClose: () => void;
   eventDetails: any;
 }) => {
+  const router = useRouter();
   // console.log(eventDetails);
   const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
@@ -151,6 +152,7 @@ const EventRegForm = ({
         await eventReg(inputs, participants, file, eventId);
         toast.success("Registration Successful");
         onClose();
+        router.push("/dashboard");
       }
       if (res.errors || res.teamErrors) {
         setGeneralErrors(res.errors);

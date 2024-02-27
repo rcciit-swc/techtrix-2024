@@ -153,19 +153,26 @@ const page = () => {
       <Heading text="Dashboard" />
       <div className="border relative md:border-slate-700 flex flex-col items-center justify-center p-5 md:p-10 gap-5 flex-wrap bg-indigo-50 w-full rounded-xl md:w-[70%]">
         <h1 className="font-semibold text-xl">Registered Events</h1>
-        <Link href={"/events"}>
-          <button className="absolute hidden md:block md:top-6 md:right-2 bg-black px-2 py-1 text-white rounded-xl font-semibold">
-            Events
-          </button>
-        </Link>
+
         <div className="flex flex-row flex-wrap items-center justify-center gap-10">
           {loading ? (
-            <PuffLoader color={"#000"} loading={loading} size={50} className="h-screen" />
-          ) : (
-            teamData &&
-            teamData!.map((teams: any,index:number) => {
+            <PuffLoader
+              color={"#000"}
+              loading={loading}
+              size={50}
+              className="h-screen"
+            />
+          ) : teamData! && teamData!.length > 0 ? (
+            teamData!.map((teams: any, index: number) => {
               return <EventRegCard teams={teams} key={index} />;
             })
+          ) : (
+            <div className="text-2xl font-semibold h-[50vh] my-auto justify-center items-center flex flex-col gap-5">
+              <h1>No Registrations</h1>
+              <Link href={"/events"}>
+                <button className="bg-black text-lg text-white rounded-xl px-3 py-1 hover:bg-white border border-black hover:text-black">Register Now</button>
+              </Link>
+            </div>
           )}
         </div>
       </div>

@@ -25,8 +25,12 @@ const Navbar = () => {
   const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
     useState(false);
   const handleLogout = async () => {
+    setShowAdminDashboard(false);
+    setShowCoordinatorDashboard(false);
+    setShowDashboard(false);
     await supabase.auth.signOut();
     router.refresh();
+
     setUser(undefined);
   };
   useEffect(() => {
@@ -34,8 +38,8 @@ const Navbar = () => {
       const { data } = await supabase.auth.getSession();
       // console.log(data);
       if (data) {
-        setUserImg(data?.session?.user.user_metadata?.avatar_url);
         setShowDashboard(true);
+        setUserImg(data?.session?.user.user_metadata?.avatar_url);
       }
 
       const { data: roleData } = await supabase
@@ -45,11 +49,13 @@ const Navbar = () => {
 
       if (roleData) {
         if (roleData?.[0]?.role === "event_coordinator") {
+          setShowDashboard(true);
           setShowCoordinatorDashboard(true);
           return;
         }
         if (roleData?.[0]?.role === "super_admin") {
           setRole("super_admin");
+          setShowDashboard(true);
           setShowCoordinatorDashboard(true);
           setShowAdminDashboard(true);
           return;
@@ -72,6 +78,7 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     await login();
+    setShowDashboard(true);
     router.refresh();
   };
   return (
@@ -136,7 +143,7 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
-              {showDashboard && (
+              {user && showDashboard && (
                 <Link href={"/dashboard"}>
                   <li
                     className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
@@ -158,7 +165,7 @@ const Navbar = () => {
                   </li>
                 </Link>
               )} */}
-              {role === "super_admin" && (
+              {user && role === "super_admin" && (
                 <Link
                   href={"/admin-dashboard"}
                   onClick={() => {
