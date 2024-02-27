@@ -9,7 +9,7 @@ export const validateReg = (
   maxTeamMember: number,
   file: any
 ) => {
-  const errors = {
+  let errors = {
     teamName: "",
     transactionId: "",
     transactionSSfileName: "",
@@ -18,9 +18,8 @@ export const validateReg = (
     file: "",
   };
   // const uniqueEmails = new Set<string>();
-  const uniquePhones = new Set<string>();
+  let uniquePhones = new Set<string>();
   const teamErrors: teamError[] = [];
-
   const regexPhone =
     /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -77,6 +76,11 @@ export const validateReg = (
         teamErrors[index].phone = "Phone is required";
       } else if (!regexPhone.test(participant.phone)) {
         teamErrors[index].phone = "Invalid Phone Number";
+      } else if (uniquePhones.has(participant.phone)) {
+        teamErrors[index].phone = "Phone number is already used in the team";
+      } else {
+        teamErrors[index].phone = "";
+        uniquePhones.add(participant.phone);
       }
 
       if (participant.name === "") {

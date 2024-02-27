@@ -35,6 +35,7 @@ const Navbar = () => {
       // console.log(data);
       if (data) {
         setUserImg(data?.session?.user.user_metadata?.avatar_url);
+        setShowDashboard(true);
       }
 
       const { data: roleData } = await supabase
@@ -135,7 +136,7 @@ const Navbar = () => {
                   </li>
                 </Link>
               ))}
-              {/* {showDashboard && (
+              {showDashboard && (
                 <Link href={"/dashboard"}>
                   <li
                     className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
@@ -146,7 +147,7 @@ const Navbar = () => {
                   </li>
                 </Link>
               )}
-              {showCoordinatorDashboard && (
+              {/* {showCoordinatorDashboard && (
                 <Link href={"/coordinator"}>
                   <li
                     className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-xl ${
