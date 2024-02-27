@@ -19,14 +19,15 @@ const Navbar = () => {
   const setUser = useUser((state) => state.setUser);
   const router = useRouter();
   const pathname = usePathname();
+  const [role, setRole] = useState("");
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
     useState(false);
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(undefined);
     router.refresh();
+    setUser(undefined);
   };
   useEffect(() => {
     const readUserSession = async () => {
@@ -47,6 +48,7 @@ const Navbar = () => {
           return;
         }
         if (roleData?.[0]?.role === "super_admin") {
+          setRole("super_admin");
           setShowCoordinatorDashboard(true);
           setShowAdminDashboard(true);
           return;
@@ -69,6 +71,7 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     await login();
+    router.refresh();
   };
   return (
     <>
@@ -154,9 +157,9 @@ const Navbar = () => {
                   </li>
                 </Link>
               )} */}
-              {showAdminDashboard && (
+              {role === "super_admin" && (
                 <Link
-                  href={"/admin"}
+                  href={"/admin-dashboard"}
                   onClick={() => {
                     setIsMenuOpen(false);
                   }}
@@ -172,13 +175,15 @@ const Navbar = () => {
               )}
               <div className="flex flex-row items-center gap-5  md:ml-10 ">
                 {user && (
-                  <Image
-                    src={userImg}
-                    alt="user"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
+                  <Link href={"/registration"}>
+                    <Image
+                      src={userImg}
+                      alt="user"
+                      width={40}
+                      height={40}
+                      className="rounded-full"
+                    />
+                  </Link>
                 )}
                 <button
                   onClick={() => {

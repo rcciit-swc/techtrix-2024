@@ -21,7 +21,7 @@ const Block = () => {
         <div
           className={`${
             !selected && "bg-black text-white"
-          } border-2 px-5 py-3 hover:bg-slate-200 hover:text-black  cursor-pointer rounded-xl`}
+          } border-2 px-5 py-3 hover:bg-slate-300 hover:text-black  cursor-pointer rounded-xl`}
           onClick={() => setSelected(false)}
         >
           <BsPeopleFill size={24} />

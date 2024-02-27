@@ -15,8 +15,11 @@ const AdminWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-10">
       <div className="flex flex-row items-center flex-wrap gap-10">
-        <AdminTab name="Edit Events" path="/admin/manage-events" />
-        <AdminTab name="Approve Registrations" path="/admin" />
+        <AdminTab name="Edit Events" path="/admin-dashboard/manage-events" />
+        <AdminTab
+          name="Approve Registrations"
+          path="/admin-dashboard/approve"
+        />
       </div>
 
       {children}

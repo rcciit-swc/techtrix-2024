@@ -26,7 +26,7 @@
 }
 
 input[type="radio"] {
-  accent-color: #fff;
+  accent-color: black;
 }
 body {
   scroll-behavior: smooth;

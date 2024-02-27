@@ -2,7 +2,8 @@
 import ApproveModal from "@/components/admin/ApproveModal";
 import FormElement from "@/components/admin/FormElement";
 import { getRegistrations } from "@/utils/functions/getRegistrations";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import React, { useEffect, useMemo, useState } from "react";
 
 const Page = () => {
   const [registrations, setRegistrations] = useState<any>([]);
@@ -25,19 +26,15 @@ const Page = () => {
     }));
   };
   useEffect(() => {
-    const sortedResults: any = filteredResults
-      .slice()
-      .sort((a: any, b: any) => {
-        if (sortOrder === "asc") {
-          return a.transaction_verified - b.transaction_verified;
-        } else {
-          return b.transaction_verified - a.transaction_verified;
-        }
-      });
-
+    const sortedResults = [...filteredResults].sort((a, b) =>
+      sortOrder === "asc"
+        ? a.transaction_verified - b.transaction_verified
+        : b.transaction_verified - a.transaction_verified
+    );
     setFilteredResults(sortedResults);
-  }, [sortOrder, filteredResults]);
-  useEffect(() => {
+  }, [sortOrder, JSON.stringify(filteredResults)]);
+
+  useMemo(() => {
     const fetchData = async () => {
       try {
         const data = await getRegistrations();

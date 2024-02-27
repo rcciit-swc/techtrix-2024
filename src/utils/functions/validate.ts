@@ -87,3 +87,32 @@ export const validateReg = (
 
   return { errors, teamErrors };
 };
+
+export const validateUserReg = (inputs: any) => {
+  const errors = {
+    name: "",
+    phone: "",
+    college: "",
+    roll: "",
+    gender: "",
+  };
+  const regexPhone =
+    /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+  if (inputs.name === "") {
+    errors.name = "Name is required";
+  }
+  if (inputs.phone === "") {
+    errors.phone = "Phone is required";
+  } else if (!regexPhone.test(inputs.phone)) {
+    errors.phone = "Invalid Phone Number";
+  }
+
+  if (inputs.college === "") {
+    errors.college = "College is required";
+  }
+  if (inputs.gender === "") {
+    errors.gender = "Gender is required";
+  }
+
+  return errors;
+};

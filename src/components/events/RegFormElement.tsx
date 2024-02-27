@@ -31,7 +31,7 @@ const RegFormElement = ({
       name={id}
       disabled={disabled}
       id={id}
-      className={`w-[${width}] border-b border-black px-2 py-1 max-md:w-full focus:border-b bg-transparent `}
+      className={`w-[${width}] border-b border-black px-2 py-1 font-semibold max-md:w-full focus:border-b bg-transparent `}
     />
   </div>
   )

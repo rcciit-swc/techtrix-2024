@@ -46,7 +46,7 @@ const EventPreviewCard = ({ event }: { event: any }) => {
             >
               View Rules
             </button>
-            <Link href={`/admin/manage-events/${event.id}`}>
+            <Link href={`/admin-dashboard/manage-events/${event.id}`}>
               <button className="border-2 border-black px-5 py-1 rounded-full bg-black text-white hover:bg-white hover:text-black">
                 Edit Event
               </button>
