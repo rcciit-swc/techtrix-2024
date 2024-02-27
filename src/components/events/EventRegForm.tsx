@@ -69,8 +69,11 @@ const EventRegForm = ({
       ...prevInputs,
       [name]: value,
     }));
-    if (maxTeamMember == 1) {
-      inputs.teamLeadName = inputs.teamName;
+    if (maxTeamMember === 1) {
+      setInputs((prevInputs: any) => ({
+        ...prevInputs,
+        teamLeadName: prevInputs.teamName,
+      }));
     }
   };
 
@@ -143,6 +146,7 @@ const EventRegForm = ({
     }
   };
 
+  console.log(inputs);
   return (
     <>
       {isOpen && (
@@ -362,7 +366,7 @@ const EventRegForm = ({
                 Close
               </button>
               <button
-              disabled={true}
+                disabled={true}
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white cursor-not-allowed" // hover:bg-white hover:text-black
                 onClick={handleSubmit}
               >
