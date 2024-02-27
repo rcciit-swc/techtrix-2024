@@ -379,7 +379,7 @@ const EventRegForm = ({
                 )}
               </div>
             }
-            <div className="flex flex-row items-center flex-wrap justify-between w-full">
+            <div className="flex flex-row items-center pt-5  flex-wrap justify-between w-full">
               <button
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
                 onClick={onClose}
