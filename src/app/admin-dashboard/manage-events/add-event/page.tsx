@@ -90,7 +90,7 @@ const Page = () => {
     //   setError("Enter the mandatory fields !");
     // } else {
       addEvent(inputs);
-      router.push("/admin/manage-events");
+      router.push("/admin-dashboard/manage-events");
     // }
   };
   useMemo(() => {
