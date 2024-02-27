@@ -1,7 +1,7 @@
 import { Heading } from "@/components/home";
 import UserRegForm from "@/components/home/UserRegForm";
 
-import React, { useState } from "react";
+import React from "react";
 
 
 const page = () => {

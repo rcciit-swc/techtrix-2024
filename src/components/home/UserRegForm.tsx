@@ -87,7 +87,7 @@ const UserRegForm = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col w-full justify-center  bg-indigo-50 border rounded-xl gap-10 p-10">
+    <div className="flex flex-col w-full justify-center  bg-indigo-50 border rounded-xl gap-10 p-6 md:p-10">
       <RegFormElement
         name="Name"
         value={inputs.name}
@@ -145,7 +145,8 @@ const UserRegForm = () => {
         width="100%"
         onChange={handleInputChange}
       />
-      <h1 className="text-red-600 font-semibold text-xs">{errors.roll}</h1>
+      <h1 className="text-xs text-red-400 font-semibold text-center">Roll Only for College students.</h1>
+      {errors.roll && <h1 className="text-red-600 font-semibold text-xs">{errors.roll}</h1>}
       <div className="flex flex-row px-3 flex-wrap items-center md:gap-5  font-semibold">
         <label htmlFor="gender">Gender : </label>
         <div className="flex flex-row flex-wrap items-center max-md:justify-between w-full  gap-10  md:items-center md:gap-16 ">
