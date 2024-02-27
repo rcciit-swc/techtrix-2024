@@ -31,3 +31,8 @@ input[type="radio"] {
 body {
   scroll-behavior: smooth;
 }
+
+.card:hover .card-body {
+  bottom: 0;
+  display: flex;
+}

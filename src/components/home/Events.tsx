@@ -1,5 +1,5 @@
 "use client";
-import { eventcards } from "@/utils/constants/events";
+import { allEvents, eventcards } from "@/utils/constants/events";
 import EventCard from "./EventCard";
 
 import Heading from "./Heading";
@@ -12,7 +12,7 @@ const Events = () => {
     <div className="w-[80%] mx-auto gap-6  flex-col flex justify-center items-center">
       <Heading text="Events" />
       <div className="grid grid-cols-1  lg:grid-cols-[1.5fr,1fr,1fr] gap-3 md:gap-2">
-        {eventcards.map((event, index) => (
+        {allEvents.map((event, index) => (
           <div
             key={index}
             className={`${

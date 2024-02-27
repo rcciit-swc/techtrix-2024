@@ -75,7 +75,7 @@ export const allEvents = [
     image:"https://i.imgur.com/MEADK47.jpg"
   },
   {
-    title: "Hack the Track",
+    title: "Hack Track",
     conic: `conic-gradient(from 180deg at 50% 50%, #AE9EF1 0deg, #FFFFFF 72deg, #AE9EF1 144deg, #FFFFFF 216deg, #AE9EF1 288deg, #FFFFFF 360deg)`,
     linear: ``,
     icon: "/assets/events/hack.svg",

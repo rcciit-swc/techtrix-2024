@@ -33,7 +33,7 @@ export default function CategoryLayout({
 }) {
   const categoryTitle = decodeURIComponent(params.category);
   const categoryDetails = allEvents.find(
-    (event) => event.title === categoryTitle
+    (event) => event.pathName === categoryTitle
   );
   return (
     <>
