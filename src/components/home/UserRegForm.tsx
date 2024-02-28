@@ -40,6 +40,7 @@ const UserRegForm = () => {
     try {
       const validation = validateUserReg(inputs);
 
+
       const allFieldsEmpty = Object.values(validation).every(
         (value) => value === ""
       );

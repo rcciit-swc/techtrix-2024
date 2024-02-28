@@ -1,3 +1,4 @@
+import { supabase } from "@/lib";
 import { Heading } from ".";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,6 +48,7 @@ const Sessions = () => {
       isOver = false;
     }
   });
+
   return (
     <div className="flex flex-col items-center gap-10 mx-auto justify-center w-[80%]">
       {isOver && <Heading text="Sessions" />}
