@@ -58,7 +58,6 @@ const Page = () => {
       coordinatorData?.forEach((eventCoordinator: any) => {
         coordinatorsArray.push(eventCoordinator.users!);
       });
-      console.log(coordinatorsArray);
       setCoordinators(coordinatorsArray);
       setLoading(false);
     };

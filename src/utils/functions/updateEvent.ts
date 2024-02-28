@@ -54,8 +54,7 @@ export const updateEvent = async (event: eventInputType, eventId: string) => {
       )
       .eq("role", "event_coordinator")
       .select();
-    console.log(data);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };

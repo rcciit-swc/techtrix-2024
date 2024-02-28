@@ -52,7 +52,6 @@ const AddCoordinator = ({
     toast.success("Coordinator Added !");
     onClose();
   };
-  console.log(inputs);
   return (
     <>
       {isOpen && (
