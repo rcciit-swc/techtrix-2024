@@ -12,21 +12,21 @@ import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
+import { PuffLoader } from "react-spinners";
 import { toast } from "sonner";
 
 const Page = () => {
   const eventId = useParams().event.toLocaleString();
   const [event, setEvent] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [coordinators, setCoordinators] = useState<any>(null);
   useEffect(() => {
     const fetchEvent = async () => {
       const { data } = await supabase
         .from("events")
         .select("*,event_categories(name),roles(id)")
         .eq("id", eventId);
-      const coordinatorData = await getCoordinators(eventId);
-      let coordinators: any = [];
-      coordinatorData!.length > 0 &&
-        coordinators.push(coordinatorData![0].users!);
+
       setEvent(data![0]);
       if (data && data.length > 0) {
         setInputs((prevInputs) => ({
@@ -38,7 +38,7 @@ const Page = () => {
           time: data![0].time,
           minTeamSize: data![0].min_team_member,
           maxTeamSize: data![0].max_team_member,
-          coordinators: coordinators,
+          coordinators: [],
           price: data![0].registration_fees,
           prize: data![0].prize,
           rules: data![0].rules,
@@ -47,6 +47,20 @@ const Page = () => {
       }
     };
     fetchEvent();
+  }, [eventId]);
+
+  useEffect(() => {
+    const getCoordinatorData = async () => {
+      const coordinatorData = await getCoordinators(eventId);
+      let coordinatorsArray: any = [];
+      coordinatorData?.forEach((eventCoordinator: any) => {
+        coordinatorsArray.push(eventCoordinator.users!);
+      });
+      console.log(coordinatorsArray);
+      setCoordinators(coordinatorsArray);
+      setLoading(false);
+    };
+    getCoordinatorData();
   }, [eventId]);
   const router = useRouter();
   const ReactQuill = useMemo(
@@ -242,12 +256,36 @@ const Page = () => {
               />
             </div>
           </div>
-           <div className="w-full lg:w-1/2 text-center flex flex-col gap-3">
+          <div className="w-full lg:w-1/2 text-center flex flex-col justify-center items-center gap-3">
+            <h2 className="font-semibold text-xl ">Old Coordinators</h2>
+            {loading ? (
+              <PuffLoader size={24} color="black" className="mx-auto" />
+            ) : (
+              <ul className="flex flex-col items-center gap-3">
+                {coordinators !== null &&
+                  coordinators!.map((coordinator: any, index: number) => (
+                    <li
+                      key={index}
+                      className="border-2 border-black rounded-xl flex flex-col items-center gap-2 px-3 py-2"
+                    >
+                      <p className="text-black font-semibold text-sm">
+                        {index + 1}. {coordinator.name}
+                      </p>
+                      <p className="text-black font-semibold text-sm">
+                        {coordinator.phone}
+                      </p>
+                      <p className="text-black font-semibold text-xs">
+                        {coordinator.email}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+            )}
             {inputs.coordinators.length == 0 ? (
               <h1>No Coordinators Added yet !</h1>
             ) : (
-              <div>
-                <h2 className="font-semibold text-xl ">Coordinators</h2>
+              <div className="flex flex-col items-center gap-2">
+                <h2 className="font-semibold text-xl ">New Coordinators</h2>
                 <ul className="flex flex-col items-center gap-2">
                   {inputs.coordinators!.map((coordinator, index) => (
                     <li
@@ -257,8 +295,8 @@ const Page = () => {
                       <p className="text-black font-semibold text-lg">
                         {index + 1}. {coordinator.name}
                       </p>
-                      <p className="text-black font-semibold text-lg">
-                        {coordinator.phone}
+                      <p className="text-black font-semibold text-sm">
+                        {coordinator.email}
                       </p>
                       <button
                         onClick={() => handleRemoveCoordinator(index)}
@@ -271,17 +309,17 @@ const Page = () => {
                 </ul>
               </div>
             )}
-            {/* <button
+            <button
               onClick={openCoordinatorForm}
               className="font-semibold md:w-1/2 mx-auto text-sm md:text-lg border-2 border-black rounded-full  px-2  py-1"
             >
               ADD COORDINATOR
-            </button> */}
-            {/* <h1 className="text-red-600 font-semibold text-xs">
+            </button>
+            <h1 className="text-red-600 font-semibold text-xs">
               This feature is optional ! You can add coordinators seperately
               later.
-            </h1> */}
-          </div> 
+            </h1>
+          </div>
         </div>
         <p className="text-red-500 font-semibold text-lg">{error}</p>
 
@@ -293,11 +331,11 @@ const Page = () => {
         </button>
       </div>
 
-      {/* <CoordinatorForm
+      <CoordinatorForm
         isOpen={isCoordinatorFormOpen}
         onClose={closeCoordinatorForm}
         onAddCoordinator={handleAddCoordinator}
-      /> */}
+      />
     </div>
   );
 };
@@ -315,10 +353,9 @@ const CoordinatorForm = ({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const handleSubmit = () => {
-    if (name && phone) {
-      onAddCoordinator({ name, phone, email });
+    if (name && email) {
+      onAddCoordinator({ name, email });
       setName("");
-      setPhone("");
       onClose();
     }
   };
@@ -344,13 +381,13 @@ const CoordinatorForm = ({
                 placeholder="Email"
                 className="border-black px-2 py-1 rounded-xl"
               />
-              <input
+              {/* <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Phone"
                 className="border-black  px-2 py-1 rounded-xl"
-              />
+              /> */}
               <div className="flex justify-end">
                 <button
                   onClick={onClose}
