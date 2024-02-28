@@ -6,6 +6,7 @@ import { supabase } from "@/lib";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
 import { getCategories } from "@/utils/functions/getCategories";
+import { getCoordinators } from "@/utils/functions/getCoordinators";
 import { updateEvent } from "@/utils/functions/updateEvent";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
@@ -22,7 +23,10 @@ const Page = () => {
         .from("events")
         .select("*,event_categories(name),roles(id)")
         .eq("id", eventId);
-
+      const coordinatorData = await getCoordinators(eventId);
+      let coordinators: any = [];
+      coordinatorData!.length > 0 &&
+        coordinators.push(coordinatorData![0].users!);
       setEvent(data![0]);
       if (data && data.length > 0) {
         setInputs((prevInputs) => ({
@@ -34,7 +38,7 @@ const Page = () => {
           time: data![0].time,
           minTeamSize: data![0].min_team_member,
           maxTeamSize: data![0].max_team_member,
-          coordinators: [],
+          coordinators: coordinators,
           price: data![0].registration_fees,
           prize: data![0].prize,
           rules: data![0].rules,
@@ -59,7 +63,7 @@ const Page = () => {
     };
     fetchCategories();
   }, []);
-  
+
   const [inputs, setInputs] = useState<eventInputType>({
     name: event?.event_name,
     description: "",
@@ -114,10 +118,10 @@ const Page = () => {
   };
 
   const submitEvent = async () => {
-    await updateEvent(inputs,eventId);
+    await updateEvent(inputs, eventId);
     toast.success("Event Updated Successfully !");
-    router.push("/admin/manage-events");
-  }
+    router.push("/admin-dashboard/manage-events");
+  };
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
       <Heading text={`Edit Event: ${event?.event_name}`} />
@@ -238,14 +242,14 @@ const Page = () => {
               />
             </div>
           </div>
-          <div className="w-full lg:w-1/2 text-center flex flex-col gap-3">
+           <div className="w-full lg:w-1/2 text-center flex flex-col gap-3">
             {inputs.coordinators.length == 0 ? (
               <h1>No Coordinators Added yet !</h1>
             ) : (
               <div>
                 <h2 className="font-semibold text-xl ">Coordinators</h2>
                 <ul className="flex flex-col items-center gap-2">
-                  {inputs.coordinators.map((coordinator, index) => (
+                  {inputs.coordinators!.map((coordinator, index) => (
                     <li
                       key={index}
                       className="border-2 border-black rounded-xl px-2 py-1"
@@ -267,17 +271,17 @@ const Page = () => {
                 </ul>
               </div>
             )}
-            <button
+            {/* <button
               onClick={openCoordinatorForm}
               className="font-semibold md:w-1/2 mx-auto text-sm md:text-lg border-2 border-black rounded-full  px-2  py-1"
             >
               ADD COORDINATOR
-            </button>
-            <h1 className="text-red-600 font-semibold text-xs">
+            </button> */}
+            {/* <h1 className="text-red-600 font-semibold text-xs">
               This feature is optional ! You can add coordinators seperately
               later.
-            </h1>
-          </div>
+            </h1> */}
+          </div> 
         </div>
         <p className="text-red-500 font-semibold text-lg">{error}</p>
 
@@ -289,11 +293,11 @@ const Page = () => {
         </button>
       </div>
 
-      <CoordinatorForm
+      {/* <CoordinatorForm
         isOpen={isCoordinatorFormOpen}
         onClose={closeCoordinatorForm}
         onAddCoordinator={handleAddCoordinator}
-      />
+      /> */}
     </div>
   );
 };
