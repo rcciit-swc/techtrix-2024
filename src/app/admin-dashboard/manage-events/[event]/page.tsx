@@ -5,6 +5,7 @@ import { Heading } from "@/components/home";
 import { supabase } from "@/lib";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
+import { deleteCoordinator } from "@/utils/functions/deleteCoordinator";
 import { getCategories } from "@/utils/functions/getCategories";
 import { getCoordinators } from "@/utils/functions/getCoordinators";
 import { updateEvent } from "@/utils/functions/updateEvent";
@@ -13,13 +14,14 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { PuffLoader } from "react-spinners";
-import { toast } from "sonner";
+import { Toaster, toast } from "sonner";
 
 const Page = () => {
   const eventId = useParams().event.toLocaleString();
   const [event, setEvent] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [coordinators, setCoordinators] = useState<any>(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   useEffect(() => {
     const fetchEvent = async () => {
       const { data } = await supabase
@@ -135,6 +137,9 @@ const Page = () => {
     await updateEvent(inputs, eventId);
     toast.success("Event Updated Successfully !");
     router.push("/admin-dashboard/manage-events");
+  };
+  const onClose = () => {
+    setIsConfirmOpen(false);
   };
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
@@ -257,7 +262,9 @@ const Page = () => {
             </div>
           </div>
           <div className="w-full lg:w-1/2 text-center flex flex-col justify-center items-center gap-3">
-            <h2 className="font-semibold text-xl ">Old Coordinators</h2>
+            {coordinators && coordinators.length > 0 && (
+              <h2 className="font-semibold text-xl ">Old Coordinators</h2>
+            )}
             {loading ? (
               <PuffLoader size={24} color="black" className="mx-auto" />
             ) : (
@@ -277,6 +284,19 @@ const Page = () => {
                       <p className="text-black font-semibold text-xs">
                         {coordinator.email}
                       </p>
+                      <button
+                        onClick={() => {
+                          setIsConfirmOpen(true);
+                        }}
+                        className="text-red-500 border-red-500 border-2 mt-3 rounded-full px-2  font-semibold"
+                      >
+                        Remove
+                      </button>
+                      <ConfirmModal
+                        isConfirmOpen={isConfirmOpen}
+                        onClose={onClose}
+                        coordinatorId={coordinator.id!}
+                      />
                     </li>
                   ))}
               </ul>
@@ -406,6 +426,58 @@ const CoordinatorForm = ({
           </div>
         </div>
       )}
+    </>
+  );
+};
+
+const ConfirmModal = ({
+  isConfirmOpen,
+  onClose,
+  coordinatorId,
+}: {
+  isConfirmOpen: boolean;
+  onClose: () => void;
+  coordinatorId: any;
+}) => {
+  const router = useRouter();
+  const handleConfirm = async () => {
+    await deleteCoordinator(coordinatorId);
+    onClose();
+
+    toast.success("Coordinator deleted Successfully !");
+    router.refresh();
+  };
+  return (
+    <>
+      {isConfirmOpen && (
+        <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
+          <div
+            className={`bg-gray-100 p-4 rounded-lg  h-auto
+             w-[90%] flex flex-col items-start md:w-auto `}
+          >
+            <div className="w-full flex flex-row mb-2 gap-5 items-center justify-between">
+              <h2 className="text-lg font-semibold">
+                Are you sure to delete this Coordinator ?
+              </h2>
+            </div>
+            <div className="flex flex-row items-center gap-2 w-full justify-between flex-wrap">
+              <button
+                className="border-2 border-black px-5 py-1 rounded-full bg-red-600  font-semibold text-white hover:bg-white hover:text-black"
+                onClick={handleConfirm}
+              >
+                Delete
+              </button>
+              <button
+                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+                onClick={onClose}
+              >
+                Go Back
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <Toaster richColors position="bottom-right" />
     </>
   );
 };

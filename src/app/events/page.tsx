@@ -12,9 +12,9 @@ export const metadata: Metadata = generateMetadata({
 });
 const page = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-10">
+    <div className="flex flex-col items-center justify-center  gap-10">
       <Heading text="Events" />
-      <div className="flex flex-row items-center gap-20  flex-wrap justify-center">
+      <div className="flex flex-row items-center gap-20 flex-wrap   2xl:mx-20 justify-center">
         {allEvents.map((event, index) => {
           return (
             <Link key={index} href={`/events/${event.pathName}`}>

@@ -6,7 +6,7 @@ import Link from "next/link";
 const sessions = [
   {
     image: "/assets/sessions/event2.png",
-    link: "/",
+    link: "https://forms.gle/MUf2B88346g42RY6A",
     time: "03/01/2024, 11:00:00",
   },
   {
