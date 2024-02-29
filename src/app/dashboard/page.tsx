@@ -141,7 +141,7 @@ const MemberModal = ({
   );
 };
 
-const page = () => {
+const Page = () => {
   const [teamData, setTeamData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [userImage, setUserImage] = useState<string>("");
@@ -242,4 +242,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

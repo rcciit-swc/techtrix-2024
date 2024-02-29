@@ -10,7 +10,7 @@ export const metadata: Metadata = generateMetadata({
   title: "Events | TechTrix 2024",
   description: "Explore the events of TechTrix 2024",
 });
-const page = () => {
+const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center  gap-10">
       <Heading text="Events" />
@@ -27,4 +27,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

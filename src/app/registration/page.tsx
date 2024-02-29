@@ -3,7 +3,7 @@ import UserRegForm from "@/components/home/UserRegForm";
 
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="flex flex-col md:w-[40%] items-center justify-center gap-10  mx-auto">
       <Heading text="Registration" />
@@ -12,4 +12,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

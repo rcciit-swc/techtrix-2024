@@ -71,7 +71,7 @@ const EventCard = ({
   );
 };
 
-const page = () => {
+const Page = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
@@ -151,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

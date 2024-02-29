@@ -9,7 +9,7 @@ export const metadata: Metadata = generateMetadata({
   description: "Explore the Gallery of TechTrix 2024",
 });
 
-const page = () => {
+const Page = () => {
   return (
     <div className='flex flex-col items-center mx-auto'>
       <Heading text='Contact Us' />
@@ -18,4 +18,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
