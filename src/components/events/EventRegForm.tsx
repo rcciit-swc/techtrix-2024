@@ -9,6 +9,7 @@ import { Toaster, toast } from "sonner";
 import RegFormElement from "./RegFormElement";
 import { useUser } from "@/lib";
 import { stat } from "fs";
+import Image from "next/image";
 
 const EventRegForm = ({
   isOpen,
@@ -172,7 +173,7 @@ const EventRegForm = ({
         <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
           <div
             className={`bg-gray-100 p-4 rounded-lg ${
-              maxTeamMember > 1 ? "h-[80vh] md:h-[60vh]" : "h-auto"
+              maxTeamMember > 1 ? "h-[80vh] md:h-[60vh]" : "h-[80vh]"
             }  w-[95%] flex flex-col items-start lg:w-1/2 lg:px-32 lg:py-8`}
           >
             <div className="w-full flex flex-row mb-2 items-center justify-between">
@@ -188,7 +189,7 @@ const EventRegForm = ({
             </div>
 
             {
-              <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
+              <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
                   type="text"
                   disabled={maxTeamMember > 1 ? false : true}
@@ -203,7 +204,7 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="number"
-                  disabled={maxTeamMember > 1 ? false : true}
+                  disabled={maxTeamMember > 1 ? true : true}
                   name={maxTeamMember > 1 ? "Team Lead Phone" : "Phone"}
                   value={inputs.teamLeadPhone}
                   id="teamLeadPhone"
@@ -217,7 +218,7 @@ const EventRegForm = ({
                 {maxTeamMember > 1 && (
                   <RegFormElement
                     type="text"
-                    disabled={maxTeamMember > 1 ? false : true}
+                    disabled={maxTeamMember > 1 ? true : true}
                     name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
                     value={inputs.teamLeadName}
                     id="teamLeadName"
@@ -230,7 +231,7 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="email"
-                  disabled={maxTeamMember > 1 ? false : true}
+                  disabled={maxTeamMember > 1 ? true : true}
                   name={maxTeamMember > 1 ? "Team Lead Email" : "Email"}
                   value={inputs.teamLeadEmail}
                   id="teamLeadEmail"
@@ -240,6 +241,14 @@ const EventRegForm = ({
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadEmail}
                 </h1>
+
+                <img
+                  src={"/QR.jpg"}
+                  width={350}
+                  className="mx-auto "
+                  height={100}
+                  alt=""
+                />
                 <RegFormElement
                   type="text"
                   name="Transaction Id"
