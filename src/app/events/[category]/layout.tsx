@@ -2,17 +2,28 @@ import SessionProvider from "@/components/SessionProvider";
 import EventWrapper from "@/components/events/EventWrapper";
 import { Footer, Navbar } from "@/components/home";
 import { supabase } from "@/lib";
+import { allEvents } from "@/utils/constants/events";
 import { generateMetadata } from "@/utils/metadata";
 import type { Metadata } from "next";
 import { Syncopate } from "next/font/google";
 
 const syncopate = Syncopate({ weight: ["400", "700"], subsets: ["latin"] });
 
-export const metadata: Metadata = generateMetadata({
-  title: "Events | TechTrix 2024",
-  description: "TechTrix 2024's Events",
-});
-
+interface Params {
+  params: {
+    category: string;
+  };
+}
+export function dynamicMetadata({ params: { category } }: Params): Metadata {
+  const categoryTitle = decodeURIComponent(category);
+  const categoryDetails = allEvents.find(
+    (event) => event.title === categoryTitle
+  );
+  return {
+    title: categoryTitle,
+    description: categoryDetails?.punchLine,
+  };
+}
 export default function CategoryLayout({
   children,
   params,
@@ -20,13 +31,16 @@ export default function CategoryLayout({
   children: React.ReactNode;
   params: any;
 }) {
+  const categoryTitle = decodeURIComponent(params.category);
+  const categoryDetails = allEvents.find(
+    (event) => event.pathName === categoryTitle
+  );
   return (
     <>
       <EventWrapper
-        title={params.category}
-        description="Challenge the algorithms, master the machines"
+        title={categoryTitle}
+        description={categoryDetails?.punchLine!}
       >
-        
         {children}
       </EventWrapper>
       <SessionProvider />

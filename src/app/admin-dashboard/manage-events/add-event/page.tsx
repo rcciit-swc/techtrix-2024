@@ -2,66 +2,23 @@
 import FormElement from "@/components/admin/FormElement";
 import SelectInput from "@/components/admin/SelectInput";
 import { Heading } from "@/components/home";
-import { supabase } from "@/lib";
 import { coordinatorType, eventInputType } from "@/types/events";
 import { addEvent } from "@/utils/functions";
 import { getCategories } from "@/utils/functions/getCategories";
-import { updateEvent } from "@/utils/functions/updateEvent";
 import dynamic from "next/dynamic";
-import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { toast } from "sonner";
 
 const Page = () => {
-  const eventId = useParams().event.toLocaleString();
-  const [event, setEvent] = useState<any>([]);
-  useEffect(() => {
-    const fetchEvent = async () => {
-      const { data } = await supabase
-        .from("events")
-        .select("*,event_categories(name),roles(id)")
-        .eq("id", eventId);
-
-      setEvent(data![0]);
-      if (data && data.length > 0) {
-        setInputs((prevInputs) => ({
-          ...prevInputs,
-          name: data![0].event_name,
-          description: data![0].desc,
-          category: data![0].event_categories.name,
-          date: data![0].date,
-          time: data![0].time,
-          minTeamSize: data![0].min_team_member,
-          maxTeamSize: data![0].max_team_member,
-          coordinators: [],
-          price: data![0].registration_fees,
-          prize: data![0].prize,
-          rules: data![0].rules,
-          imagePath: data![0].event_image_url,
-        }));
-      }
-    };
-    fetchEvent();
-  }, [eventId]);
   const router = useRouter();
   const ReactQuill = useMemo(
     () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
+    [],
   );
-
   const [categories, setCategories] = useState<any>([]);
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategories();
-      // console.log(data);
-      setCategories(data?.map((category: any) => category.name));
-    };
-    fetchCategories();
-  }, []);
-  
   const [inputs, setInputs] = useState<eventInputType>({
-    name: event?.event_name,
+    name: "",
     description: "",
     category: "",
     date: "",
@@ -76,7 +33,7 @@ const Page = () => {
   });
   const [error, setError] = useState("");
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>,
   ) => {
     const { name, value } = e.target;
     setInputs((prevInputs) => ({
@@ -84,7 +41,7 @@ const Page = () => {
       [name]: value,
     }));
   };
-  // console.log(inputs);
+
   const handleQuillChange = (value: string, name: string) => {
     setInputs((prevInputs) => ({
       ...prevInputs,
@@ -113,14 +70,39 @@ const Page = () => {
     setIsCoordinatorFormOpen(false);
   };
 
-  const submitEvent = async () => {
-    await updateEvent(inputs,eventId);
-    toast.success("Event Updated Successfully !");
-    router.push("/admin/manage-events");
-  }
+  // const validate = () => {
+  //   if (
+  //     inputs.name === "" &&
+  //     inputs.category === "" &&
+  //     !inputs.minTeamSize &&
+  //     !inputs.maxTeamSize &&
+  //     inputs.price === "" &&
+  //     inputs.description === "" &&
+  //     inputs.imagePath === ""
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
+  const submitEvent = () => {
+    // const review = validate();
+    // if (review) {
+    //   setError("Enter the mandatory fields !");
+    // } else {
+      addEvent(inputs);
+      router.push("/admin-dashboard/manage-events");
+    // }
+  };
+  useMemo(() => {
+    const getEventCategories = async () => {
+      const res = await getCategories();
+      setCategories(res?.map((category: any) => category.name));
+    };
+    getEventCategories();
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
-      <Heading text={`Edit Event: ${event?.event_name}`} />
+      <Heading text="Manage Events" />
       <div className="mx-auto border-2 border-black rounded-xl bg-gray-100 flex flex-col  flex-wrap gap-10 w-full px-2 py-5  md:px-10 md:py-10">
         <div className=" flex flex-row items-center gap-8 md:gap-20 flex-wrap justify-start w-full  ">
           {/* <FormElement
@@ -131,17 +113,13 @@ const Page = () => {
             type="text"
           /> */}
 
-          <h1 className="text-lg font-semibold">Category: {inputs.category}</h1>
-          {/* <h1 className="text-red-500">
-            Use Only in case if you want to change category
-          </h1> */}
-          {/* <SelectInput
+          <SelectInput
             name="Category"
             id="category"
             value={inputs.category}
             onChange={(e) => handleInputChange(e)}
             options={categories}
-          /> */}
+          />
           <FormElement
             name="Event Name"
             value={inputs.name}
@@ -253,9 +231,9 @@ const Page = () => {
                       <p className="text-black font-semibold text-lg">
                         {index + 1}. {coordinator.name}
                       </p>
-                      <p className="text-black font-semibold text-lg">
+                      {/* <p className="text-black font-semibold text-lg">
                         {coordinator.phone}
-                      </p>
+                      </p> */}
                       <button
                         onClick={() => handleRemoveCoordinator(index)}
                         className="text-red-500 border-red-500 border-2 mt-3 rounded-full px-2  font-semibold"
@@ -285,7 +263,7 @@ const Page = () => {
           onClick={submitEvent}
           className=" md:text-xl border-2 font-semibold border-black w-1/2 md:w-1/3 mx-auto rounded-full px-2 py-1 text-black"
         >
-          Submit Changes
+          Submit
         </button>
       </div>
 
@@ -311,9 +289,10 @@ const CoordinatorForm = ({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const handleSubmit = () => {
-    if (name && phone) {
-      onAddCoordinator({ name, phone, email });
+    if (name && email) {
+      onAddCoordinator({ name, email });
       setName("");
+      setEmail("");
       setPhone("");
       onClose();
     }
@@ -340,13 +319,13 @@ const CoordinatorForm = ({
                 placeholder="Email"
                 className="border-black px-2 py-1 rounded-xl"
               />
-              <input
+              {/* <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Phone"
                 className="border-black  px-2 py-1 rounded-xl"
-              />
+              /> */}
               <div className="flex justify-end">
                 <button
                   onClick={onClose}

@@ -10,20 +10,31 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const url = new URL(request.url);
+  const url = new URL(request.nextUrl);
   if (!session) {
-    if (url.pathname.startsWith("/admin") || url.pathname === "/registration") {
+    if (
+      url.pathname.startsWith("/admin-dashboard") ||
+      url.pathname.startsWith("/registration") ||
+      url.pathname.startsWith("/dashboard") ||
+      url.pathname.startsWith("/coordinator")
+    ) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }
-
-  else {
+  if (session) {
     const userDetails = await supabase
       .from("users")
       .select()
       .eq("id", session?.user.id);
 
-    
+    const userRoles = await supabase
+      .from("roles")
+      .select("role")
+      .eq("id", session?.user.id);
+    const superAdmin = userRoles?.data?.[0]?.role?.includes("super_admin");
+    const eventCoordinator =
+      userRoles?.data?.[0]?.role?.includes("event_coordinator");
+
     if (
       !checkUserDetails(userDetails?.data?.[0]) &&
       url.pathname !== "/registration"
@@ -31,40 +42,24 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/registration", request.url));
     }
 
-    if (url.pathname === "/admin") {
-      const userRoles = await supabase
-        .from("roles")
-        .select("role")
-        .eq("id", session?.user.id);
-
-      if (!userRoles?.data?.[0]?.role?.includes("super_admin")) {
-        return NextResponse.redirect(
-          new URL("/?error=permission_error", request.url)
-        );
-      }
-    }
-
-    if (url.pathname === "/coordinator-dashboard") {
-      const userRoles = await supabase
-        .from("roles")
-        .select()
-        .eq("id", session?.user.id);
-
-      if (
-        !userRoles?.data?.[0]?.role?.includes("event_coordinator") &&
-        !userRoles?.data?.[0]?.role?.includes("super_admin")
-      ) {
-        return NextResponse.redirect(
-          new URL("/?error=permission_error", request.url)
-        );
-      }
+    if (superAdmin && url.pathname.startsWith("/admin-dashboard")) {
       return NextResponse.next();
     }
 
-    // TODO: implement event management page
+    if (!superAdmin && url.pathname.startsWith("/admin-dashboard")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (eventCoordinator && url.pathname.startsWith("/coordinator")) {
+      return NextResponse.next();
+    }
+
+    if (!eventCoordinator && url.pathname.startsWith("/coordinator")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {

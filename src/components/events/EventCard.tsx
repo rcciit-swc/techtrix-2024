@@ -27,7 +27,7 @@ const EventCard = ({ event, index }: { event: any; index: number }) => {
       {/* <img src={event.image} alt="" className="z-[10]" /> */}
       <div className="absolute w-full  bottom-[5%] px-5">
         <div
-          className={` flex flex-col px-5 gap-2 items-start pb-5 text-white  font-bold 
+          className={` flex flex-col px-5 gap-2 items-start pb-5 text-black  font-bold 
              text-2xl lg:text-4xl
           } `}
         >

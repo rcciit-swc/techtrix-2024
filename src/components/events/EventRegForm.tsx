@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
 import { Toaster, toast } from "sonner";
 import RegFormElement from "./RegFormElement";
+import { useUser } from "@/lib";
+import { stat } from "fs";
 
 const EventRegForm = ({
   isOpen,
@@ -17,6 +19,7 @@ const EventRegForm = ({
   onClose: () => void;
   eventDetails: any;
 }) => {
+  const router = useRouter();
   // console.log(eventDetails);
   const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
@@ -39,17 +42,33 @@ const EventRegForm = ({
       transactionSSfileName: selectedFile.name,
     }));
   };
-  const [eventInfo, setEventInfo] = useState<EventData | undefined>();
+  // const [eventInfo, setEventInfo] = useState<EventData | undefined>();
 
-  useEffect(() => {
-    const getEvent = async () => {
-      const res: EventData[] | null | undefined = await getEventInfo(event);
-      setEventInfo(res![0]);
-    };
-    getEvent();
-  }, [event]);
+  // useEffect(() => {
+  //   const getEvent = async () => {
+  //     const res: EventData[] | null | undefined | any = await getEventInfo(event);
+  //     console.log(res);
+  //     setEventInfo(res![0]);
+  //   };
+  //   getEvent();
+  // }, [event]);
+
+  const user = useUser((state) => state.user);
+
   const minTeamMember = eventDetails?.min_team_member;
   const maxTeamMember = eventDetails?.max_team_member;
+
+  useEffect(() => {
+    if (user) {
+      setInputs((prevInputs: any) => ({
+        ...prevInputs,
+        teamLeadPhone: user.phone,
+        teamLeadEmail: user.email,
+        teamName: maxTeamMember > 1 ? "" : user.name, // Set teamName as blank if maxTeamMember > 1
+        teamLeadName: user.name,
+      }));
+    }
+  }, [user, maxTeamMember]);
 
   const [participants, setParticipants] = useState<any>([]);
   useEffect(() => {
@@ -70,7 +89,10 @@ const EventRegForm = ({
       [name]: value,
     }));
     if (maxTeamMember == 1) {
-      inputs.teamLeadName = inputs.teamName;
+      setInputs((prevInputs: any) => ({
+        ...prevInputs,
+        teamLeadName: prevInputs.teamName,
+      }));
     }
   };
 
@@ -130,6 +152,7 @@ const EventRegForm = ({
         await eventReg(inputs, participants, file, eventId);
         toast.success("Registration Successful");
         onClose();
+        router.push("/dashboard");
       }
       if (res.errors || res.teamErrors) {
         setGeneralErrors(res.errors);
@@ -168,6 +191,7 @@ const EventRegForm = ({
               <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
                   type="text"
+                  disabled={maxTeamMember > 1 ? false : true}
                   name={maxTeamMember > 1 ? "Team Name" : "Name"}
                   value={inputs.teamName}
                   id="teamName"
@@ -179,6 +203,7 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="number"
+                  disabled={maxTeamMember > 1 ? false : true}
                   name={maxTeamMember > 1 ? "Team Lead Phone" : "Phone"}
                   value={inputs.teamLeadPhone}
                   id="teamLeadPhone"
@@ -192,6 +217,7 @@ const EventRegForm = ({
                 {maxTeamMember > 1 && (
                   <RegFormElement
                     type="text"
+                    disabled={maxTeamMember > 1 ? false : true}
                     name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
                     value={inputs.teamLeadName}
                     id="teamLeadName"
@@ -204,6 +230,7 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="email"
+                  disabled={maxTeamMember > 1 ? false : true}
                   name={maxTeamMember > 1 ? "Team Lead Email" : "Email"}
                   value={inputs.teamLeadEmail}
                   id="teamLeadEmail"
@@ -354,7 +381,7 @@ const EventRegForm = ({
                 )}
               </div>
             }
-            <div className="flex flex-row items-center flex-wrap justify-between w-full">
+            <div className="flex flex-row items-center pt-5  flex-wrap justify-between w-full">
               <button
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
                 onClick={onClose}
@@ -362,7 +389,7 @@ const EventRegForm = ({
                 Close
               </button>
               <button
-              disabled={true}
+                disabled={true}
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white cursor-not-allowed" // hover:bg-white hover:text-black
                 onClick={handleSubmit}
               >

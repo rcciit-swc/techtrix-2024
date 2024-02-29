@@ -5,7 +5,7 @@ export const getCoordinators = async(event:any) => {
         const coordinators:any = [];
         const { data, error } = await supabase
         .from('roles')
-        .select('*,users(name,email,phone)')
+        .select('users(name,email,phone,id)')
         .eq('event_id', event);
         return data;
     }

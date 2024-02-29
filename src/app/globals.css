@@ -5,6 +5,7 @@
 .mix-gradient {
   mix-blend-mode: difference;
 }
+
 .text-color {
   background: linear-gradient(187.03deg, #ffffff 49.99%, #000000 94.51%);
 }
@@ -26,8 +27,13 @@
 }
 
 input[type="radio"] {
-  accent-color: #fff;
+  accent-color: black;
 }
 body {
   scroll-behavior: smooth;
+}
+
+.card:hover .card-body {
+  bottom: 0;
+  display: flex;
 }

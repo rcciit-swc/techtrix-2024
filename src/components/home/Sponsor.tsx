@@ -37,7 +37,7 @@ const Sponsor = () => {
   return (
     <>
       <div className=" flex flex-col  items-center w-[95%] md:w-[80%] lg:w-[70%] 2xl:w-[60%] mx-auto justify-center mt-10 mb-5">
-        <Heading text="Sponsors" />
+        {/* <Heading text="Sponsors" /> */}
         <div className="mt-14 md:mt-24   relative">
           <Image
             src="/assets/sponsors/bg-frame.svg"

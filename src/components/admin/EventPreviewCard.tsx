@@ -39,14 +39,14 @@ const EventPreviewCard = ({ event }: { event: any }) => {
               dangerouslySetInnerHTML={{ __html: event.desc }}
             ></div>
           </div>
-          <div className="flex flex-row items-center justify-between flex-wrap w-full">
+          <div className="flex flex-row  items-center justify-center max-md:gap-5 md:justify-between flex-wrap w-full">
             <button
               onClick={() => setIsOpen(true)}
               className="border-2 border-black px-5 py-1 rounded-full bg-black text-white hover:bg-white hover:text-black"
             >
               View Rules
             </button>
-            <Link href={`/admin/manage-events/${event.id}`}>
+            <Link href={`/admin-dashboard/manage-events/${event.id}`}>
               <button className="border-2 border-black px-5 py-1 rounded-full bg-black text-white hover:bg-white hover:text-black">
                 Edit Event
               </button>

@@ -34,7 +34,7 @@ const Page = () => {
 
         <button className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl ">
           <FaPlus />
-          <Link href={"/admin/manage-events/add-event"}>Add Event</Link>
+          <Link href={"/admin-dashboard/manage-events/add-event"}>Add Event</Link>
         </button>
         <button
           onClick={() => setIsOpen(true)}
@@ -43,7 +43,6 @@ const Page = () => {
           <FaPlus />
           Add Coordinator
         </button>
-
         <EventPreview events={events} />
       </div>
       {isOpen ? <AddCoordinator isOpen={isOpen} onClose={onClose} /> : null}

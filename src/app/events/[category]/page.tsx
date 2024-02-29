@@ -35,7 +35,7 @@ const EventCard = ({
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
           {event?.event_name!}
         </h1>
-        <div className="text-black text-sm">{parse(event?.desc!)}</div>
+        <div className="text-black text-xs">{parse(event?.desc!)}</div>
       </div>
       {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {
@@ -71,15 +71,16 @@ const EventCard = ({
   );
 };
 
-const page = () => {
+const Page = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
-  const event = useParams();
+  const param:any = useParams();
+  const event = decodeURIComponent(param?.category!);
   useMemo(() => {
     const getEvents = async () => {
-      const res = await getCategoryEvents(event?.category);
+      const res = await getCategoryEvents(event!);
       setEventbyCategory(res!);
       setLoading(false);
     };
@@ -150,4 +151,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

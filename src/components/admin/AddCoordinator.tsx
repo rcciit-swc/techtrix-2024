@@ -5,6 +5,7 @@ import SelectInput from "./SelectInput";
 import { supabase } from "@/lib";
 import { addCoordinator } from "@/utils/functions/addCoordinator";
 import { getCategories } from "@/utils/functions/getCategories";
+import { Toaster, toast } from "sonner";
 
 const AddCoordinator = ({
   isOpen,
@@ -43,9 +44,13 @@ const AddCoordinator = ({
   }, [isOpen]);
 
   const submitCoordinator = async () => {
-    if (inputs.email === "" || inputs.event === "")
-      // console.log("Fill all fields !");
-    addCoordinator(inputs);
+    if (inputs.email === "" || inputs.event === "") {
+      toast.error("Fill all fields !");
+    }
+
+    await addCoordinator(inputs);
+    toast.success("Coordinator Added !");
+    onClose();
   };
   return (
     <>
@@ -103,6 +108,7 @@ const AddCoordinator = ({
           </div>
         </div>
       )}
+      <Toaster richColors position="bottom-right" />
     </>
   );
 };
