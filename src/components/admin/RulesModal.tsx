@@ -1,3 +1,4 @@
+import parse from "html-react-parser";
 const RulesModal = ({
   isOpen,
   onClose,
@@ -26,11 +27,11 @@ const RulesModal = ({
                 X
               </h2>
             </div>
-
             <div
-              className="h-full overflow-y-scroll my-1 py-2 px-1 w-full "
-              dangerouslySetInnerHTML={{ __html: rules }}
-            ></div>
+              className="h-full overflow-y-scroll my-1 py-2 px-1 w-full text-xs"
+            >
+              {parse(rules!)}
+            </div>
             <button
               className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
               onClick={onClose}

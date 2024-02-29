@@ -132,7 +132,7 @@ const EventDetails = ({
                   height={0}
                 />
               )}
-              <button
+              {eventInfo! && eventInfo!.is_open && <button
                 disabled={!eventInfo.is_open}
                 onClick={() => {
                   if (!user) {
@@ -143,7 +143,7 @@ const EventDetails = ({
                 className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
               >
                 Register Soon !
-              </button>
+              </button>}
             </div>
           </>
         </div>
