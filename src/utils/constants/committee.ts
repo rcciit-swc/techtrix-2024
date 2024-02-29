@@ -1,11 +1,11 @@
 export const CommitteeDetails = [
     {
-      title: "Faculty-In-Charge (Sports)",
+      title: "Faculty-In-Charge (Tech)",
       members: [
         {
-          name: "Sarbojit Mukherjee",
-          role: "Assistant Professor, RCCIIT",
-          phone: "+919433852385",
+          name: "Dr. Hiranmoy Roy",
+          role: "Associate Professor, RCCIIT",
+          phone: "+91 9832244201",
         },
       ],
     },
@@ -19,46 +19,46 @@ export const CommitteeDetails = [
         },
       ],
     },
-    {
-      title: "SWC Faculty Sub-Committee (Sports)",
-      members: [
-        {
-          name: "Ms. Jayanti Das",
-          role: "Assistant Professor, RCCIIT",
-          phone: "+91 9836585886",
-        },
-        {
-          name: "Dipan Bandyopadhyay",
-          role: "Assistant Professor, RCCIIT",
-          phone: "+91 7003467858",
-        },
-        {
-          name: "Deepam Gangopadhyay ",
-          role: "Assistant Professor, RCCIIT",
-          phone: "+91 8240668401",
-        },
-      ],
-    },
-    {
-      title: "For Event Details",
-      members: [
-        {
-          name: "Shatabdi Das",
-          role: "",
-          phone: "+91 9051805749",
-        },
-      ],
-    },
-    {
-      title: "For Sponsorship",
-      members: [
-        {
-          name: "Aranya Nandi",
-          role: "",
-          phone: "+91 6296851026",
-        },
-      ],
-    },
+    // {
+    //   title: "SWC Faculty Sub-Committee (Sports)",
+    //   members: [
+    //     {
+    //       name: "Ms. Jayanti Das",
+    //       role: "Assistant Professor, RCCIIT",
+    //       phone: "+91 9836585886",
+    //     },
+    //     {
+    //       name: "Dipan Bandyopadhyay",
+    //       role: "Assistant Professor, RCCIIT",
+    //       phone: "+91 7003467858",
+    //     },
+    //     {
+    //       name: "Deepam Gangopadhyay ",
+    //       role: "Assistant Professor, RCCIIT",
+    //       phone: "+91 8240668401",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "For Event Details",
+    //   members: [
+    //     {
+    //       name: "Shatabdi Das",
+    //       role: "",
+    //       phone: "+91 9051805749",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "For Sponsorship",
+    //   members: [
+    //     {
+    //       name: "Aranya Nandi",
+    //       role: "",
+    //       phone: "+91 6296851026",
+    //     },
+    //   ],
+    // },
     {
       title: "SWC Student Representatives",
       members: [

@@ -29,7 +29,7 @@ const Footer = () => {
                 Sponsorship Brochure
               </h1>
             </Link>
-            <Link href="/contact">
+            <Link href="/contacts">
               <h1 className="text-sm md:text-xs lg:text-sm xl:text-sm">
                 Contacts
               </h1>
