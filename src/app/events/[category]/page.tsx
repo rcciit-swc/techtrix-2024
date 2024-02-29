@@ -35,7 +35,7 @@ const EventCard = ({
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
           {event?.event_name!}
         </h1>
-        <div className="text-black text-sm">{parse(event?.desc!)}</div>
+        <div className="text-black text-xs">{parse(event?.desc!)}</div>
       </div>
       {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {

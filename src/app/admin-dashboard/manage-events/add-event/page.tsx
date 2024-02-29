@@ -231,9 +231,9 @@ const Page = () => {
                       <p className="text-black font-semibold text-lg">
                         {index + 1}. {coordinator.name}
                       </p>
-                      <p className="text-black font-semibold text-lg">
+                      {/* <p className="text-black font-semibold text-lg">
                         {coordinator.phone}
-                      </p>
+                      </p> */}
                       <button
                         onClick={() => handleRemoveCoordinator(index)}
                         className="text-red-500 border-red-500 border-2 mt-3 rounded-full px-2  font-semibold"
@@ -289,9 +289,10 @@ const CoordinatorForm = ({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const handleSubmit = () => {
-    if (name && phone) {
-      onAddCoordinator({ name, phone, email });
+    if (name && email) {
+      onAddCoordinator({ name, email });
       setName("");
+      setEmail("");
       setPhone("");
       onClose();
     }
@@ -318,13 +319,13 @@ const CoordinatorForm = ({
                 placeholder="Email"
                 className="border-black px-2 py-1 rounded-xl"
               />
-              <input
+              {/* <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Phone"
                 className="border-black  px-2 py-1 rounded-xl"
-              />
+              /> */}
               <div className="flex justify-end">
                 <button
                   onClick={onClose}
