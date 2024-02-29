@@ -113,9 +113,9 @@ const MemberModal = ({
             </div>
 
             <div className="h-full overflow-y-scroll flex flex-col items-center gap-2 my-1 py-2 px-1 w-full text-center">
-              {members.map((member: any) => {
+              {members.map((member: any,index:number) => {
                 return (
-                  <div className="flex flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full">
+                  <div key={index} className="flex flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full">
                     <h1>{member.name}</h1>
                     <a
                       className="text-red-500 hover:cursor-pointer hover:opacity-70"
