@@ -14,16 +14,21 @@ interface Params {
     category: string;
   };
 }
-export function dynamicMetadata({ params: { category } }: Params): Metadata {
-  const categoryTitle = decodeURIComponent(category);
-  const categoryDetails = allEvents.find(
-    (event) => event.title === categoryTitle
-  );
-  return {
-    title: categoryTitle,
-    description: categoryDetails?.punchLine,
-  };
-}
+// export function dynamicMetadata({ params: { category } }: Params): Metadata {
+//   const categoryTitle = decodeURIComponent(category);
+//   const categoryDetails = allEvents.find(
+//     (event) => event.title === categoryTitle
+//   );
+//   return {
+//     title: categoryTitle,
+//     description: categoryDetails?.punchLine,
+//   };
+// }
+
+export const metadata: Metadata = generateMetadata({
+  title: "Events | TechTrix 2024",
+  description: "RCCIIT's Team for TechTrix 2024",
+});
 export default function CategoryLayout({
   children,
   params,
