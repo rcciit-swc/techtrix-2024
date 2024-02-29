@@ -389,6 +389,7 @@ const EventRegForm = ({
                 Close
               </button>
               <button
+                disabled={true}
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white cursor-not-allowed" // hover:bg-white hover:text-black
                 onClick={handleSubmit}
               >
