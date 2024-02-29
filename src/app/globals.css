@@ -5,6 +5,7 @@
 .mix-gradient {
   mix-blend-mode: difference;
 }
+
 .text-color {
   background: linear-gradient(187.03deg, #ffffff 49.99%, #000000 94.51%);
 }
