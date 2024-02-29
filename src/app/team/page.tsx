@@ -1,6 +1,6 @@
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="h-screen my-auto">
       <h1 className="text-xl font-semibold">Coming Soon</h1>
@@ -8,4 +8,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
