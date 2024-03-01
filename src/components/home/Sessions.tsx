@@ -14,6 +14,11 @@ const sessions = [
     link: "https://lu.ma/risein-solidity",
     time: "03/11/2024, 11:00:00",
   },
+  {
+    image: "/assets/sessions/event3.jpg",
+    link: "https://gdsc.community.dev/events/details/developer-student-clubs-rcc-institute-of-information-technology-kolkata-presents-techtrix-2k24-info-amp-orientation-session-day-2/",
+    time: "03/04/2024, 11:00:00",
+  },
 ];
 const SessionCard = ({ session }: { session: any }) => {
   return (

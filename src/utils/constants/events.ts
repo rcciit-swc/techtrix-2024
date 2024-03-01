@@ -55,6 +55,7 @@ export const allEvents = [
     linear: `linear-gradient(143.02deg,#d85123 8.76%,#ff8a63 23.79%,#ff7f54 39.77%,#ff9c7a 59.03%,#f87c53 78.29%,#ef3d00 98.97%)`,
     icon: "/assets/events/arrow.svg",
     pathName: "Out Of The Box",
+    punchLine: "Challenge the algorithms, master the machines",
     image: "https://i.imgur.com/NOA9Ijs.jpg",
   },
   {

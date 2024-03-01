@@ -23,7 +23,7 @@ const EventRegCard = ({ teams }: { teams: any }) => {
         .select("event_name,event_image_url,event_categories(name)")
         .eq("id", teams.event_id);
       setEvent(data![0].event_name);
-
+      setEventImage(data![0].event_image_url);
       setCategory(data![0]?.event_categories!);
       setMembers(teams.members);
       teams?.transaction_verified ? setVerified(true) : setVerified(false);
@@ -113,9 +113,12 @@ const MemberModal = ({
             </div>
 
             <div className="h-full overflow-y-scroll flex flex-col items-center gap-2 my-1 py-2 px-1 w-full text-center">
-              {members.map((member: any,index:number) => {
+              {members.map((member: any, index: number) => {
                 return (
-                  <div key={index} className="flex flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full">
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full"
+                  >
                     <h1>{member.name}</h1>
                     <a
                       className="text-red-500 hover:cursor-pointer hover:opacity-70"
@@ -179,7 +182,7 @@ const Page = () => {
         <div className="flex flex-col items-center gap-10">
           <Link href="/events">
             <button className="bg-black font-semibold text-white px-3 py-1 rounded-xl hover:bg-white hover:text-black border border-black">
-            All Events
+              All Events
             </button>
           </Link>
           <Link href="/registration">

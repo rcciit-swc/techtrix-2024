@@ -26,6 +26,7 @@ const EventDetails = ({
   useMemo(() => {
     const getInfo = async () => {
       const res = await getEventInfo(eventDetails?.event_name);
+      console.log(res);
       setEventInfo(res![0]);
       setLoading(false);
     };
@@ -70,13 +71,15 @@ const EventDetails = ({
               <h1>
                 Team Capacity :{" "}
                 <span className="font-semibold">
-                  {eventInfo.min_team_member} to {eventInfo.max_team_member}
+                  {eventInfo.min_team_member}{" "}
+                  {eventInfo.max_team_member > 1 &&
+                    "to" + eventInfo.max_team_member}
                 </span>
               </h1>
               <h1>
                 Registration Fees :{" "}
                 <span className="font-semibold">
-                  {eventInfo.registration_fees}
+                  {eventInfo.registration_fees} Rupees
                 </span>{" "}
               </h1>
               <h1>
@@ -93,18 +96,21 @@ const EventDetails = ({
                       key={index}
                       className="flex flex-col items-start gap-2"
                     >
-                      <h1 className="text-lg lg:text-xl">
+                      <h1 className="text-lg lg:text-sm">
                         Coordinators:{" "}
                         <span className="font-semibold text-black">
                           {coordinator?.users?.name}
                         </span>
                       </h1>
-                      <h1 className="text-lg lg:text-xl">
+                      <a
+                        href={`tel:${coordinator?.users?.phone}`}
+                        className="text-lg lg:text-sm"
+                      >
                         Contact:{" "}
-                        <span className="font-semibold text-black">
+                        <span className="font-semibold hover:text-green-500 text-black">
                           {coordinator?.users?.phone}
                         </span>
-                      </h1>
+                      </a>
                     </div>
                   );
                 })
@@ -132,18 +138,20 @@ const EventDetails = ({
                   height={0}
                 />
               )}
-              {eventInfo! && eventInfo!.is_open && <button
-                disabled={!eventInfo.is_open}
-                onClick={() => {
-                  if (!user) {
-                    login();
-                  }
-                  setRegOpen(true);
-                }}
-                className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
-              >
-                Register Now
-              </button>}
+              {eventInfo! && eventInfo!.is_open && (
+                <button
+                  disabled={!eventInfo.is_open}
+                  onClick={() => {
+                    if (!user) {
+                      login();
+                    }
+                    setRegOpen(true);
+                  }}
+                  className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
+                >
+                  Register Now
+                </button>
+              )}
             </div>
           </>
         </div>

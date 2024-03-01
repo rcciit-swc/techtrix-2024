@@ -146,7 +146,7 @@ const Navbar = () => {
               {user && showDashboard && (
                 <Link href={"/dashboard"}>
                   <li
-                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
                       pathname === "/dashboard" && "text-white bg-black"
                     }`}
                   >
@@ -157,7 +157,7 @@ const Navbar = () => {
               {user && role === "event_coordinator" && (
                 <Link href={"/coordinator"}>
                   <li
-                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
                       pathname === "/coordinator" && "text-white bg-black"
                     }`}
                   >
@@ -173,7 +173,7 @@ const Navbar = () => {
                   }}
                 >
                   <li
-                    className={`my-2 pt-2 font-semibold duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-1 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
                       pathname === "/admin" && "text-white bg-black"
                     }`}
                   >
