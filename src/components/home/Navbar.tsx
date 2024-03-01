@@ -135,7 +135,7 @@ const Navbar = () => {
                   key={index}
                 >
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-4 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >
