@@ -5,7 +5,7 @@ export const addCoordinator = async (inputs: any) => {
     const { data: user, error: userError } = await supabase
       .from("users")
       .select("id")
-      .eq("email", inputs.email);
+      .eq("phone", inputs.phone);
 
     const { data: event, error: eventError } = await supabase
       .from("events")

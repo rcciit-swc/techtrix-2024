@@ -27,29 +27,31 @@ const EventCard = ({
   }, [event]);
   return (
     <motion.div
-      initial={{ scale: 1 }} 
+      initial={{ scale: 1 }}
       onClick={onClick}
-      className="flex flex-col cursor-pointer items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px] justify-center lg:h-[550px] border-4 border-white rounded-2xl"
+      className="flex flex-col cursor-pointer mx-auto items-start gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px] justify-center lg:h-[600px] border-4 border-white rounded-2xl"
     >
       <div className="w-full md:w-[100%]">
         <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
           {event?.event_name!}
         </h1>
-        <div className="text-black text-xs">{parse(event?.desc!)}</div>
+        <div className="text-black text-xs mt-5">{parse(event?.desc!)}</div>
       </div>
+      <h1 className="-mb-3 font-semibold">Coordinators :</h1>
       {coordinators.length > 0 ? (
         coordinators.map((coordinator: any, index: number) => {
           return (
-            <div key={index} className="flex flex-col items-start gap-2">
-              <h1 className="text-lg lg:text-xl">
-                Coordinators:{" "}
-                <span className="font-semibold text-black">
+            <div
+              key={index}
+              className="flex flex-col items-start gap-2 text-sm"
+            >
+              <h1>
+                <span className="font-semibold text-black ">
                   {coordinator?.users?.name}
                 </span>
               </h1>
-              <h1 className="text-lg lg:text-xl">
-                Contact:{" "}
-                <span className="font-semibold text-black">
+              <h1>
+                <span className="font-semibold text-black ">
                   {coordinator?.users?.phone}
                 </span>
               </h1>
@@ -76,7 +78,7 @@ const Page = () => {
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
-  const param:any = useParams();
+  const param: any = useParams();
   const event = decodeURIComponent(param?.category!);
   useMemo(() => {
     const getEvents = async () => {

@@ -55,7 +55,8 @@ export const allEvents = [
     linear: `linear-gradient(143.02deg,#d85123 8.76%,#ff8a63 23.79%,#ff7f54 39.77%,#ff9c7a 59.03%,#f87c53 78.29%,#ef3d00 98.97%)`,
     icon: "/assets/events/arrow.svg",
     pathName: "Out Of The Box",
-    image: "https://i.imgur.com/NOA9Ijs.jpg"
+    punchLine: "Challenge the algorithms, master the machines",
+    image: "https://i.imgur.com/NOA9Ijs.jpg",
   },
   {
     title: "auto mata",
@@ -63,33 +64,33 @@ export const allEvents = [
     linear: ``,
     pathName: "Automata",
     punchLine: "Challenge the algorithms, master the machines",
-    image:"https://i.imgur.com/nUazErt.jpg"
+    image: "https://i.imgur.com/nUazErt.jpg",
   },
   {
-    title: "game Sesh",
+    title: "Gaming",
     conic: `conic-gradient(from 180deg at 50% 50%, #A8D775 0deg, rgba(255, 255, 255, 0.84375) 56.25deg, #A8D775 116.25deg, #FFFFFF 172.5deg, #A8D775 236.25deg, #FFFFFF 294.38deg, #A8D775 360deg)`,
     linear: ``,
     icon: "/assets/events/game.svg",
     pathName: "Gaming",
-    punchLine: "Challenge the algorithms, master the machines 2",
-    image:"https://i.imgur.com/MEADK47.jpg"
+    punchLine: "Challenge the algorithms, master the machines",
+    image: "https://i.imgur.com/MEADK47.jpg",
   },
   {
-    title: "Hack Track",
+    title: "Flagship",
     conic: `conic-gradient(from 180deg at 50% 50%, #AE9EF1 0deg, #FFFFFF 72deg, #AE9EF1 144deg, #FFFFFF 216deg, #AE9EF1 288deg, #FFFFFF 360deg)`,
     linear: ``,
     icon: "/assets/events/hack.svg",
     pathName: "Flagship",
-    punchLine: "Challenge the algorithms, master the machines 3",
-    image: "https://i.imgur.com/YTlkpOF.jpg"
+    punchLine: "Challenge the algorithms, master the machines",
+    image: "https://i.imgur.com/YTlkpOF.jpg",
   },
   {
-    title: "robo cohort",
+    title: "Robotics",
     conic: ``,
     linear: `#9FC4EC `,
     icon: "",
     pathName: "Robotics",
-    punchLine: "Challenge the algorithms, master the machines 4",
-    image: "https://i.imgur.com/6F8E6lg.jpg"
+    punchLine: "Challenge the algorithms, master the machines",
+    image: "https://i.imgur.com/6F8E6lg.jpg",
   },
 ];

@@ -26,6 +26,7 @@ const EventDetails = ({
   useMemo(() => {
     const getInfo = async () => {
       const res = await getEventInfo(eventDetails?.event_name);
+      console.log(res);
       setEventInfo(res![0]);
       setLoading(false);
     };
@@ -55,7 +56,7 @@ const EventDetails = ({
       ) : (
         <div className="bg-white pt-20 border-2 oveflow-x-hidden relative  rounded-2xl mx-auto justify-center  md:w-[90%] px-5 lg:px-10 py-14 flex flex-row items-center gap-5 lg:gap-10 flex-wrap-reverse">
           <>
-            <div className="flex flex-col w-full items-start gap-5 lg:w-1/2">
+            <div className="flex flex-col w-full items-start gap-5 2xl:w-1/2">
               <button
                 onClick={onCloseEvent}
                 className="absolute hover:bg-black hover:text-white border-2 border-black rounded-full text-xl font-semibold left-3 top-5 sm:top-10"
@@ -70,13 +71,13 @@ const EventDetails = ({
               <h1>
                 Team Capacity :{" "}
                 <span className="font-semibold">
-                  {eventInfo.min_team_member}-{eventInfo.max_team_member}
+                  {eventInfo.min_team_member == eventInfo.max_team_member ? eventInfo.max_team_member  : eventInfo.min_team_member + " to " + eventInfo.max_team_member}
                 </span>
               </h1>
               <h1>
                 Registration Fees :{" "}
                 <span className="font-semibold">
-                  {eventInfo.registration_fees}
+                  {eventInfo.registration_fees} Rupees
                 </span>{" "}
               </h1>
               <h1>
@@ -93,18 +94,21 @@ const EventDetails = ({
                       key={index}
                       className="flex flex-col items-start gap-2"
                     >
-                      <h1 className="text-lg lg:text-xl">
+                      <h1 className="text-lg lg:text-sm">
                         Coordinators:{" "}
                         <span className="font-semibold text-black">
                           {coordinator?.users?.name}
                         </span>
                       </h1>
-                      <h1 className="text-lg lg:text-xl">
+                      <a
+                        href={`tel:${coordinator?.users?.phone}`}
+                        className="text-lg lg:text-sm"
+                      >
                         Contact:{" "}
-                        <span className="font-semibold text-black">
+                        <span className="font-semibold hover:text-green-500 text-black">
                           {coordinator?.users?.phone}
                         </span>
-                      </h1>
+                      </a>
                     </div>
                   );
                 })
@@ -127,23 +131,25 @@ const EventDetails = ({
                 <img
                   src={eventInfo.event_image_url}
                   alt=""
-                  className="w-80 h-80"
+                  className="w-96 h-96 object-cover rounded-2xl"
                   width={0}
                   height={0}
                 />
               )}
-              {eventInfo! && eventInfo!.is_open && <button
-                disabled={!eventInfo.is_open}
-                onClick={() => {
-                  if (!user) {
-                    login();
-                  }
-                  setRegOpen(true);
-                }}
-                className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
-              >
-                Register Soon !
-              </button>}
+              {eventInfo! && eventInfo!.is_open && (
+                <button
+                  disabled={!eventInfo.is_open}
+                  onClick={() => {
+                    if (!user) {
+                      login();
+                    }
+                    setRegOpen(true);
+                  }}
+                  className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
+                >
+                  Register Now
+                </button>
+              )}
             </div>
           </>
         </div>
