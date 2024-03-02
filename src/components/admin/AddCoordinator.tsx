@@ -15,7 +15,7 @@ const AddCoordinator = ({
   onClose: () => void;
 }) => {
   const [inputs, setInputs] = useState({
-    email: "",
+    phone: "",
     event: "",
   });
   const [events, setEvents] = useState<any>([]);
@@ -44,7 +44,7 @@ const AddCoordinator = ({
   }, [isOpen]);
 
   const submitCoordinator = async () => {
-    if (inputs.email === "" || inputs.event === "") {
+    if (inputs.phone === "" || inputs.event === "") {
       toast.error("Fill all fields !");
     }
 
@@ -84,10 +84,10 @@ const AddCoordinator = ({
                 id="event"
               />
               <FormElement
-                name="Email"
-                value={inputs.email}
-                type="email"
-                id="email"
+                name="Phone"
+                value={inputs.phone}
+                type="text"
+                id="phone"
                 onChange={(e: any) => handleInputChange(e)}
               />
             </div>
