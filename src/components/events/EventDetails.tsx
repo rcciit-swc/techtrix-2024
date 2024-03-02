@@ -73,7 +73,7 @@ const EventDetails = ({
                 <span className="font-semibold">
                   {eventInfo.min_team_member}{" "}
                   {eventInfo.max_team_member > 1 &&
-                    "to" + eventInfo.max_team_member}
+                    "to " + eventInfo.max_team_member}
                 </span>
               </h1>
               <h1>
