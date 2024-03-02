@@ -5,7 +5,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="flex flex-col md:w-[40%] items-center justify-center gap-10  mx-auto">
+    <div className="flex flex-col md:w-[40%] mt-5 items-center justify-center gap-10  mx-auto">
       <Heading text="Registration" />
       <UserRegForm />
     </div>

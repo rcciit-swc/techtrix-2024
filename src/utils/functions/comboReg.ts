@@ -1,7 +1,7 @@
 import { supabase } from "@/lib";
 
 export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
-//   console.log(inputs, eventInputs, file);
+  //   console.log(inputs, eventInputs, file);
 
   try {
     const promises = eventInputs.map(async (eventInput: any) => {
@@ -13,7 +13,7 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
             event_id: eventInput.id,
             team_name: inputs.teamName,
             team_lead_phone: inputs.teamLeadPhone,
-            transaction_id: inputs.transactionId+eventInput.id,
+            transaction_id: eventInput.eventName + "-" + inputs.transactionId,
             transaction_ss_filename: file.name!,
           },
         ])
@@ -22,7 +22,7 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
       if (teamError) {
         throw new Error(`Error inserting team: ${teamError.message}`);
       }
-    //   console.log(teamData, "teamData")
+      //   console.log(teamData, "teamData")
       const teamId = teamData![0].team_id;
 
       // Insert participation records for each participant in the event
@@ -39,6 +39,16 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
             ])
             .select();
 
+          const { data: uploadFile, error: uploadError } =
+            await supabase.storage
+              .from("fests")
+              .upload(
+                `Techtrix/2024/${eventInput?.id}/transactions/${file.name!}-${
+                  eventInput.eventName
+                }`,
+                file!
+              );
+          console.log(uploadFile, "uploadFile");
           if (participantError) {
             throw new Error(
               `Error inserting participation record: ${participantError.message}`
