@@ -27,39 +27,44 @@ const EventCard = ({
     setCoordinators(res!);
   }, [event]);
   return (
-    <motion.div
+    <div
       style={{
-        backgroundImage: `url(${event?.event_image_url})`,
-        backgroundPosition: "center",
-        backgroundSize: "contain",
+        backgroundImage: `radial-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.8)), url(${event.event_image_url})`,
+        backgroundSize: "cover",
         backdropFilter: "blur(10px)",
       }}
-      initial={{ scale: 1 }}
-      onClick={onClick}
-      className="relative z-0  cursor-pointer mx-auto gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px]  lg:h-[600px] border-4 border-white rounded-2xl"
+      className="relative w-full h-full flex flex-col justify-center items-center gap-5 rounded-2xl"
     >
-      <div className="card absolute top-0 left-0 h-full w-full z-10 flex justify-center flex-col mx-auto items-start gap-5">
+      <motion.div
+        initial={{ scale: 1 }}
+        onClick={onClick}
+        className="card cursor-pointer gap-5 p-5 md:py-10 md:px-10 h-auto lg:w-[450px]
+      flex justify-center flex-col lg:h-[600px] border-4 border-white rounded-2xl"
+      >
+        {/* <div className="card absolute top-0 left-0 h-full w-full z-10 flex justify-center flex-col mx-auto items-start gap-5"> */}
         <div className="  w-full md:w-[100%]">
-          <h1 className="text-black font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
+          <h1 className="text-white font-semibold text-xl md:text-2xl min-[1024px]:text-3xl">
             {event?.event_name!}
           </h1>
-          <div className="text-black text-xs mt-5">{parse(event?.desc!)}</div>
+          <div className="text-white text-xs mt-5">{parse(event?.desc!)}</div>
         </div>
-        <h1 className="-mb-3 font-semibold">Coordinators :</h1>
+        <h1 className="-mb-3 font-semibold text-xl text-white">
+          Coordinators :
+        </h1>
         {coordinators.length > 0 ? (
           coordinators.map((coordinator: any, index: number) => {
             return (
               <div
                 key={index}
-                className="flex flex-col items-start gap-2 text-sm"
+                className="flex flex-col items-start gap-2 text-sm text-white"
               >
                 <h1>
-                  <span className="font-semibold text-black ">
+                  <span className="font-semibold">
                     {coordinator?.users?.name}
                   </span>
                 </h1>
                 <h1>
-                  <span className="font-semibold text-black ">
+                  <span className="font-medium">
                     {coordinator?.users?.phone}
                   </span>
                 </h1>
@@ -71,14 +76,15 @@ const EventCard = ({
             No Coordinators added yet !
           </h1>
         )}
-        <h1 className="font-semibold text-lg cursor-pointer">
+        <h1 className="font-semibold text-lg cursor-pointer text-white">
           Tap to view more {"-->"}
         </h1>
         {/* <h1 className="font-semibold text-xl cursor-pointer text-center w-full">
         COMING SOON
       </h1> */}
-      </div>
-    </motion.div>
+        {/* </div> */}
+      </motion.div>
+    </div>
   );
 };
 
