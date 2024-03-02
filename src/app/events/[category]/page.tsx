@@ -105,14 +105,18 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const param: any = useParams();
   const event = decodeURIComponent(param?.category!);
+  let isAllOpen: boolean = false;
   useMemo(() => {
     const getEvents = async () => {
       const res = await getCategoryEvents(event!);
+
       setEventbyCategory(res!);
+
       setLoading(false);
     };
     getEvents();
   }, [event]);
+
   const eventCardRef = React.useRef(null);
   const handleEventCardClick = (event: any, eventCardRef: any) => {
     setSelectedEvent(event);
@@ -153,7 +157,10 @@ const Page = () => {
               </h1>
             ) : (
               <>
-               {comboEvents.find((comboEvent:any)=>comboEvent.category === event) && (
+                {comboEvents.find(
+                  (comboEvent: any) => comboEvent.category === event
+                ) &&
+                  isAllOpen && (
                     <button
                       onClick={() => setComboRegOpen(true)}
                       className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-black bg-black text-white rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
