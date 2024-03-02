@@ -26,7 +26,6 @@ const EventDetails = ({
   useMemo(() => {
     const getInfo = async () => {
       const res = await getEventInfo(eventDetails?.event_name);
-      console.log(res);
       setEventInfo(res![0]);
       setLoading(false);
     };

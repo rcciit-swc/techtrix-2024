@@ -120,3 +120,78 @@ export const validateUserReg = (inputs: any) => {
 
   return errors;
 };
+
+export const validateEventInputs = (
+  inputs: any,
+  eventInputs: any[],
+  file: any
+) => {
+  let errors = {
+    teamName: "",
+    transactionId: "",
+    transactionSSfileName: "", // Fixed key name
+    teamLeadPhone: "",
+    teamLeadEmail: "",
+    file: "",
+  };
+  const regexPhone =
+    /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+  const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  if (inputs.teamName === "") {
+    errors.teamName = "Team Name is required";
+  } else if (inputs.teamName.length < 3) {
+    errors.teamName = "Team Name is too short";
+  }
+
+  if (inputs.transactionId === "") {
+    errors.transactionId = "Transaction Id is required";
+  } else if (inputs.transactionId.length < 12) {
+    errors.transactionId = "Invalid Transaction Id";
+  }
+
+  if (file === null) {
+    errors.file = "Payment Screenshot File is required";
+  }
+
+  if (inputs.transactionSSfileName === "") {
+    errors.transactionSSfileName = "Payment Screenshot is required";
+  }
+
+  if (inputs.teamLeadPhone === "") {
+    errors.teamLeadPhone = "Phone is required";
+  } else if (!regexPhone.test(inputs.teamLeadPhone)) {
+    errors.teamLeadPhone = "Invalid Phone Number";
+  }
+
+  if (inputs.teamLeadEmail === "") {
+    errors.teamLeadEmail = "Email is required";
+  } else if (!regexEmail.test(inputs.teamLeadEmail)) {
+    errors.teamLeadEmail = "Invalid Email";
+  }
+
+  // const eventInputErrors: any[] = [];
+
+  // eventInputs.forEach((eventInput: any, index: number) => {
+  //   console.log(eventInput, "eventInput");
+  //   let teamErrors = {
+  //     phone: "",
+  //     name: "",
+  //   };
+
+  //   if (eventInput.participants[index].phone === "") {
+  //     teamErrors.phone = "Phone is required";
+  //   } else if (!regexPhone.test(eventInput.participants.phone)) {
+  //     teamErrors.phone = "Invalid Phone Number";
+  //   }
+
+  //   if (eventInput.participants[index].name === "") {
+  //     teamErrors.name = "Name is required";
+  //   }
+
+  //   eventInputErrors.push(teamErrors);
+  //   console.log(teamErrors);
+  // });
+
+  return { errors };
+};
