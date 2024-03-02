@@ -135,7 +135,7 @@ const Navbar = () => {
                   key={index}
                 >
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >
@@ -146,7 +146,7 @@ const Navbar = () => {
               {user && showDashboard && (
                 <Link href={"/dashboard"}>
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
                       pathname === "/dashboard" && "text-white bg-black"
                     }`}
                   >
@@ -157,7 +157,7 @@ const Navbar = () => {
               {user && role === "event_coordinator" && (
                 <Link href={"/coordinator"}>
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
                       pathname === "/coordinator" && "text-white bg-black"
                     }`}
                   >
@@ -173,7 +173,7 @@ const Navbar = () => {
                   }}
                 >
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-lg ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
                       pathname === "/admin" && "text-white bg-black"
                     }`}
                   >
@@ -199,7 +199,7 @@ const Navbar = () => {
                       user ? handleLogout() : handleLogin();
                     }
                   }}
-                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-sm md:text-xs lg:text-sm xl:text-lg hover:text-white font-bold text-black px-5 lg:px-10 py-2"
+                  className="border-2 border-gray-500 rounded-full hover:bg-black duration-300 text-sm md:text-xs lg:text-sm xl:text-sm hover:text-white font-bold text-black px-5 lg:px-10 py-2"
                 >
                   {user ? (
                     <>
