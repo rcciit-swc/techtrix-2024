@@ -36,7 +36,7 @@ const EventCard = ({
       }}
       initial={{ scale: 1 }}
       onClick={onClick}
-      className="relative z-0  cursor-pointer mx-auto gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px]  lg:h-[600px] border-4 border-white rounded-2xl"
+      className="relative z-0 cursor-pointer mx-auto gap-5 p-5 md:py-10 md:px-10 w-[95%] h-auto  lg:w-[450px]  lg:h-[600px] border-4 border-white rounded-2xl"
     >
       <div className="card absolute top-0 left-0 h-full w-full z-10 flex justify-center flex-col mx-auto items-start gap-5">
         <div className="  w-full md:w-[100%]">
