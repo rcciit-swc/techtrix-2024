@@ -22,6 +22,11 @@ export const partners: partnerType[] = [
     type: "Event Partner",
   },
   {
+    name: "Google Developer Student Clubs RCCIIT",
+    logo: "/assets/partners/gdscrcciit.png",
+    type: "Hosting Partner",
+  },
+  {
     name: "NoobCode",
     logo: "/assets/partners/noobcode.svg",
     type: "Community Partner",

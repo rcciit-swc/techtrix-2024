@@ -33,8 +33,10 @@ const EventRegCard = ({ teams }: { teams: any }) => {
 
   return (
     <>
-      <div className="bg-white p-12 w-[90%] md:w-[60%] xl:w-auto 2xl:h-auto  gap-5 font-semibold flex flex-col justify-around items-center text-sm rounded-xl">
-        {eventImage! && <Image src={eventImage!} width={300} height={100} alt="" />}
+      <div className="bg-white p-12 w-[90%] md:w-[100%] lg:w-[60%] xl:w-auto 2xl:h-auto  gap-5 font-semibold flex flex-col justify-around items-center text-sm rounded-xl">
+        {eventImage! && (
+          <Image src={eventImage!} width={300} height={100} alt="" />
+        )}
         <div className="flex flex-row items-center gap-2 flex-wrap">
           <h1>Event :</h1> <span>{event!}</span>
         </div>
@@ -162,7 +164,7 @@ const Page = () => {
   }, [user]);
   return (
     <div className="w-full flex flex-col lg:flex-row items-start fixed justify-between gap-2  bg-[#F5F5F5] lg:-mt-10">
-      <div className="hidden lg:flex  sticky top-0 h-screen   flex-col  lg:w-[25%] items-center  gap-10  border-r-2 border-black">
+      <div className="hidden lg:flex  sticky top-0 h-screen   flex-col  lg:w-[30%] px-2 items-center  gap-10  border-r-2 border-black">
         <div className="flex flex-col items-center gap-10 mt-10">
           <Image
             src={userImage!}
@@ -172,10 +174,10 @@ const Page = () => {
             className="rounded-full "
           />
           <div className="flex flex-col items-center gap-2">
-            <h1 className="text-2xl font-semibold">{user?.name}</h1>
-            <h1 className="text-lg font-semibold">{user?.email}</h1>
-            <h1 className="text-lg font-semibold">{user?.phone}</h1>
-            <h1 className="text-lg font-semibold">College : {user?.college}</h1>
+            <h1 className="text-lg font-semibold">{user?.name}</h1>
+            <h1 className="text-sm font-semibold">{user?.email}</h1>
+            <h1 className="text-sm font-semibold">{user?.phone}</h1>
+            <h1 className="text-sm font-semibold">College : {user?.college}</h1>
           </div>
         </div>
 
@@ -198,7 +200,7 @@ const Page = () => {
         </button> */}
       </div>
 
-      <div className="flex flex-col gap-8 items-center h-screen pb-40  lg:w-[75%] overflow-y-scroll ">
+      <div className="flex flex-col gap-8 items-center h-screen pb-40 w-full lg:w-[70%] overflow-y-scroll ">
         <div className="flex flex-row justify-center gap-2 mt-3 flex-wrap items-center px-5 w-full pt-2 lg:justify-between">
           <h1 className="font-semibold text-2xl">Registered Events</h1>
           {/* <div className="flex flex-row items-center gap-1">
