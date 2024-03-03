@@ -30,6 +30,7 @@ const ComboRegForm = ({
     teamLeadName: "",
   });
 
+  const eventNames = events.map((event: any) => event! && event!.event_name!);
   const [file, setFile] = useState<any>(null);
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
@@ -185,6 +186,13 @@ const ComboRegForm = ({
               </h2>
             </div>
             <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
+              <h1 className="font-semibold">
+                Register on 3 Events Together{" "}
+                <span className="text-green-800">
+                  {eventNames.length > 0 && `(${eventNames.join(", ")})`}
+                </span>{" "}
+                and Get <span className="text-green-800">100 ₹ Off</span>
+              </h1>
               <RegFormElement
                 type="text"
                 name={"Team Name"}
