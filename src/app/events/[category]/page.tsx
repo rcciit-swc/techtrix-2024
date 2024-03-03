@@ -105,7 +105,7 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const param: any = useParams();
   const event = decodeURIComponent(param?.category!);
-  let isAllOpen: boolean = false;
+  let isAllOpen: boolean = true;
   useMemo(() => {
     const getEvents = async () => {
       const res = await getCategoryEvents(event!);
