@@ -30,6 +30,7 @@ const EventRegForm = ({
     teamLeadPhone: "",
     teamLeadEmail: "",
     teamLeadName: "",
+    referralCode: "",
   });
 
   const [file, setFile] = useState<any>(null);
@@ -241,6 +242,16 @@ const EventRegForm = ({
                 <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.teamLeadEmail}
                 </h1>
+
+                <RegFormElement
+                  type="text"
+                  name={"Referral Code"}
+                  placeholder="Optional"
+                  value={inputs.referralCode}
+                  id="referralCode"
+                  onChange={handleInputChange}
+                  width="100%"
+                />
 
                 <img
                   src={"/QR.jpg"}
