@@ -72,7 +72,7 @@ const UserRegForm = () => {
         return;
       }
     } catch (error) {
-      console.log("Error occurred", { error });
+      // console.log("Error occurred", { error });
     }
   };
 

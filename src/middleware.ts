@@ -42,11 +42,21 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/registration", request.url));
     }
 
-    if (superAdmin && url.pathname.startsWith("/admin-dashboard")) {
+    if (
+      superAdmin &&
+      url.pathname.startsWith(
+        "/admin-dashboard" || url.pathname.startsWith("/coordinator")
+      )
+    ) {
       return NextResponse.next();
     }
 
-    if (!superAdmin && url.pathname.startsWith("/admin-dashboard")) {
+    if (
+      !superAdmin &&
+      url.pathname.startsWith(
+        "/admin-dashboard" || url.pathname.startsWith("/coordinator")
+      )
+    ) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 

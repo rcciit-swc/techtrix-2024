@@ -11,6 +11,8 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { PuffLoader } from "react-spinners";
 import parse from "html-react-parser";
+import { MdLocalOffer } from "react-icons/md";
+import ComboRegForm from "@/components/events/ComboRegForm";
 
 const EventCard = ({
   event,
@@ -88,26 +90,58 @@ const EventCard = ({
   );
 };
 
+const comboEvents = [
+  {
+    category: "Robotics",
+    events: ["Final Kick", "Robo War (15 KG)", "ROAD RASH"],
+  },
+];
+
 const Page = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [comboRegOpen, setComboRegOpen] = useState(false);
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
   const param: any = useParams();
   const event = decodeURIComponent(param?.category!);
+  let isAllOpen: boolean = false;
   useMemo(() => {
     const getEvents = async () => {
       const res = await getCategoryEvents(event!);
+
       setEventbyCategory(res!);
+
       setLoading(false);
     };
     getEvents();
   }, [event]);
+
   const eventCardRef = React.useRef(null);
   const handleEventCardClick = (event: any, eventCardRef: any) => {
     setSelectedEvent(event);
   };
+  let comboEventCategory: any;
   eventsbyCategory = useEventbyCategory((state) => state.events!);
+  const comboEventDetails: any[] = useMemo(() => {
+    let comboEventsArr: any[] = [];
+    comboEventCategory =
+      comboEvents &&
+      comboEvents.find((comboEvent) => comboEvent.category === event);
+    console.log(comboEventCategory);
+    if (comboEventCategory) {
+      comboEventsArr = comboEventCategory.events.map((event: any) => {
+        return (
+          eventsbyCategory &&
+          eventsbyCategory.find(
+            (eventCategory) => eventCategory.event_name === event
+          )
+        );
+      });
+    }
+    return comboEventsArr;
+  }, [event, eventsbyCategory]);
+
   return (
     <>
       {loading ? (
@@ -122,28 +156,42 @@ const Page = () => {
                 No events announced yet !
               </h1>
             ) : (
-              eventsbyCategory?.map((event, index) => {
-                return (
-                  <div key={index}>
-                    {!selectedEvent && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        transition={{ ease: "linear", delay: 0 }}
-                        ref={eventCardRef}
-                      >
-                        <EventCard
-                          event={event}
-                          onClick={() =>
-                            handleEventCardClick(event, eventCardRef)
-                          }
-                        />
-                      </motion.div>
-                    )}
-                  </div>
-                );
-              })
+              <>
+                {comboEvents.find(
+                  (comboEvent: any) => comboEvent.category === event
+                ) &&
+                  isAllOpen && (
+                    <button
+                      onClick={() => setComboRegOpen(true)}
+                      className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-black bg-black text-white rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
+                    >
+                      Combo Registration Offer
+                      <MdLocalOffer size={20} />
+                    </button>
+                  )}
+                {eventsbyCategory?.map((event, index) => {
+                  return (
+                    <div key={index}>
+                      {!selectedEvent && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.5 }}
+                          transition={{ ease: "linear", delay: 0 }}
+                          ref={eventCardRef}
+                        >
+                          <EventCard
+                            event={event}
+                            onClick={() =>
+                              handleEventCardClick(event, eventCardRef)
+                            }
+                          />
+                        </motion.div>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
             )}
 
             <AnimatePresence>
@@ -164,6 +212,11 @@ const Page = () => {
           </div>
         </div>
       )}
+      <ComboRegForm
+        events={comboEventDetails}
+        isOpen={comboRegOpen}
+        onClose={() => setComboRegOpen(false)}
+      />
     </>
   );
 };

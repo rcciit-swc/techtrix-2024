@@ -249,6 +249,12 @@ const EventRegForm = ({
                   height={100}
                   alt=""
                 />
+                <h1 className="mx-auto text-center font-semibold text-lg">
+                  Pay Now :{" "}
+                  <span className="font-semibold text-green-600">
+                    ₹ {eventDetails?.registration_fees}
+                  </span>
+                </h1>
                 <RegFormElement
                   type="text"
                   name="Transaction Id"
@@ -381,7 +387,7 @@ const EventRegForm = ({
                     {participants.length < maxTeamMember && (
                       <button
                         onClick={addParticipant}
-                        className="font-semibold border-2 border-black bg-black text-white px-5 py-2 rounded-full hover:bg-white hover:text-black"
+                        className="font-semibold border-2 text-sm border-black bg-black text-white px-5 py-2 rounded-full hover:bg-white hover:text-black"
                       >
                         Add Person
                       </button>

@@ -34,7 +34,7 @@ const EventRegCard = ({ teams }: { teams: any }) => {
   return (
     <>
       <div className="bg-white p-12 w-[90%] md:w-[60%] xl:w-auto 2xl:h-auto  gap-5 font-semibold flex flex-col justify-around items-center text-sm rounded-xl">
-        <Image src={eventImage!} width={200} height={100} alt="" />
+        {eventImage! && <Image src={eventImage!} width={300} height={100} alt="" />}
         <div className="flex flex-row items-center gap-2 flex-wrap">
           <h1>Event :</h1> <span>{event!}</span>
         </div>
