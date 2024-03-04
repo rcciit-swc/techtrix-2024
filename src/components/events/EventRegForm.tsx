@@ -7,7 +7,7 @@ import { validateReg } from "@/utils/functions/validate";
 import { EventData } from "@/types/events";
 import { Toaster, toast } from "sonner";
 import RegFormElement from "./RegFormElement";
-import { useUser } from "@/lib";
+import { supabase, useUser } from "@/lib";
 import { stat } from "fs";
 import Image from "next/image";
 
@@ -21,6 +21,7 @@ const EventRegForm = ({
   eventDetails: any;
 }) => {
   const router = useRouter();
+
   // console.log(eventDetails);
   const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
@@ -30,6 +31,7 @@ const EventRegForm = ({
     teamLeadPhone: "",
     teamLeadEmail: "",
     teamLeadName: "",
+    referralCode: "",
   });
 
   const [file, setFile] = useState<any>(null);
@@ -55,7 +57,6 @@ const EventRegForm = ({
   // }, [event]);
 
   const user = useUser((state) => state.user);
-
   const minTeamMember = eventDetails?.min_team_member;
   const maxTeamMember = eventDetails?.max_team_member;
 
@@ -67,6 +68,8 @@ const EventRegForm = ({
         teamLeadEmail: user.email,
         teamName: maxTeamMember > 1 ? "" : user.name, // Set teamName as blank if maxTeamMember > 1
         teamLeadName: user.name,
+        referralCode:
+          user?.referral_code === "default" ? "" : user.referral_code!,
       }));
     }
   }, [user, maxTeamMember]);
@@ -242,6 +245,19 @@ const EventRegForm = ({
                   {generalErrors.teamLeadEmail}
                 </h1>
 
+                <RegFormElement
+                  type="text"
+                  name={"Referral Code"}
+                  disabled={user?.referral_code !== "default" ? true : false}
+                  placeholder="Optional"
+                  value={inputs.referralCode}
+                  id="referralCode"
+                  onChange={handleInputChange}
+                  width="100%"
+                />
+                <h1 className="text-green-600 font-semibold text-xs">
+                  Use Referral Codes for exclusive offers ! T&C Apply !
+                </h1>
                 <img
                   src={"/QR.jpg"}
                   width={350}

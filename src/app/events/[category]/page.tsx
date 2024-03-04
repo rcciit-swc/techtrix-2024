@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import EventDetails from "@/components/events/EventDetails";
 import EventWrapper from "@/components/events/EventWrapper";
-import { supabase } from "@/lib";
+import { supabase, useUser } from "@/lib";
 import { useEventbyCategory } from "@/lib/store/event";
 import { CategoryState } from "@/types/events";
 import { getCategoryEvents } from "@/utils/functions/getCategoryEvents";
@@ -13,6 +13,7 @@ import { PuffLoader } from "react-spinners";
 import parse from "html-react-parser";
 import { MdLocalOffer } from "react-icons/md";
 import ComboRegForm from "@/components/events/ComboRegForm";
+import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 
 const EventCard = ({
   event,
@@ -22,12 +23,14 @@ const EventCard = ({
   onClick: (e: any) => void;
 }) => {
   const router = useRouter();
+
   const [coordinators, setCoordinators] = useState<any>([]);
   useMemo(async () => {
     const res = await getCoordinators(event.id!);
 
     setCoordinators(res!);
   }, [event]);
+
   return (
     <div
       style={{
@@ -109,7 +112,6 @@ const Page = () => {
   useMemo(() => {
     const getEvents = async () => {
       const res = await getCategoryEvents(event!);
-
       setEventbyCategory(res!);
 
       setLoading(false);
@@ -128,7 +130,6 @@ const Page = () => {
     comboEventCategory =
       comboEvents &&
       comboEvents.find((comboEvent) => comboEvent.category === event);
-    console.log(comboEventCategory);
     if (comboEventCategory) {
       comboEventsArr = comboEventCategory.events.map((event: any) => {
         return (

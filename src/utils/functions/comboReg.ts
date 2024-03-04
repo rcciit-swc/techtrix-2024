@@ -5,7 +5,6 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
 
   try {
     const promises = eventInputs.map(async (eventInput: any) => {
-      // Insert team data
       const { data: teamData, error: teamError } = await supabase
         .from("teams")
         .insert([
@@ -14,7 +13,9 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
             team_name: inputs.teamName,
             team_lead_phone: inputs.teamLeadPhone,
             transaction_id: eventInput.eventName + "-" + inputs.transactionId,
-            transaction_ss_filename: file.name!,
+            transaction_ss_filename: eventInput.eventName + "-" + file.name!,
+            referral_code:
+              inputs.referralCode !== "" ? inputs.referralCode : "default",
           },
         ])
         .select();
@@ -25,7 +26,6 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
       //   console.log(teamData, "teamData")
       const teamId = teamData![0].team_id;
 
-      // Insert participation records for each participant in the event
       const participantPromises = eventInput.participants.map(
         async (participant: any) => {
           const { error: participantError } = await supabase
@@ -43,9 +43,9 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
             await supabase.storage
               .from("fests")
               .upload(
-                `Techtrix/2024/${eventInput?.id}/transactions/${file.name!}-${
+                `Techtrix/2024/${eventInput?.id}/transactions/${
                   eventInput.eventName
-                }`,
+                }-${file.name!}`,
                 file!
               );
           console.log(uploadFile, "uploadFile");

@@ -5,11 +5,6 @@ import Link from "next/link";
 
 const sessions = [
   {
-    image: "/assets/sessions/event2.png",
-    link: "https://forms.gle/MUf2B88346g42RY6A",
-    time: "03/01/2024, 11:00:00",
-  },
-  {
     image: "/assets/sessions/event1.png",
     link: "https://lu.ma/risein-solidity",
     time: "03/11/2024, 11:00:00",
@@ -57,7 +52,7 @@ const Sessions = () => {
   return (
     <div className="flex flex-col items-center gap-10 mx-auto justify-center w-[80%]">
       {isOver && <Heading text="Sessions" />}
-      <div className="flex flex-row items-center flex-wrap gap-20 justify-center">
+      <div className="flex flex-row items-center w-full flex-wrap gap-20 justify-center">
         {sessions.map((session, index) => {
           const expiryTime = new Date(session.time).getTime();
 

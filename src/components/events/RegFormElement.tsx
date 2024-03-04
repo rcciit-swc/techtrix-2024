@@ -7,7 +7,8 @@ const RegFormElement = ({
     id,
     onChange,
     width,
-    disabled
+    disabled,
+    placeholder
   }: {
     name: string;
     value: string;
@@ -18,6 +19,7 @@ const RegFormElement = ({
     onChange: (
       e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
+    placeholder?: string;
   }) => {
   return (
     <div className="flex flex-col w-full px-3  items-start gap-1 md:gap-5 flex-wrap justify-start">
@@ -31,6 +33,7 @@ const RegFormElement = ({
       name={id}
       disabled={disabled}
       id={id}
+      placeholder={placeholder}
       className={`w-[${width}] border-b border-black px-2 py-1 font-semibold max-md:w-full focus:border-b bg-transparent `}
     />
   </div>

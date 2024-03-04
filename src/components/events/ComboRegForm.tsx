@@ -28,6 +28,7 @@ const ComboRegForm = ({
     teamLeadPhone: "",
     teamLeadEmail: "",
     teamLeadName: "",
+    referralCode: "",
   });
 
   const eventNames = events.map((event: any) => event! && event!.event_name!);
@@ -53,6 +54,8 @@ const ComboRegForm = ({
         teamLeadEmail: user.email,
         teamName: "",
         teamLeadName: user.name,
+        referralCode:
+          user?.referral_code === "default" ? "" : user.referral_code!,
       }));
     }
   }, [user]);
@@ -241,6 +244,20 @@ const ComboRegForm = ({
               />
               <h1 className="text-red-600 font-semibold text-xs">
                 {generalErrors.teamLeadEmail}
+              </h1>
+
+              <RegFormElement
+                type="text"
+                name={"Referral Code"}
+                disabled={user?.referral_code !== "default" ? true : false}
+                placeholder="Optional"
+                value={inputs.referralCode}
+                id="referralCode"
+                onChange={handleInputChange}
+                width="100%"
+              />
+              <h1 className="text-green-600 font-semibold text-xs">
+                Use Referral Codes for exclusive offers ! T&C Apply !
               </h1>
               <img
                 src={"/QR.jpg"}

@@ -10,7 +10,7 @@ export const eventReg = async (
     .from("events")
     .select("*")
     .eq("id", eventId);
- 
+
   let teamId = "";
   const eventType =
     eventResponse.data![0].max_team_member > 1 ? "team" : "individual";
@@ -23,6 +23,7 @@ export const eventReg = async (
         team_lead_phone: team.teamLeadPhone,
         transaction_id: team.transactionId,
         transaction_ss_filename: file.name!,
+        referral_code: team.referralCode !== "" ? team.referralCode : "default",
       })
       .select();
     teamId = data![0].team_id!;
@@ -48,6 +49,7 @@ export const eventReg = async (
         team_lead_phone: team.teamLeadPhone,
         transaction_id: team.transactionId,
         transaction_ss_filename: file.name!,
+        referral_code: team.referralCode !== "" ? team.referralCode : "default",
       })
       .select();
     teamId = individualData![0].team_id!;
