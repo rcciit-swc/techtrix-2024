@@ -1,4 +1,3 @@
-import { navRoutes } from "@/utils/constants/navRoutes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -15,9 +14,32 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-5">
           <h1 className="font-semibold text-lg">Follow us</h1>
           <div className="flex flex-row items-center gap-10">
-            <GrInstagram size={24} className="hover:text-pink-500 cursor-pointer" />
-            <ImFacebook2 size={24} className="hover:text-blue-500 cursor-pointer" />
-            <FaGoogle size={24} className="hover:text-red-600 cursor-pointer" />
+            <Link
+              href={
+                "https://www.instagram.com/techtrix_official?igsh=MWx5OWE4bXQweGJlZw%3D%3D"
+              }
+              target="_blank"
+            >
+              <GrInstagram
+                size={24}
+                className="hover:text-pink-500 cursor-pointer"
+              />
+            </Link>
+            <Link
+              href={"https://www.facebook.com/techtrix.rcciit?mibextid=ZbWKwL"}
+              target="_blank"
+            >
+              <ImFacebook2
+                size={24}
+                className="hover:text-blue-500 cursor-pointer"
+              />
+            </Link>
+            <Link href={"https://www.rcciit.org/"} target="_blank">
+              <FaGoogle
+                size={24}
+                className="hover:text-red-600 cursor-pointer"
+              />
+            </Link>
           </div>
         </div>
 
@@ -41,24 +63,21 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-      
       </div>
 
       <div className="bg-black flex flex-row gap-2 font-semibold justify-around flex-wrap py-2 text-xs md:text-sm text-white w-full text-center">
         <div>
-        © 2024 &nbsp;
-        <a href="#" className="neon">
-          Techtrix™
-        </a>
-        . All Rights Reserved.
+          © 2024 &nbsp;
+          <a href="#" className="neon">
+            Techtrix™
+          </a>
+          . All Rights Reserved.
         </div>
         <p>
           Made with <span className="text-red-600">&hearts;</span> by Techtrix
           tech team
         </p>
-       
       </div>
-
     </div>
   );
 };

@@ -259,7 +259,7 @@ const EventRegForm = ({
                   Use Referral Codes for exclusive offers ! T&C Apply !
                 </h1>
                 <img
-                  src={"/QR.jpg"}
+                  src={"/shourya_kotak.png"}
                   width={350}
                   className="mx-auto "
                   height={100}
