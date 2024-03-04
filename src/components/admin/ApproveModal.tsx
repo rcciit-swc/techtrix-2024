@@ -18,6 +18,7 @@ const ApproveModal = ({
   data: any;
   setRegistrations: any;
 }) => {
+  console.log(data);
   const [imageUrl, setImageUrl] = useState<any>("");
   const [loaded, setLoaded] = useState(false);
   let teamType;
@@ -47,23 +48,43 @@ const ApproveModal = ({
 
   const handleAccept = async () => {
     // console.log(data.team_id)
-    const response = await approveReg(data.team_id);
-    if (!response) {
+    const { data: confirmData, error } = await supabase
+      .from("teams")
+      .update({ transaction_verified: true })
+      .eq("team_id", data.team_id)
+      .select();
+
+    if(error){
+      toast.error("Error Occured");
       onClose();
       setImageUrl("");
-      toast.error("Error Occured");
       setLoaded(false);
       return;
     }
-    // console.log(response)
-    if (response) {
+    if(confirmData){
       toast.success("Team Verified");
-      const updatedData = await getRegistrations();
-      setRegistrations(updatedData);
-      setImageUrl("");
-      onClose();
-      setLoaded(false);
+       const updatedData = await getRegistrations();
+       setRegistrations(updatedData);
+       setImageUrl("");
+       onClose();
+       setLoaded(false);
     }
+    // if (!data) {
+    //   onClose();
+    //   setImageUrl("");
+    //   toast.error("Error Occured");
+    //   setLoaded(false);
+    //   return;
+    // }
+    // // console.log(response)
+    // if (data) {
+    //   toast.success("Team Verified");
+    //   const updatedData = await getRegistrations();
+    //   setRegistrations(updatedData);
+    //   setImageUrl("");
+    //   onClose();
+    //   setLoaded(false);
+    // }
   };
   return (
     <>
