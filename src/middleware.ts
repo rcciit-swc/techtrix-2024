@@ -1,16 +1,17 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-
+import { cookies } from "next/headers";
 import { checkUserDetails } from "./utils/functions/checkUserDetails";
 
 export async function middleware(request: NextRequest) {
+  const cookieStore = cookies();
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
   const url = new URL(request.nextUrl);
+
   if (!session) {
     if (
       url.pathname.startsWith("/admin-dashboard") ||
@@ -20,8 +21,32 @@ export async function middleware(request: NextRequest) {
     ) {
       return NextResponse.redirect(new URL("/", request.url));
     }
+    if (url.pathname.startsWith("/") && url.searchParams.has("ref")) {
+      const query: any = url.searchParams.get("ref");
+      if (query) {
+        res.cookies.set("ref", query, {
+          secure: true,
+        });
+      }
+    }
   }
   if (session) {
+    if (url.pathname.startsWith("/") && url.searchParams.has("ref")) {
+      const query: any = url.searchParams.get("ref");
+    
+      if (query) {
+        res.cookies.set("ref", query, {
+          secure: true,
+        });
+        const { data, error } = await supabase
+        .from("users")
+        .update({
+          "referral_code": query,
+        }).eq("id",session?.user.id)
+        .select();
+        console.log(data,error)
+      }
+    }
     const userDetails = await supabase
       .from("users")
       .select()

@@ -8,5 +8,5 @@ export interface IUser extends User {
   email: string;
   gender: string;
   id: string;
-  
+  referral_code: string;
 }

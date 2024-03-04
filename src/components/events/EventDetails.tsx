@@ -31,12 +31,15 @@ const EventDetails = ({
   useMemo(() => {
     const getInfo = async () => {
       const res = await getEventInfo(eventDetails?.event_name);
-      const ifRegistered = await checkIfUserRegistered({
-        phone_param: user?.phone!,
-      });
-      if (ifRegistered.find((e: any) => e.event_id === eventDetails?.id)) {
-        setRegisteredEvent(true);
+      if (user) {
+        const ifRegistered = await checkIfUserRegistered({
+          phone_param: user?.phone!,
+        });
+        if (ifRegistered.find((e: any) => e.event_id === eventDetails?.id)) {
+          setRegisteredEvent(true);
+        }
       }
+
       setEventInfo(res![0]);
       setLoading(false);
     };
