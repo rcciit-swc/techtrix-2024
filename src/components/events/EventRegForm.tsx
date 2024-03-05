@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import FormElement from "../admin/FormElement";
+// import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
 import { useParams, useRouter } from "next/navigation";
-import { getEventInfo } from "@/utils/functions/getEventsInfo";
+// import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
-import { EventData } from "@/types/events";
+// import { EventData } from "@/types/events";
 import { Toaster, toast } from "sonner";
 import RegFormElement from "./RegFormElement";
 import { supabase, useUser } from "@/lib";
-import { stat } from "fs";
-import Image from "next/image";
+import Link from "next/link";
+// import { stat } from "fs";
+// import Image from "next/image";
 
 const EventRegForm = ({
   isOpen,
@@ -176,7 +177,11 @@ const EventRegForm = ({
         <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
           <div
             className={`bg-gray-100 p-4 rounded-lg ${
-              maxTeamMember > 1 ? "h-[80vh] md:h-[60vh]" : "h-[80vh]"
+              maxTeamMember > 1 && eventDetails.register_through_portal
+                ? "h-[80vh] md:h-[60vh]"
+                : eventDetails.register_through_portal
+                ? "h-[80vh]"
+                : ""
             }  w-[95%] flex flex-col items-start lg:w-1/2 lg:px-32 lg:py-8`}
           >
             <div className="w-full flex flex-row mb-2 items-center justify-between">
@@ -191,7 +196,7 @@ const EventRegForm = ({
               </h2>
             </div>
 
-            {
+            {eventDetails.register_through_portal ? (
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
                   type="text"
@@ -411,21 +416,36 @@ const EventRegForm = ({
                   </div>
                 )}
               </div>
-            }
-            <div className="flex flex-row items-center pt-5  flex-wrap justify-between w-full">
-              <button
-                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                onClick={onClose}
-              >
-                Close
-              </button>
-              <button
-                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black" // hover:bg-white hover:text-black
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
+            ) : (
+              <div className="flex items-center justify-center w-full">
+                <Link
+                  href={eventDetails.registration_link}
+                  target="_blank"
+                  className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+                  onClick={handleSubmit}
+                >
+                  Fill Form
+                </Link>
+              </div>
+            )}
+            {eventDetails.register_through_portal ? (
+              <div className="flex flex-row items-center pt-5 flex-wrap justify-between w-full">
+                <button
+                  className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+                  onClick={onClose}
+                >
+                  Close
+                </button>
+                <button
+                  className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black" // hover:bg-white hover:text-black
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <Toaster position="bottom-right" richColors />
         </div>
