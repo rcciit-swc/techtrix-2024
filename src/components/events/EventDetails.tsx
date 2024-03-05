@@ -1,20 +1,26 @@
 "use client";
-import { useParams } from "next/navigation";
+// import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import React, { useEffect, useMemo, useState } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
-import { getCoordinators } from "@/utils/functions/getCoordinators";
+// import { getCoordinators } from "@/utils/functions/getCoordinators";
 import { PuffLoader } from "react-spinners";
 import RulesModal from "../admin/RulesModal";
-import Image from "next/image";
-import EventRegForm from "./EventRegForm";
+// import Image from "next/image";
+// import EventRegForm from "./EventRegForm";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { useUser } from "@/lib";
 import { login } from "@/utils/functions";
-import { Toaster, toast } from "sonner";
+// import { Toaster, toast } from "sonner";
 import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 import { TiTick } from "react-icons/ti";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const EventRegForm = dynamic(() => import("@/components/events/EventRegForm"), {
+  ssr: false,
+});
+
 const EventDetails = ({
   eventDetails,
   onCloseEvent,
@@ -45,6 +51,7 @@ const EventDetails = ({
     };
     getInfo();
   }, [event]);
+
   const { roles } = eventInfo;
   const [regOpen, setRegOpen] = useState(false);
   const onClose = () => {
