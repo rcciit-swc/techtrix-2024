@@ -98,10 +98,6 @@ const comboEvents = [
     category: "Robotics",
     events: ["Final Kick", "Robo War (15 KG)", "ROAD RASH"],
   },
-  {
-    category: "Automata",
-    events: ["Build the Electro-bricks AND DIGITAL CIRCUIT", "CODATHON", "CRACK ME IF YOU CAN"],
-  },
 ];
 
 const Page = () => {
