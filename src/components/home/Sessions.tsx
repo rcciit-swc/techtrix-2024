@@ -5,15 +5,10 @@ import Link from "next/link";
 
 const sessions = [
   {
-    image: "/assets/sessions/event1.png",
-    link: "https://lu.ma/risein-solidity",
-    time: "03/11/2024, 11:00:00",
-  },
-  {
-    image: "/assets/sessions/event3.jpg",
-    link: "https://gdsc.community.dev/events/details/developer-student-clubs-rcc-institute-of-information-technology-kolkata-presents-techtrix-2k24-info-amp-orientation-session-day-2/",
-    time: "03/04/2024, 11:00:00",
-  },
+    image: "/assets/sessions/event4.jpg",
+    link: "https://lu.ma/ms-azure-day",
+    time: "03/11/2024, 12:00:00",
+  }
 ];
 const SessionCard = ({ session }: { session: any }) => {
   return (
@@ -51,7 +46,7 @@ const Sessions = () => {
 
   return (
     <div className="flex flex-col items-center gap-10 mx-auto justify-center w-[80%]">
-      {isOver && <Heading text="Sessions" />}
+      {<Heading text="Sessions" />}
       <div className="flex flex-row items-center w-full flex-wrap gap-20 justify-center">
         {sessions.map((session, index) => {
           const expiryTime = new Date(session.time).getTime();

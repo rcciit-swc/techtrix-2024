@@ -178,9 +178,9 @@ const EventRegForm = ({
           <div
             className={`bg-gray-100 p-4 rounded-lg ${
               maxTeamMember > 1 && eventDetails.register_through_portal
-                ? "h-[80vh] md:h-[60vh]"
+                ? "h-[80vh] md:h-[70vh]"
                 : eventDetails.register_through_portal
-                ? "h-[80vh]"
+                ? "h-[70vh]"
                 : ""
             }  w-[95%] flex flex-col items-start lg:w-1/2 lg:px-32 lg:py-8`}
           >
@@ -264,7 +264,7 @@ const EventRegForm = ({
                   Use Referral Codes for exclusive offers ! T&C Apply !
                 </h1>
                 <img
-                  src={"/shourya_kotak.png"}
+                  src={"/QR.jpg"}
                   width={350}
                   className="mx-auto "
                   height={100}

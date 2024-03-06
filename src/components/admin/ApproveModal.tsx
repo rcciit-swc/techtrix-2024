@@ -18,7 +18,6 @@ const ApproveModal = ({
   data: any;
   setRegistrations: any;
 }) => {
-  console.log(data);
   const [imageUrl, setImageUrl] = useState<any>("");
   const [loaded, setLoaded] = useState(false);
   let teamType;

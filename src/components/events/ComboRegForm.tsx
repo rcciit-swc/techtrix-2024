@@ -154,11 +154,24 @@ const ComboRegForm = ({
       const allFieldsEmpty = Object.values(res.errors).every(
         (value) => value === ""
       );
+
       if (allFieldsEmpty) {
-        await comboReg(inputs, eventInputs, file);
-        toast.success("Registration Successful");
-        onClose();
-        router.push("/dashboard");
+        const validTeamSizes = eventInputs.every((eventInput) => {
+          const participantsCount = eventInput.participants.length;
+          return (
+            participantsCount >= eventInput.minTeamMember &&
+            participantsCount <= eventInput.maxTeamMember
+          );
+        });
+
+        if (validTeamSizes) {
+          await comboReg(inputs, eventInputs, file);
+          toast.success("Registration Successful");
+          onClose();
+          router.push("/dashboard");
+        } else {
+          toast.error("Team size for one or more events is invalid!");
+        }
       }
 
       if (res.errors) {
@@ -260,7 +273,7 @@ const ComboRegForm = ({
                 Use Referral Codes for exclusive offers ! T&C Apply !
               </h1>
               <img
-                src={"/shourya_kotak.png"}
+                src={"//QR.jpg"}
                 width={350}
                 className="mx-auto"
                 height={100}

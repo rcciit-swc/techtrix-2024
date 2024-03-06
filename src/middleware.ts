@@ -33,18 +33,18 @@ export async function middleware(request: NextRequest) {
   if (session) {
     if (url.pathname.startsWith("/") && url.searchParams.has("ref")) {
       const query: any = url.searchParams.get("ref");
-    
+
       if (query) {
         res.cookies.set("ref", query, {
           secure: true,
         });
         const { data, error } = await supabase
-        .from("users")
-        .update({
-          "referral_code": query,
-        }).eq("id",session?.user.id)
-        .select();
-        console.log(data,error)
+          .from("users")
+          .update({
+            referral_code: query,
+          })
+          .eq("id", session?.user.id)
+          .select();
       }
     }
     const userDetails = await supabase
@@ -70,8 +70,8 @@ export async function middleware(request: NextRequest) {
     if (
       superAdmin &&
       url.pathname.startsWith(
-        "/admin-dashboard" || url.pathname.startsWith("/coordinator")
-      )
+        "/admin-dashboard" || "/coordinator")
+      
     ) {
       return NextResponse.next();
     }
@@ -86,6 +86,9 @@ export async function middleware(request: NextRequest) {
     }
 
     if (eventCoordinator && url.pathname.startsWith("/coordinator")) {
+      return NextResponse.next();
+    }
+    if (superAdmin && url.pathname.startsWith("/coordinator")) {
       return NextResponse.next();
     }
 
