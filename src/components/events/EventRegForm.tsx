@@ -273,7 +273,7 @@ const EventRegForm = ({
                       type="text"
                       name={"Referral Code"}
                       disabled={
-                        user?.referral_code !== "default" ? true : false
+                        user?.referral_code !== "default" ? false : false
                       }
                       placeholder="Optional"
                       value={inputs.referralCode}
