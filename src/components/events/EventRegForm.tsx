@@ -212,7 +212,7 @@ const EventRegForm = ({
                 X
               </h2>
             </div>
-            <h1 className="text-green-600 font-semibold text-sm mb-2">No Registration fees required if SWC paid except Robotics and Gaming Category for RCCIIT students !</h1>
+            <h1 className="text-green-600 font-semibold text-xs mb-2">No Registration fees required if SWC paid except Robotics and Gaming Category for RCCIIT students !</h1>
             {eventDetails.register_through_portal ? (
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
@@ -271,9 +271,9 @@ const EventRegForm = ({
                   <>
                     <RegFormElement
                       type="text"
-                      name={"Referral Code"}
+                      name={"Tracking Code"}
                       disabled={
-                        user?.referral_code !== "default" ? true : false
+                        user?.referral_code !== "default" ? false : false
                       }
                       placeholder="Optional"
                       value={inputs.referralCode}
@@ -282,7 +282,7 @@ const EventRegForm = ({
                       width="100%"
                     />
                     <h1 className="text-green-600 font-semibold text-xs">
-                      Use Referral Codes for exclusive offers ! T&C Apply !
+                      Use Tracking Codes for exclusive offers ! T&C Apply !
                     </h1>
                     <img
                       src={"/QR.jpg"}
@@ -445,7 +445,6 @@ const EventRegForm = ({
                   href={eventDetails.registration_link}
                   target="_blank"
                   className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                  onClick={handleSubmit}
                 >
                   Fill Form
                 </Link>
