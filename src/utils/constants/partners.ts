@@ -23,8 +23,13 @@ export const partners: partnerType[] = [
   },
   {
     name: "Google Developer Student Clubs RCCIIT",
-    logo: "/assets/partners/gdscrcciit.png",
+    logo: "/GDSC3.png",
     type: "Hosting Partner",
+  },
+  {
+    name: "Microsoft Learn Student Ambassador",
+    logo: "/mlsa.jpeg",
+    type: "Sessions Partner",
   },
   {
     name: "NoobCode",
