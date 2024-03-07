@@ -11,10 +11,12 @@ import { useUser } from "@/lib";
 import { comboReg } from "@/utils/functions/comboReg";
 
 const ComboRegForm = ({
+  discount,
   isOpen,
   onClose,
   events,
 }: {
+  discount: string;
   isOpen: boolean;
   onClose: () => void;
   events: any;
@@ -207,7 +209,7 @@ const ComboRegForm = ({
                 <span className="text-green-800">
                   {eventNames.length > 0 && `(${eventNames.join(", ")})`}
                 </span>{" "}
-                and Get <span className="text-green-800">100 ₹ Off</span>
+                and Get <span className="text-green-800">₹ {discount} Off</span>
               </h1>
               <RegFormElement
                 type="text"
@@ -288,7 +290,15 @@ const ComboRegForm = ({
                       (total: number, event: any) =>
                         total + parseInt(event.registration_fees),
                       0
-                    ) - 100}{" "}
+                    ) - parseInt(discount)}{" "}
+                  <span className="line-through text-red-600 font-semibold">{`(₹ ${
+                    events! &&
+                    events!.reduce(
+                      (total: number, event: any) =>
+                        total + parseInt(event.registration_fees),
+                      0
+                    )
+                  })`}</span>
                 </span>
               </h1>
               <RegFormElement

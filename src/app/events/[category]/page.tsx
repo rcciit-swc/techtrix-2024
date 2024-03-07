@@ -142,13 +142,16 @@ const Page = () => {
   const handleEventCardClick = (event: any, eventCardRef: any) => {
     setSelectedEvent(event);
   };
+  const [discount, setDiscount] = useState<string>("0");
   let comboEventCategory: any;
   eventsbyCategory = useEventbyCategory((state) => state.events!);
+  
   const comboEventDetails: any[] = useMemo(() => {
     let comboEventsArr: any[] = [];
     comboEventCategory =
       comboEvents &&
       comboEvents.find((comboEvent) => comboEvent.category === event);
+    setDiscount(comboEventCategory?.discount!);
     if (comboEventCategory) {
       comboEventsArr = comboEventCategory.events.map((event: any) => {
         return (
@@ -242,6 +245,7 @@ const Page = () => {
         </div>
       )}
       <ComboRegForm
+      discount={discount}
         events={comboEventDetails}
         isOpen={comboRegOpen}
         onClose={() => setComboRegOpen(false)}
