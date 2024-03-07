@@ -16,6 +16,7 @@ import ComboRegForm from "@/components/events/ComboRegForm";
 import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 import { comboEvents } from "@/utils/constants/comboEvents";
 import Link from "next/link";
+import { login } from "@/utils/functions";
 
 const EventCard = ({
   event,
@@ -187,7 +188,11 @@ const Page = () => {
                   isAllOpen &&
                   !comboRegistered! && (
                     <button
-                      onClick={() => setComboRegOpen(true)}
+                      onClick={() => {
+                        if (!user) {
+                          login();
+                        }
+                        setComboRegOpen(true)}}
                       className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-black bg-black text-white rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
                     >
                       Combo Registration Offer
