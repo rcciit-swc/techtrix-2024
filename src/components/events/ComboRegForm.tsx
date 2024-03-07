@@ -204,7 +204,7 @@ const ComboRegForm = ({
               </h2>
             </div>
             <div className="flex w-full overflow-x-hidden flex-col items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
-              <h1 className="font-semibold">
+              <h1 className="font-semibold text-sm">
                 Register on 3 Events Together{" "}
                 <span className="text-green-800">
                   {eventNames.length > 0 && `(${eventNames.join(", ")})`}

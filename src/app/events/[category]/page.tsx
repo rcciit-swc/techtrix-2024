@@ -118,7 +118,7 @@ const Page = () => {
     getEvents();
   }, [event]);
 
-  const [comboRegistered, setComboRegistered] = useState<boolean>(true);
+  const [comboRegistered, setComboRegistered] = useState<any>(null);
 
   useEffect(() => {
     if (user) {
@@ -132,6 +132,7 @@ const Page = () => {
             res.some((regEvent: any) => regEvent.event_name === event)
           )
         );
+        
         setComboRegistered(allComboEventsRegistered);
       };
       getRegisteredEvents();
