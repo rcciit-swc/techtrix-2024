@@ -263,7 +263,7 @@ const ComboRegForm = ({
 
               <RegFormElement
                 type="text"
-                name={"Referral Code"}
+                name={"Tracking Code"}
                 disabled={user?.referral_code !== "default" ? true : false}
                 placeholder="Optional"
                 value={inputs.referralCode}
@@ -272,7 +272,7 @@ const ComboRegForm = ({
                 width="100%"
               />
               <h1 className="text-green-600 font-semibold text-xs">
-                Use Referral Codes for exclusive offers ! T&C Apply !
+                Use Tracking Codes for exclusive offers ! T&C Apply !
               </h1>
               <img
                 src={"/QR.jpg"}

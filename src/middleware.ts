@@ -56,8 +56,12 @@ export async function middleware(request: NextRequest) {
         .from("swc")
         .select("email")
         .eq("email", session?.user.email);
-
-      if (swcDetails!.length > 0) {
+      const userCollegeEmail = swcDetails![0].email.toLowerCase();
+      if (
+        userCollegeEmail !== "" &&
+        userCollegeEmail !== null &&
+        userCollegeEmail !== undefined
+      ) {
         await supabase
           .from("users")
           .update({
