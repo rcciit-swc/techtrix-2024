@@ -1,10 +1,12 @@
 import { supabase } from "@/lib";
-
+import { v4 as uuidv4 } from "uuid";
+import { v1 as uuidv1 } from "uuid";
 export const eventReg = async (
   team: any,
   participants: any,
   file: any,
-  eventId: any
+  eventId: any,
+  swc: boolean
 ) => {
   const eventResponse = await supabase
     .from("events")
@@ -21,9 +23,10 @@ export const eventReg = async (
         team_name: team.teamName,
         event_id: eventId,
         team_lead_phone: team.teamLeadPhone,
-        transaction_id: team.transactionId,
-        transaction_ss_filename: file.name!,
+        transaction_id: swc ? uuidv4() : team.transactionId,
+        transaction_ss_filename: swc ? uuidv1() : file.name!,
         referral_code: team.referralCode !== "" ? team.referralCode : "default",
+        transaction_verified: swc ? true : false,
       })
       .select();
     teamId = data![0].team_id!;
@@ -47,9 +50,10 @@ export const eventReg = async (
         team_name: team.teamName,
         event_id: eventId,
         team_lead_phone: team.teamLeadPhone,
-        transaction_id: team.transactionId,
-        transaction_ss_filename: file.name!,
+        transaction_id: swc ? uuidv4() : team.transactionId,
+        transaction_ss_filename: swc ? uuidv1() : file.name!,
         referral_code: team.referralCode !== "" ? team.referralCode : "default",
+        transaction_verified: swc ? true : false,
       })
       .select();
     teamId = individualData![0].team_id!;
@@ -66,8 +70,11 @@ export const eventReg = async (
     }
     // console.log(individualData, participantData);
   }
-  const { data: uploadFile, error: uploadError } = await supabase.storage
-    .from("fests")
-    .upload(`Techtrix/2024/${eventId}/transactions/${file.name!}`, file!);
+  if (!swc) {
+    const { data: uploadFile, error: uploadError } = await supabase.storage
+      .from("fests")
+      .upload(`Techtrix/2024/${eventId}/transactions/${file.name!}`, file!);
+  }
+
   // console.log(uploadFile);
 };

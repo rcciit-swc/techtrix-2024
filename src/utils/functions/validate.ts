@@ -1,3 +1,5 @@
+import { supabase } from "@/lib";
+
 interface teamError {
   // email: string;
   phone: string;
@@ -7,7 +9,8 @@ export const validateReg = (
   inputs: any,
   participants: any,
   maxTeamMember: number,
-  file: any
+  file: any,
+  swc: boolean
 ) => {
   let errors = {
     teamName: "",
@@ -18,6 +21,7 @@ export const validateReg = (
     file: "",
   };
   // const uniqueEmails = new Set<string>();
+
   let uniquePhones = new Set<string>();
   const teamErrors: teamError[] = [];
   const regexPhone =
@@ -30,19 +34,24 @@ export const validateReg = (
     errors.teamName = "Team Name is too short";
   }
 
-  if (inputs.transactionId === "") {
-    errors.transactionId = "Transaction Id is required";
-  } else if (inputs.transactionId.length < 12) {
-    errors.transactionId = "Invalid Transaction Id";
+  if (!swc) {
+    if (inputs.transactionId === "") {
+      errors.transactionId = "Transaction Id is required";
+    } else if (inputs.transactionId.length < 12) {
+      errors.transactionId = "Invalid Transaction Id";
+    }
   }
 
-  if (inputs.transactionSSfileName === "") {
+  if (!swc && inputs.transactionSSfileName === "") {
     errors.transactionSSfileName = "Payment Screenshot is required";
   }
 
-  if (file === null) {
-    errors.file = "Payment Screenshot File is required";
+  if (!swc) {
+    if (file === null) {
+      errors.file = "Payment Screenshot File is required";
+    }
   }
+
   if (inputs.teamLeadPhone === "") {
     errors.teamLeadPhone = "Phone is required";
   } else if (!regexPhone.test(inputs.teamLeadPhone)) {

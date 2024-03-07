@@ -9,7 +9,7 @@ import RulesModal from "../admin/RulesModal";
 // import Image from "next/image";
 // import EventRegForm from "./EventRegForm";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
-import { useUser } from "@/lib";
+import { supabase, useUser } from "@/lib";
 import { login } from "@/utils/functions";
 // import { Toaster, toast } from "sonner";
 import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
@@ -24,9 +24,11 @@ const EventRegForm = dynamic(() => import("@/components/events/EventRegForm"), {
 const EventDetails = ({
   eventDetails,
   onCloseEvent,
+
 }: {
   eventDetails: any;
   onCloseEvent: () => void;
+
 }) => {
   const user = useUser((state) => state.user);
   const [registeredEvent, setRegisteredEvent] = useState(false);
@@ -34,6 +36,7 @@ const EventDetails = ({
   const [isOpen, setIsOpen] = useState(false);
   const [eventInfo, setEventInfo] = useState({} as any);
   const [loading, setLoading] = useState(true);
+  const [eventCategory, setEventCategory] = useState<any>(null);
   useMemo(() => {
     const getInfo = async () => {
       const res = await getEventInfo(eventDetails?.event_name);
@@ -51,6 +54,20 @@ const EventDetails = ({
     };
     getInfo();
   }, [event]);
+
+
+  useEffect(() => {
+    const getCategory = async () => {
+      const { data: category, error } = await supabase
+        .from("event_categories")
+        .select("name")
+        .eq("id", eventDetails.event_category_id);
+     
+      
+        setEventCategory(category![0]?.name)
+    }
+    getCategory();
+  }, [eventDetails]);
 
   const { roles } = eventInfo;
   const [regOpen, setRegOpen] = useState(false);
@@ -160,7 +177,7 @@ const EventDetails = ({
                   height={0}
                 />
               )}
-              {!registeredEvent! && eventInfo! && eventInfo!.is_open && (
+              {/* {!registeredEvent! && eventInfo! && eventInfo!.is_open && (
                 <button
                   disabled={!eventInfo.is_open}
                   onClick={() => {
@@ -173,7 +190,18 @@ const EventDetails = ({
                 >
                   Register Now
                 </button>
-              )}
+              )} */}
+              <button
+                onClick={() => {
+                  if (!user) {
+                    login();
+                  }
+                  setRegOpen(true);
+                }}
+                className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
+              >
+                Register Now
+              </button>
               {registeredEvent! && (
                 <Link href={"/dashboard"}>
                   <h1 className="text-green-600 flex flex-row items-center gap-2 border border-green-600 rounded-xl px-5 py-2 font-semibold">
@@ -191,6 +219,7 @@ const EventDetails = ({
         isOpen={regOpen}
         onClose={onClose}
         eventDetails={eventInfo}
+        category={eventCategory}
       />
     </motion.div>
   );

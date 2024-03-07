@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 // import FormElement from "../admin/FormElement";
 import { eventReg } from "@/utils/functions/eventReg";
 import { useParams, useRouter } from "next/navigation";
@@ -16,14 +16,14 @@ const EventRegForm = ({
   isOpen,
   onClose,
   eventDetails,
+  category,
 }: {
   isOpen: boolean;
   onClose: () => void;
   eventDetails: any;
+  category: string;
 }) => {
   const router = useRouter();
-
-  // console.log(eventDetails);
   const eventId = eventDetails?.id;
   const [inputs, setInputs] = useState<any>({
     teamName: "",
@@ -60,7 +60,7 @@ const EventRegForm = ({
   const user = useUser((state) => state.user);
   const minTeamMember = eventDetails?.min_team_member;
   const maxTeamMember = eventDetails?.max_team_member;
-
+  const [isSWCcleared, setIsSWCcleared] = useState<any>(null);
   useEffect(() => {
     if (user) {
       setInputs((prevInputs: any) => ({
@@ -74,6 +74,16 @@ const EventRegForm = ({
       }));
     }
   }, [user, maxTeamMember]);
+
+  useEffect(() => {
+    if (category === "Robotics") {
+      setIsSWCcleared(false);
+    } else if (category === "Gaming") {
+      setIsSWCcleared(false);
+    } else {
+      setIsSWCcleared(user?.swc);
+    }
+  }, [user, category]);
 
   const [participants, setParticipants] = useState<any>([]);
   useEffect(() => {
@@ -138,7 +148,14 @@ const EventRegForm = ({
   let teamMemberCountError = "";
   const handleSubmit = async () => {
     try {
-      const res = validateReg(inputs, participants, maxTeamMember, file);
+      const res = validateReg(
+        inputs,
+        participants,
+        maxTeamMember,
+        file,
+        isSWCcleared
+      );
+      console.log(res);
       // if (
       //   participants.length < minTeamMember &&
       //   participants.length > maxTeamMember
@@ -154,7 +171,7 @@ const EventRegForm = ({
             participant.name === "" && participant.phone === ""
         );
       if (allFieldsEmpty) {
-        await eventReg(inputs, participants, file, eventId);
+        await eventReg(inputs, participants, file, eventId, isSWCcleared);
         toast.success("Registration Successful");
         onClose();
         router.push("/dashboard");
@@ -166,7 +183,7 @@ const EventRegForm = ({
         return;
       }
     } catch (err) {
-      // console.log(err);
+      console.log(err);
       toast.error("Registration Failed !");
     }
   };
@@ -250,60 +267,66 @@ const EventRegForm = ({
                   {generalErrors.teamLeadEmail}
                 </h1>
 
-                <RegFormElement
-                  type="text"
-                  name={"Referral Code"}
-                  disabled={user?.referral_code !== "default" ? true : false}
-                  placeholder="Optional"
-                  value={inputs.referralCode}
-                  id="referralCode"
-                  onChange={handleInputChange}
-                  width="100%"
-                />
-                <h1 className="text-green-600 font-semibold text-xs">
-                  Use Referral Codes for exclusive offers ! T&C Apply !
-                </h1>
-                <img
-                  src={"/QR.jpg"}
-                  width={350}
-                  className="mx-auto "
-                  height={100}
-                  alt=""
-                />
-                <h1 className="mx-auto text-center font-semibold text-lg">
-                  Pay Now :{" "}
-                  <span className="font-semibold text-green-600">
-                    ₹ {eventDetails?.registration_fees}
-                  </span>
-                </h1>
-                <RegFormElement
-                  type="text"
-                  name="Transaction Id"
-                  value={inputs.transactionId}
-                  id="transactionId"
-                  onChange={handleInputChange}
-                  width="100%"
-                />
-                <h1 className="text-red-600 font-semibold text-xs">
-                  {generalErrors.transactionId}
-                </h1>
-                <div className="flex flex-row gap-2 flex-wrap text-sm items-center">
-                  <label
-                    htmlFor="transactionSSfileName"
-                    className="font-semibold"
-                  >
-                    Payment Screenshot :
-                  </label>
-                  <input
-                    type="file"
-                    id="transactionSSfileName"
-                    className="font-semibold"
-                    onChange={handleFileChange}
-                  />
-                  <h1 className="text-red-600 font-semibold text-xs">
-                    {generalErrors.transactionSSfileName}
-                  </h1>
-                </div>
+                {!isSWCcleared && (
+                  <>
+                    <RegFormElement
+                      type="text"
+                      name={"Referral Code"}
+                      disabled={
+                        user?.referral_code !== "default" ? true : false
+                      }
+                      placeholder="Optional"
+                      value={inputs.referralCode}
+                      id="referralCode"
+                      onChange={handleInputChange}
+                      width="100%"
+                    />
+                    <h1 className="text-green-600 font-semibold text-xs">
+                      Use Referral Codes for exclusive offers ! T&C Apply !
+                    </h1>
+                    <img
+                      src={"/QR.jpg"}
+                      width={350}
+                      className="mx-auto "
+                      height={100}
+                      alt=""
+                    />
+                    <h1 className="mx-auto text-center font-semibold text-lg">
+                      Pay Now :{" "}
+                      <span className="font-semibold text-green-600">
+                        ₹ {eventDetails?.registration_fees}
+                      </span>
+                    </h1>
+                    <RegFormElement
+                      type="text"
+                      name="Transaction Id"
+                      value={inputs.transactionId}
+                      id="transactionId"
+                      onChange={handleInputChange}
+                      width="100%"
+                    />
+                    <h1 className="text-red-600 font-semibold text-xs">
+                      {generalErrors.transactionId}
+                    </h1>
+                    <div className="flex flex-row gap-2 flex-wrap text-sm items-center">
+                      <label
+                        htmlFor="transactionSSfileName"
+                        className="font-semibold"
+                      >
+                        Payment Screenshot :
+                      </label>
+                      <input
+                        type="file"
+                        id="transactionSSfileName"
+                        className="font-semibold"
+                        onChange={handleFileChange}
+                      />
+                      <h1 className="text-red-600 font-semibold text-xs">
+                        {generalErrors.transactionSSfileName}
+                      </h1>
+                    </div>
+                  </>
+                )}
 
                 {maxTeamMember > 1 && (
                   <div className="flex flex-col items-center gap-5">

@@ -9,4 +9,5 @@ export interface IUser extends User {
   gender: string;
   id: string;
   referral_code: string;
+  swc: boolean;
 }
