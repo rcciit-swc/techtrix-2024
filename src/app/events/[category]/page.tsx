@@ -8,12 +8,14 @@ import { CategoryState } from "@/types/events";
 import { getCategoryEvents } from "@/utils/functions/getCategoryEvents";
 import { getCoordinators } from "@/utils/functions/getCoordinators";
 import { useParams, useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { PuffLoader } from "react-spinners";
 import parse from "html-react-parser";
 import { MdLocalOffer } from "react-icons/md";
 import ComboRegForm from "@/components/events/ComboRegForm";
 import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
+import { comboEvents } from "@/utils/constants/comboEvents";
+import Link from "next/link";
 
 const EventCard = ({
   event,
@@ -93,17 +95,14 @@ const EventCard = ({
   );
 };
 
-const comboEvents = [
-  {
-    category: "Robotics",
-    events: ["Final Kick", "Robo War (15 KG)", "ROAD RASH"],
-  },
-];
-
 const Page = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [comboRegOpen, setComboRegOpen] = useState(false);
   const setEventbyCategory = useEventbyCategory((state) => state.setEvents);
+
+  const [registeredEvents, setRegisteredEvents] = useState<any>([]);
+  const user = useUser((state) => state.user);
+
   var eventsbyCategory: CategoryState[] = [];
   const [loading, setLoading] = useState<boolean>(true);
   const param: any = useParams();
@@ -118,6 +117,26 @@ const Page = () => {
     };
     getEvents();
   }, [event]);
+
+  const [comboRegistered, setComboRegistered] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (user) {
+      const getRegisteredEvents = async () => {
+        const res = await checkIfUserRegistered({
+          phone_param: user.phone,
+        });
+        setRegisteredEvents(res);
+        const allComboEventsRegistered = comboEvents.every((comboEvent) =>
+          comboEvent.events.every((event) =>
+            res.some((regEvent: any) => regEvent.event_name === event)
+          )
+        );
+        setComboRegistered(allComboEventsRegistered);
+      };
+      getRegisteredEvents();
+    }
+  }, [user]);
 
   const eventCardRef = React.useRef(null);
   const handleEventCardClick = (event: any, eventCardRef: any) => {
@@ -161,7 +180,8 @@ const Page = () => {
                 {comboEvents.find(
                   (comboEvent: any) => comboEvent.category === event
                 ) &&
-                  isAllOpen && (
+                  isAllOpen &&
+                  !comboRegistered! && (
                     <button
                       onClick={() => setComboRegOpen(true)}
                       className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-black bg-black text-white rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
@@ -170,6 +190,14 @@ const Page = () => {
                       <MdLocalOffer size={20} />
                     </button>
                   )}
+                {comboRegistered! && (
+                  <Link
+                    href={"/dashboard"}
+                    className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-green-600 bg-white text-green-600 rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
+                  >
+                    Combo Registered !
+                  </Link>
+                )}
                 {eventsbyCategory?.map((event, index) => {
                   return (
                     <div key={index}>

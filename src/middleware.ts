@@ -47,6 +47,27 @@ export async function middleware(request: NextRequest) {
           .select();
       }
     }
+
+    if (
+      session &&
+      session?.user?.email?.includes("@rcciit.org.in" || "@rccinstitue.org")
+    ) {
+      const { data: swcDetails, error } = await supabase
+        .from("swc")
+        .select("email")
+        .eq("email", session?.user.email);
+
+      if (swcDetails!.length > 0) {
+        await supabase
+          .from("users")
+          .update({
+            swc: true,
+          })
+          .eq("email", session?.user.email)
+          .select();
+      }
+    }
+
     const userDetails = await supabase
       .from("users")
       .select()
@@ -69,9 +90,7 @@ export async function middleware(request: NextRequest) {
 
     if (
       superAdmin &&
-      url.pathname.startsWith(
-        "/admin-dashboard" || "/coordinator")
-      
+      url.pathname.startsWith("/admin-dashboard" || "/coordinator")
     ) {
       return NextResponse.next();
     }
