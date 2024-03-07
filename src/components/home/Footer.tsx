@@ -7,7 +7,7 @@ import { FaGoogle } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center mt-10">
+    <div className=" flex flex-col items-center mt-10">
       <div className=" bg-indigo-50 py-10 text-black w-full flex flex-row flex-wrap items-center gap-10 justify-around">
         <Image src="/rcc 1.png" width={82} height={82} alt="logo" />
 

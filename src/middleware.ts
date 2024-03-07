@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
         .from("swc")
         .select("email")
         .eq("email", session?.user.email);
-      if (swcDetails!.length > 0) { 
+      if (swcDetails!.length > 0) {
         await supabase
           .from("users")
           .update({
@@ -76,10 +76,22 @@ export async function middleware(request: NextRequest) {
       .from("roles")
       .select("role")
       .eq("id", session?.user.id);
-    const superAdmin = userRoles?.data?.[0]?.role?.includes("super_admin");
-    const eventCoordinator =
-      userRoles?.data?.[0]?.role?.includes("event_coordinator");
-
+    // const superAdmin = userRoles?.data?.[0]?.role?.includes("super_admin");
+    // const eventCoordinator =
+    //   userRoles?.data?.[0]?.role?.includes("event_coordinator");
+    // const convenor = userRoles?.data?.[0]?.role?.includes("convenor");
+    let superAdmin = false;
+    let eventCoordinator = false;
+    let convenor = false;
+    for (const obj of userRoles.data!) {
+      if (obj.role === "super_admin") {
+        superAdmin = true;
+      } else if (obj.role === "event_coordinator") {
+        eventCoordinator = true;
+      } else if (obj.role === "convenor") {
+        convenor = true;
+      }
+    }
     if (
       !checkUserDetails(userDetails?.data?.[0]) &&
       url.pathname !== "/registration"
@@ -104,6 +116,9 @@ export async function middleware(request: NextRequest) {
     }
 
     if (eventCoordinator && url.pathname.startsWith("/coordinator")) {
+      return NextResponse.next();
+    }
+    if (convenor && url.pathname.startsWith("/coordinator")) {
       return NextResponse.next();
     }
     if (superAdmin && url.pathname.startsWith("/coordinator")) {
