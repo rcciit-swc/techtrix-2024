@@ -445,7 +445,6 @@ const EventRegForm = ({
                   href={eventDetails.registration_link}
                   target="_blank"
                   className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                  onClick={handleSubmit}
                 >
                   Fill Form
                 </Link>

@@ -141,7 +141,7 @@ const Page = () => {
     setIsConfirmOpen(false);
   };
   return (
-    <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center gap-5 w-[90%] md:w-[80%] mx-auto ">
       <Heading text={`Edit Event: ${event?.event_name}`} />
       <div className="mx-auto border-2 border-black rounded-xl bg-gray-100 flex flex-col  flex-wrap gap-10 w-full px-2 py-5  md:px-10 md:py-10">
         <div className=" flex flex-row items-center gap-8 md:gap-20 flex-wrap justify-start w-full  ">
