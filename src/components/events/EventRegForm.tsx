@@ -212,7 +212,7 @@ const EventRegForm = ({
                 X
               </h2>
             </div>
-            <h1 className="text-green-600 font-semibold text-sm mb-2">No Registration fees required if SWC paid except Robotics and Gaming Category for RCCIIT students !</h1>
+            <h1 className="text-green-600 font-semibold text-xs mb-2">No Registration fees required if SWC paid except Robotics and Gaming Category for RCCIIT students !</h1>
             {eventDetails.register_through_portal ? (
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
