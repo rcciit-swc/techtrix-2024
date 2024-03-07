@@ -84,6 +84,7 @@ const EventDetails = ({
     }
   });
 
+
   return (
     <motion.div className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (
@@ -105,6 +106,9 @@ const EventDetails = ({
               </h1>
 
               <div dangerouslySetInnerHTML={{ __html: eventInfo.desc }}></div>
+              {eventInfo.event_name === "Model and Poster Presentation (Student Innovation)" && 
+              <Link download={true} href="/downloads/Model Template.pptx" className="bg-black text-white border border-black hover:bg-white hover:text-black px-3 py-2 rounded-xl text-sm font-semibold">
+                View Template</Link>}
               <h1>
                 Team Capacity :{" "}
                 <span className="font-semibold">
