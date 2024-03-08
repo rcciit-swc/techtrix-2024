@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Heading from "./Heading";
+import Link from "next/link";
 
 const SponsorButton = ({
   title,
@@ -7,15 +8,19 @@ const SponsorButton = ({
   textColor,
   icon,
   onClick,
+  href,
 }: {
   title: string;
   background: string;
   textColor: string;
   icon: string;
   onClick: () => void;
+  href?: string | null | undefined | any;
 }) => {
   return (
-    <div
+    <Link
+      target="_blank"
+      href={href}
       className={`flex flex-row items-center justify-between w-[50%]  hover:invert  bg-${background} border-2  lg:px-2 cursor-pointer rounded-full  duration-500 hover:scale-[101%]`}
     >
       <h1
@@ -30,7 +35,7 @@ const SponsorButton = ({
         className="w-6 lg:w-10 xl:w-14 cursor-pointer hover:scale-110 duration-500"
         alt="arrow"
       />
-    </div>
+    </Link>
   );
 };
 const Sponsor = () => {
@@ -59,6 +64,7 @@ const Sponsor = () => {
             </h1>
             <div className="flex flex-col items-start gap-[3px] xl:mt-2 ">
               <SponsorButton
+                href="https://drive.google.com/file/d/1HOmJnMt-zE72mbEHBw76h-UIjw_H4um2/view?usp=sharing"
                 title="Brochure"
                 background="white"
                 textColor="black"
@@ -66,6 +72,7 @@ const Sponsor = () => {
                 onClick={() => {}}
               />
               <SponsorButton
+                href={""}
                 title="Hit Us Up"
                 background="black"
                 textColor="white"

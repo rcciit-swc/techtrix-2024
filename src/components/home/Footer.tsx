@@ -46,7 +46,10 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-semibold text-lg">Quick Links</h1>
           <div className="flex flex-row flex-wrap justify-center px-2 items-center gap-10 font-semibold">
-            <Link href="/">
+            <Link
+              target="_blank"
+              href="https://drive.google.com/file/d/1HOmJnMt-zE72mbEHBw76h-UIjw_H4um2/view?usp=sharing"
+            >
               <h1 className="text-sm md:text-xs lg:text-sm xl:text-sm">
                 Sponsorship Brochure
               </h1>
