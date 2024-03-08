@@ -119,7 +119,7 @@ const MemberModal = ({
                 return (
                   <div
                     key={index}
-                    className="flex flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full"
+                    className="flex text-center flex-col md:flex-row bg-green-200 flex-wrap justify-around font-semibold w-full"
                   >
                     <h1>{member.name}</h1>
                     <a

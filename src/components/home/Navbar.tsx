@@ -64,22 +64,26 @@ const Navbar = () => {
           }
         }
 
-        if (!isConvenor) {
-          setShowCoordinatorDashboard(true);
-        }
-        if (isSuperAdmin || !isCoordinator) {
-          setShowConvenorDashboard(true);
-        }
-
-        if(isConvenor){
+        if (isSuperAdmin) {
+          setShowAdminDashboard(true);
           setShowConvenorDashboard(true);
           setShowCoordinatorDashboard(false);
+        } else {
+          if (isConvenor) {
+            setShowConvenorDashboard(true);
+            setShowCoordinatorDashboard(false);
+            return;
+          } else {
+            if (isCoordinator) {
+              setShowConvenorDashboard(false);
+              setShowCoordinatorDashboard(true);
+            } else if (!isSuperAdmin && !isCoordinator && !isConvenor) {
+              setShowCoordinatorDashboard(false);
+              setShowConvenorDashboard(false);
+            }
+          }
         }
 
-        if (!isSuperAdmin && !isCoordinator && !isConvenor) {
-          setShowCoordinatorDashboard(false);
-          setShowConvenorDashboard(false);
-        }
         setShowDashboard(true);
         setShowAdminDashboard(isSuperAdmin);
       }
