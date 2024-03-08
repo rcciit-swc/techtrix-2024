@@ -37,3 +37,16 @@ export const partners: partnerType[] = [
     type: "Community Partner",
   },
 ];
+
+export const communityPartners: partnerType[] = [
+  {
+    name: "Flutter Kolkata",
+    logo: "/assets/partners/flutter.jpg",
+    type: "Community Partner",
+  },
+  {
+    name: "Kotlin Kolkata",
+    logo: "/assets/partners/kotlin.jpg",
+    type: "Community Partner",
+  },
+]
