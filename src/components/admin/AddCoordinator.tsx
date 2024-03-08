@@ -6,19 +6,24 @@ import { supabase } from "@/lib";
 import { addCoordinator } from "@/utils/functions/addCoordinator";
 import { getCategories } from "@/utils/functions/getCategories";
 import { Toaster, toast } from "sonner";
+import { addConvenor } from "@/utils/functions/addConvenor";
 
 const AddCoordinator = ({
   isOpen,
   onClose,
+  role,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  role: string;
 }) => {
   const [inputs, setInputs] = useState({
     phone: "",
     event: "",
+    category: "",
   });
   const [events, setEvents] = useState<any>([]);
+  const [categories, setCategories] = useState<any>([]);
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | any
@@ -40,15 +45,20 @@ const AddCoordinator = ({
         .eq("fest_name", "Techtrix");
       setEvents(res.data?.map((event: any) => event.event_name));
     };
+    const getCategories = async () => {
+      const res = await supabase.from("event_categories").select("id,name");
+      setCategories(res.data?.map((event: any) => event.name));
+    };
     getEventDetails();
+    getCategories();
   }, [isOpen]);
 
   const submitCoordinator = async () => {
-    if (inputs.phone === "" || inputs.event === "") {
-      toast.error("Fill all fields !");
-    }
+    
 
-    await addCoordinator(inputs);
+    role === "Convenor"
+      ? await addConvenor(inputs)
+      : await addCoordinator(inputs);
     toast.success("Coordinator Added !");
     onClose();
   };
@@ -58,7 +68,7 @@ const AddCoordinator = ({
         <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
           <div className="bg-gray-100 w-[90%] md:w-1/3 p-4 rounded-lg relative   flex flex-col items-start  ">
             <div className="w-full flex flex-row mb-2 items-center justify-between">
-              <h2 className="text-lg font-semibold">Coordinator Addition</h2>
+              <h2 className="text-lg font-semibold">{role} Addition</h2>
 
               <h2
                 onClick={onClose}
@@ -75,13 +85,13 @@ const AddCoordinator = ({
 
             <div className="flex flex-col items-start gap-2 my-2 w-full">
               <SelectInput
-                options={events}
+                options={role !== "Convenor" ? events : categories}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
-                value={inputs.event}
-                name="Choose Event"
-                id="event"
+                value={role !== "Convenor" ? inputs.event : inputs.category}
+                name={role !== "Convenor" ? "Event" : "Category"}
+                id={role !== "Convenor" ? "event" : "category"}
               />
               <FormElement
                 name="Phone"

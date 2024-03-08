@@ -10,7 +10,11 @@ import AddCoordinator from "@/components/admin/AddCoordinator";
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
+  const [isConvenorOpen, setIsConvenorOpen] = useState(false);
+  const onClose = () =>{
+    setIsOpen(false);
+    setIsConvenorOpen(false);
+  }
   const [events, setEvents] = useState<any>([]);
   useEffect(() => {
     const fetchEvents = async () => {
@@ -32,20 +36,29 @@ const Page = () => {
           <IoSearchSharp className="w-10 h-10" />
         </div>
 
-        <button className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl ">
+        <button   className="flex flex-row items-center font-semibold border-2 border-black px-3 py-1 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-sm ">
           <FaPlus />
           <Link href={"/admin-dashboard/manage-events/add-event"}>Add Event</Link>
         </button>
         <button
           onClick={() => setIsOpen(true)}
-          className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-xl "
+          className="flex flex-row items-center font-semibold border-2 border-black px-3 py-1 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-sm "
         >
           <FaPlus />
           Add Coordinator
         </button>
+
+        <button
+          onClick={() => setIsConvenorOpen(true)}
+          className="flex flex-row items-center font-semibold border-2 border-black px-3 py-1 hover:bg-white hover:text-black rounded-xl bg-black text-white gap-2 text-sm "
+        >
+          <FaPlus />
+          Add Convenor
+        </button>
         <EventPreview events={events} />
       </div>
-      {isOpen ? <AddCoordinator isOpen={isOpen} onClose={onClose} /> : null}
+      {isOpen ? <AddCoordinator isOpen={isOpen} onClose={onClose} role="Coordinator"  /> : null}
+      {isConvenorOpen ? <AddCoordinator isOpen={isConvenorOpen} onClose={onClose} role="Convenor" /> : null}
     </div>
   );
 };

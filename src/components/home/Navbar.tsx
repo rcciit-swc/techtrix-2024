@@ -21,6 +21,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [role, setRole] = useState("");
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showConvenorDashboard, setShowConvenorDashboard] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
     useState(false);
@@ -36,7 +37,6 @@ const Navbar = () => {
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
-      // console.log(data);
       if (data) {
         setShowDashboard(true);
         setUserImg(data?.session?.user.user_metadata?.avatar_url);
@@ -47,19 +47,45 @@ const Navbar = () => {
         .select()
         .match({ id: data?.session?.user?.id });
 
+      let isSuperAdmin = false;
+      let isCoordinator = false;
+      let isConvenor = false;
+
       if (roleData) {
-        if (roleData?.[0]?.role === "event_coordinator") {
-          setShowDashboard(true);
-          setShowCoordinatorDashboard(true);
-          return;
+        for (const obj of roleData!) {
+          if (obj.role === "super_admin") {
+            isSuperAdmin = true;
+          }
+          if (obj.role === "event_coordinator") {
+            isCoordinator = true;
+          }
+          if (obj.role === "convenor") {
+            isConvenor = true;
+          }
         }
-        if (roleData?.[0]?.role === "super_admin") {
-          setRole("super_admin");
-          setShowDashboard(true);
-          setShowCoordinatorDashboard(true);
+
+        if (isSuperAdmin) {
           setShowAdminDashboard(true);
-          return;
+          setShowConvenorDashboard(true);
+          setShowCoordinatorDashboard(false);
+        } else {
+          if (isConvenor) {
+            setShowConvenorDashboard(true);
+            setShowCoordinatorDashboard(false);
+            return;
+          } else {
+            if (isCoordinator) {
+              setShowConvenorDashboard(false);
+              setShowCoordinatorDashboard(true);
+            } else if (!isSuperAdmin && !isCoordinator && !isConvenor) {
+              setShowCoordinatorDashboard(false);
+              setShowConvenorDashboard(false);
+            }
+          }
         }
+
+        setShowDashboard(true);
+        setShowAdminDashboard(isSuperAdmin);
       }
     };
 
@@ -165,6 +191,19 @@ const Navbar = () => {
                   </li>
                 </Link>
               )}
+
+              {user && showConvenorDashboard && (
+                <Link href={"/coordinator"}>
+                  <li
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                      pathname === "/coordinator" && "text-white bg-black"
+                    }`}
+                  >
+                    Convenor
+                  </li>
+                </Link>
+              )}
+
               {user && showAdminDashboard && (
                 <Link
                   href={"/admin-dashboard"}
