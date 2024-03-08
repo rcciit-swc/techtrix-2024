@@ -401,7 +401,7 @@ const EventRegForm = ({
                                 disabled={index == 0 ? true : false}
                                 value={
                                   index == 0
-                                    ? (participant.phone === inputs.teamLeadPhone)
+                                    ? (participant.phone = inputs.teamLeadPhone)
                                     : participant.phone
                                 }
                                 onChange={(e) =>
