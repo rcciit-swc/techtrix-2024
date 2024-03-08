@@ -13,7 +13,7 @@ const TeamCard = ({ member }: { member: any }) => {
           width={200}
           height={200}
           style={{ objectFit: "cover", objectPosition: "0 10%" }}
-          className="h-72 w-72 rounded-2xl object-cover "
+          className="h-80 w-80 rounded-2xl object-cover "
           onLoad={() => setLoaded(true)}
         />
         <h1 className="text-lg text-center font-bold">{member.name}</h1>

@@ -11,7 +11,7 @@ export const teams = [
             {
                 name: "Shourya Shikhar Ghosh",
                 role: "A.G.S. Tech",
-                image: "https://i.imgur.com/BkViygc.jpg"
+                image: "https://i.postimg.cc/D0TtD5DL/shourya.png"
             },
             {
                 name: "Tridibes Pal",
@@ -64,13 +64,18 @@ export const teams = [
         id: "management",
         members:[
             {
+                name: "Srinanda Das",
+                role: "Convenor",
+                image: "https://i.imgur.com/vcD9y4v.jpg"
+            },
+            {
                 name: "Shuvangi De",
-                role: "SPOC",
+                role: "Joint Convenor",
                 image: "https://i.imgur.com/iMBBteF.jpg"
             },
             {
                 name: "Anamitra Sengupta",
-                role: "SPOC",
+                role: "Joint Convenor",
                 image: "https://i.imgur.com/gHXMpIx.jpg"
             },
             {
@@ -80,7 +85,7 @@ export const teams = [
             },
             {
                 name: "Shatabdi Das",
-                role: "Registration Team",
+                role: "Registration Team Lead",
                 image: "https://i.imgur.com/TXRzq98.jpg"
             },
             {
