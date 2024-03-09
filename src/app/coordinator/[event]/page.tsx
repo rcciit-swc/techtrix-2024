@@ -17,6 +17,7 @@ const Page = () => {
     transactionId: "",
     membersPhone: "",
     createdAt: "",
+    swc:"",
   });
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState<any>([]);
@@ -44,6 +45,9 @@ const Page = () => {
         registration.team_lead_name
           .toLowerCase()
           .includes(inputs.name.toLowerCase()) &&
+          registration.swc
+          .toLowerCase()
+          .includes(inputs.swc.toLowerCase()) &&
         new Date(registration.created_at)
           .toLocaleDateString("en-US", options)
           .includes(inputs.createdAt) &&
@@ -114,6 +118,14 @@ const Page = () => {
           value={inputs.membersPhone}
           type="text"
           id="membersPhone"
+          onChange={handleInputChange}
+          width="1/3"
+        />
+        <FormElement
+          name="SWC"
+          value={inputs.swc}
+          type="text"
+          id="swc"
           onChange={handleInputChange}
           width="1/3"
         />
