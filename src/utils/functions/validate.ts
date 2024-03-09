@@ -19,6 +19,7 @@ export const validateReg = (
     teamLeadPhone: "",
     teamLeadEmail: "",
     file: "",
+    college: ""
   };
   // const uniqueEmails = new Set<string>();
 
@@ -44,6 +45,10 @@ export const validateReg = (
 
   if (!swc && inputs.transactionSSfileName === "") {
     errors.transactionSSfileName = "Payment Screenshot is required";
+  }
+
+  if(inputs.college === "") {
+    errors.college = "College is required";
   }
 
   if (!swc) {
@@ -142,6 +147,8 @@ export const validateEventInputs = (
     teamLeadPhone: "",
     teamLeadEmail: "",
     file: "",
+    college: "",
+    
   };
   const regexPhone =
     /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
@@ -157,6 +164,10 @@ export const validateEventInputs = (
     errors.transactionId = "Transaction Id is required";
   } else if (inputs.transactionId.length < 12) {
     errors.transactionId = "Invalid Transaction Id";
+  }
+
+  if(inputs.college === "") {
+    errors.college = "College is required";
   }
 
   if (file === null) {

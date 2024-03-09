@@ -1,7 +1,9 @@
 "use client";
 import FormElement from "@/components/admin/FormElement";
+import ManualRegModal from "@/components/admin/ManualReg";
 import Table from "@/components/admin/Table";
 import { Heading } from "@/components/home";
+import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { getRegisteredTeams } from "@/utils/functions/getRegisteredTeams";
 import { getRegsByEvent } from "@/utils/functions/getRegsByEvent";
 import { useParams } from "next/navigation";
@@ -17,14 +19,19 @@ const Page = () => {
     transactionId: "",
     membersPhone: "",
     createdAt: "",
+    swc:"",
   });
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState<any>([]);
   const [registrationData, setRegistrationData] = useState<any[]>([]);
-
+  const [offlineReg, setOfflineReg] = useState(false);
+  const [eventDetails, setEventDetails] = useState<any>({});
   useEffect(() => {
     const getAllEvents = async () => {
       const data = await getRegsByEvent(eventId);
+      const res = await getEventInfo(eventId);
+      console.log(res![0]!);
+      setEventDetails(res![0]!);
       setRegistrationData(data);
       setLoading(false);
     };
@@ -44,6 +51,9 @@ const Page = () => {
         registration.team_lead_name
           .toLowerCase()
           .includes(inputs.name.toLowerCase()) &&
+          registration.swc
+          .toLowerCase()
+          .includes(inputs.swc.toLowerCase()) &&
         new Date(registration.created_at)
           .toLocaleDateString("en-US", options)
           .includes(inputs.createdAt) &&
@@ -118,6 +128,14 @@ const Page = () => {
           width="1/3"
         />
         <FormElement
+          name="SWC"
+          value={inputs.swc}
+          type="text"
+          id="swc"
+          onChange={handleInputChange}
+          width="1/3"
+        />
+        <FormElement
           name="Created At"
           value={inputs.createdAt}
           type="text"
@@ -126,6 +144,10 @@ const Page = () => {
           width="1/3"
         />
       </div>
+      {/* <div className="font-semibold flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
+        <h1>For Offline Registration :</h1>
+        <button onClick={()=>setOfflineReg(true)} className="bg-black border border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black">Registration</button>
+      </div> */}
       {loading ? (
         <div className="min-h-[60vh] flex flex-col justify-center">
           <PuffLoader color={"#000"} size={100} />
@@ -135,6 +157,7 @@ const Page = () => {
           <Table registrationData={filteredData} />
         </div>
       )}
+     <ManualRegModal isOpen={offlineReg} onClose={()=>setOfflineReg(false)} eventDetails={eventDetails} />
     </div>
   );
 };

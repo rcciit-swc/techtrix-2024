@@ -39,7 +39,7 @@ const EventDetails = ({
   const [eventCategory, setEventCategory] = useState<any>(null);
   useMemo(() => {
     const getInfo = async () => {
-      const res = await getEventInfo(eventDetails?.event_name);
+      const res = await getEventInfo(eventDetails?.id);
       if (user) {
         const ifRegistered = await checkIfUserRegistered({
           phone_param: user?.phone!,

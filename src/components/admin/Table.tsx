@@ -30,8 +30,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
     const filteredData = registrationData.filter((registration: any) =>
       Object.values(registration).some(
         (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(searchValue)
+          typeof value === "string" && value.toLowerCase().includes(searchValue)
       )
     );
     setFilteredResults(filteredData);
@@ -50,18 +49,18 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
   return (
     <>
       <div className="flex items-center mb-5">
-        <input
+        {/* <input
           type="text"
           className="border border-gray-300 px-2 py-1 rounded-md mr-3"
           placeholder="Search..."
           onChange={handleSearch}
-        />
-        <button
+        /> */}
+        {/* <button
           className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-md"
           onClick={handleSort}
         >
           Sort
-        </button>
+        </button> */}
       </div>
       <table className="w-full table-auto border border-gray-300 rounded-xl">
         <thead>
@@ -84,6 +83,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
             <th>Team Name</th>
             <th>Name</th>
             <th>Team Lead Phone</th>
+            <th>Email</th>
             <th>Transaction ID</th>
             <th>SWC</th>
             <th>Members</th>
@@ -124,6 +124,9 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {registration?.team_lead_phone!}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {registration?.team_lead_email!}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {registration.transaction_id}

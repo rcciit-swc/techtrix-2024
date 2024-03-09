@@ -31,6 +31,8 @@ const ComboRegForm = ({
     teamLeadEmail: "",
     teamLeadName: "",
     referralCode: "",
+    regMode: "",
+    college: "",
   });
 
   const eventNames = events.map((event: any) => event! && event!.event_name!);
@@ -260,6 +262,17 @@ const ComboRegForm = ({
               <h1 className="text-red-600 font-semibold text-xs">
                 {generalErrors.teamLeadEmail}
               </h1>
+              <RegFormElement
+                  type="text"
+                  name={"College"}
+                  value={inputs.college}
+                  id="college"
+                  onChange={handleInputChange}
+                  width="100%"
+                />
+                   <h1 className="text-red-600 font-semibold text-xs">
+                  {generalErrors.college}
+                </h1>
 
               <RegFormElement
                 type="text"

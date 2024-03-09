@@ -1,27 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
-// import FormElement from "../admin/FormElement";
+import { useUser } from "@/lib";
 import { eventReg } from "@/utils/functions/eventReg";
-import { useParams, useRouter } from "next/navigation";
-// import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { validateReg } from "@/utils/functions/validate";
-// import { EventData } from "@/types/events";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { Toaster, toast } from "sonner";
-import RegFormElement from "./RegFormElement";
-import { supabase, useUser } from "@/lib";
+import RegFormElement from "../events/RegFormElement";
 import Link from "next/link";
-// import { stat } from "fs";
-// import Image from "next/image";
+// import FormElement from "../admin/FormElement";
 
-const EventRegForm = ({
+const ManualRegModal = ({
   isOpen,
   onClose,
   eventDetails,
-  category,
 }: {
   isOpen: boolean;
   onClose: () => void;
   eventDetails: any;
-  category: string;
 }) => {
   const router = useRouter();
   const eventId = eventDetails?.id;
@@ -48,47 +42,12 @@ const EventRegForm = ({
       transactionSSfileName: selectedFile.name,
     }));
   };
-  // const [eventInfo, setEventInfo] = useState<EventData | undefined>();
-
-  // useEffect(() => {
-  //   const getEvent = async () => {
-  //     const res: EventData[] | null | undefined | any = await getEventInfo(event);
-  //     console.log(res);
-  //     setEventInfo(res![0]);
-  //   };
-  //   getEvent();
-  // }, [event]);
 
   const user = useUser((state) => state.user);
   const minTeamMember = eventDetails?.min_team_member;
   const maxTeamMember = eventDetails?.max_team_member;
-  const [isSWCcleared, setIsSWCcleared] = useState<any>(null);
-  useEffect(() => {
-    if (user) {
-      setInputs((prevInputs: any) => ({
-        ...prevInputs,
-        teamLeadPhone: user.phone,
-        teamLeadEmail: user.email,
-        teamName: maxTeamMember > 1 ? "" : user.name, // Set teamName as blank if maxTeamMember > 1
-        teamLeadName: user.name,
-        referralCode:
-          user?.referral_code === "default" ? "" : user.referral_code!,
-          college: isSWCcleared ? "RCCIIT" : prevInputs.college,
-      }));
-    }
-  }, [user, maxTeamMember,isSWCcleared]);
+  const [isSWCcleared, setIsSWCcleared] = useState<any>(true);
 
-  useEffect(() => {
-    if (category === "Robotics") {
-      setIsSWCcleared(false);
-    } else if (category === "Gaming") {
-      setIsSWCcleared(false);
-    } else {
-      setIsSWCcleared(user?.swc);
-      
-    }
-  }, [user, category]);
-  console.log(inputs)
   const [participants, setParticipants] = useState<any>([]);
   useEffect(() => {
     if (minTeamMember !== undefined && minTeamMember !== null) {
@@ -159,15 +118,7 @@ const EventRegForm = ({
         file,
         isSWCcleared
       );
-      console.log(res);
-      // if (
-      //   participants.length < minTeamMember &&
-      //   participants.length > maxTeamMember
-      // ) {
-      //   teamMemberCountError = `Team Members should be between ${minTeamMember} and ${maxTeamMember}`;
-      //   return;
-      // }
-      // console.log(res);
+
       const allFieldsEmpty =
         Object.values(res.errors).every((value) => value === "") &&
         res.teamErrors.every(
@@ -176,9 +127,10 @@ const EventRegForm = ({
         );
       if (allFieldsEmpty) {
         await eventReg(inputs, participants, file, eventId, isSWCcleared);
-        toast.success("Registration Successful");
+
         onClose();
-        router.push("/dashboard");
+        router.refresh();
+        toast.success("Registration Successful");
       }
       if (res.errors || res.teamErrors) {
         setGeneralErrors(res.errors);
@@ -192,6 +144,7 @@ const EventRegForm = ({
     }
   };
 
+  console.log(inputs);
   return (
     <>
       {isOpen && (
@@ -216,12 +169,14 @@ const EventRegForm = ({
                 X
               </h2>
             </div>
-            <h1 className="text-green-600 font-semibold text-xs mb-2">No Registration fees required if SWC paid except Robotics and Gaming Category for RCCIIT students !</h1>
+            <h1 className="text-green-600 font-semibold text-xs mb-2">
+              No Registration fees required if SWC paid except Robotics and
+              Gaming Category for RCCIIT students !
+            </h1>
             {eventDetails.register_through_portal ? (
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
                   type="text"
-                  disabled={maxTeamMember > 1 ? false : true}
                   name={maxTeamMember > 1 ? "Team Name" : "Name"}
                   value={inputs.teamName}
                   id="teamName"
@@ -233,7 +188,6 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="number"
-                  disabled={maxTeamMember > 1 ? true : true}
                   name={maxTeamMember > 1 ? "Team Lead Phone" : "Phone"}
                   value={inputs.teamLeadPhone}
                   id="teamLeadPhone"
@@ -247,7 +201,6 @@ const EventRegForm = ({
                 {maxTeamMember > 1 && (
                   <RegFormElement
                     type="text"
-                    disabled={maxTeamMember > 1 ? true : true}
                     name={maxTeamMember > 1 ? "Team Lead Name" : "Name"}
                     value={inputs.teamLeadName}
                     id="teamLeadName"
@@ -260,7 +213,6 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="email"
-                  disabled={maxTeamMember > 1 ? true : true}
                   name={maxTeamMember > 1 ? "Team Lead Email" : "Email"}
                   value={inputs.teamLeadEmail}
                   id="teamLeadEmail"
@@ -272,76 +224,43 @@ const EventRegForm = ({
                 </h1>
                 <RegFormElement
                   type="text"
-                  name={"College"}
-                  disabled={isSWCcleared ? true : false}
-                  value={isSWCcleared ? "RCCIIT" : inputs.college}
+                  name={"college"}
+                  value={inputs.college}
                   id="college"
                   onChange={handleInputChange}
                   width="100%"
                 />
-                   <h1 className="text-red-600 font-semibold text-xs">
+                <h1 className="text-red-600 font-semibold text-xs">
                   {generalErrors.college}
                 </h1>
-                {!isSWCcleared && (
-                  <>
-                    <RegFormElement
-                      type="text"
-                      name={"Tracking Code"}
-                      disabled={
-                        user?.referral_code !== "default" ? false : false
-                      }
-                      placeholder="Optional"
-                      value={inputs.referralCode}
-                      id="referralCode"
+                <h1 className="font-semibold">Payment Method :</h1>
+                <div className="flex px-1 font-semibold text-xs md:text-xl flex-row flex-wrap items-center max-md:justify-between w-full  gap-10  md:items-center md:gap-16 ">
+                  <label className="flex flex-row items-center gap-1">
+                    <input
+                      name="regMode"
+                      type="radio"
+                      value="Offline UPI"
+                      className="text-black bg-black"
+                      checked={inputs.regMode === "Offline UPI"}
                       onChange={handleInputChange}
-                      width="100%"
+                      required={true}
                     />
-                    <h1 className="text-green-600 font-semibold text-xs">
-                      Use Tracking Codes for exclusive offers ! T&C Apply !
-                    </h1>
-                    <img
-                      src={"/QR.jpg"}
-                      width={350}
-                      className="mx-auto "
-                      height={100}
-                      alt=""
-                    />
-                    <h1 className="mx-auto text-center font-semibold text-lg">
-                      Pay Now :{" "}
-                      <span className="font-semibold text-green-600">
-                        ₹ {eventDetails?.registration_fees}
-                      </span>
-                    </h1>
-                    <RegFormElement
-                      type="text"
-                      name="Transaction Id"
-                      value={inputs.transactionId}
-                      id="transactionId"
+                    Offline UPI
+                  </label>
+
+                  <label className="flex flex-row items-center gap-1">
+                    <input
+                      name="regMode"
+                      type="radio"
+                      value="Offline Cash"
+                      className="text-black bg-black"
+                      checked={inputs.regMode === "Offline Cash"}
                       onChange={handleInputChange}
-                      width="100%"
+                      required={true}
                     />
-                    <h1 className="text-red-600 font-semibold text-xs">
-                      {generalErrors.transactionId}
-                    </h1>
-                    <div className="flex flex-row gap-2 flex-wrap text-sm items-center">
-                      <label
-                        htmlFor="transactionSSfileName"
-                        className="font-semibold"
-                      >
-                        Payment Screenshot :
-                      </label>
-                      <input
-                        type="file"
-                        id="transactionSSfileName"
-                        className="font-semibold"
-                        onChange={handleFileChange}
-                      />
-                      <h1 className="text-red-600 font-semibold text-xs">
-                        {generalErrors.transactionSSfileName}
-                      </h1>
-                    </div>
-                  </>
-                )}
+                    Offline Cash
+                  </label>
+                </div>
 
                 {maxTeamMember > 1 && (
                   <div className="flex flex-col items-center gap-5">
@@ -362,30 +281,6 @@ const EventRegForm = ({
                           </label>
 
                           <div className="flex flex-col items-start gap-3">
-                            {/* <div className="flex flex-row flex-wrap gap-2 font-semibold">
-                              <label htmlFor="email">Email :</label>
-                              <input
-                                type="text"
-                                id="email"
-                                value={
-                                  index == 0
-                                    ? (participant.email = inputs.teamLeadEmail)
-                                    : participant.email
-                                }
-                                disabled={index == 0 ? true : false}
-                                onChange={(e) =>
-                                  handleEmailChange(index, e.target.value)
-                                }
-                                className="border-black px-2 py-1 max-md:w-full rounded-lg"
-                                placeholder="Email"
-                              />
-                              {teamErrors && teamErrors[index] && (
-                                <h1 className="text-red-600 font-semibold text-xs">
-                                  {teamErrors[index].email}
-                                </h1>
-                              )}
-                            </div> */}
-
                             <div className="flex flex-row flex-wrap gap-2 font-semibold">
                               <label htmlFor="name">Name :</label>
                               <input
@@ -491,4 +386,4 @@ const EventRegForm = ({
   );
 };
 
-export default EventRegForm;
+export default ManualRegModal;

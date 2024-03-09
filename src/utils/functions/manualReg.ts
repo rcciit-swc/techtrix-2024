@@ -1,7 +1,7 @@
 import { supabase } from "@/lib";
 import { v4 as uuidv4 } from "uuid";
 import { v1 as uuidv1 } from "uuid";
-export const eventReg = async (
+export const manualReg = async (
   team: any,
   participants: any,
   file: any,
@@ -23,12 +23,12 @@ export const eventReg = async (
         team_name: team.teamName,
         event_id: eventId,
         team_lead_phone: team.teamLeadPhone,
-        transaction_id: swc ? uuidv4() : team.transactionId,
-        transaction_ss_filename: swc ? uuidv1() : file.name!,
-        referral_code: team.referralCode !== "" ? team.referralCode : "default",
-        transaction_verified: swc ? true : false,
+        transaction_id: uuidv4() ,
+        transaction_ss_filename:  uuidv1(),
+        referral_code: "default",
+        transaction_verified: true,
         reg_mode: team.regMode,
-        college: swc ? "RCCIIT"  : team.college,
+        college: team.college,
       })
       .select();
     teamId = data![0].team_id!;
@@ -52,12 +52,12 @@ export const eventReg = async (
         team_name: team.teamName,
         event_id: eventId,
         team_lead_phone: team.teamLeadPhone,
-        transaction_id: swc ? uuidv4() : team.transactionId,
-        transaction_ss_filename: swc ? uuidv1() : file.name!,
-        referral_code: team.referralCode !== "" ? team.referralCode : "default",
-        transaction_verified: swc ? true : false,
+        transaction_id: uuidv4(),
+        transaction_ss_filename: uuidv1(),
+        referral_code: "default",
+        transaction_verified: true,
         reg_mode: team.regMode,
-        college: swc ? "RCCIIT"  : team.college,
+        college: team.college,
       })
       .select();
     teamId = individualData![0].team_id!;
@@ -74,11 +74,5 @@ export const eventReg = async (
     }
     // console.log(individualData, participantData);
   }
-  if (!swc) {
-    const { data: uploadFile, error: uploadError } = await supabase.storage
-      .from("fests")
-      .upload(`Techtrix/2024/${eventId}/transactions/${file.name!}`, file!);
-  }
-
   // console.log(uploadFile);
 };

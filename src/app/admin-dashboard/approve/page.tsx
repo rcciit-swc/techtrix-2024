@@ -19,6 +19,8 @@ const Page = () => {
     eventName: "",
     createdAt: "",
     swc: "",
+    teamLeadName: "",
+    teamLeadEmail: "",
   });
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
@@ -39,13 +41,24 @@ const Page = () => {
   }, [sortOrder, JSON.stringify(filteredResults)]);
 
   const [loading, setLoading] = useState(true);
+  const [swcCount, setSwcCount] = useState(0);
+  const [nonSwcCount, setNonSwcCount] = useState(0);
   useMemo(() => {
     const fetchData = async () => {
       try {
         const data = await getRegistrations();
         setFilteredResults(data);
         setRegistrations(data);
+
         setLoading(false);
+        const swcPaidRegistrationsCount = data.filter(
+          (res: any) => res.swc === "Yes"
+        ).length;
+        setSwcCount(swcPaidRegistrationsCount);
+        const nonswcPaidRegistrationsCount = data.filter(
+          (res: any) => res.swc === "No"
+        ).length;
+        setNonSwcCount(nonswcPaidRegistrationsCount);
       } catch (error) {
         // console.log(error);
       }
@@ -64,8 +77,12 @@ const Page = () => {
     const filteredResults = registrations.filter(
       (registration: any) =>
         registration.team_lead_phone.includes(inputs.phone) &&
+        registration.team_lead_email.includes(inputs.teamLeadEmail) &&
         registration.transaction_id.includes(inputs.transactionId) &&
         registration.swc.toLowerCase().includes(inputs.swc.toLowerCase()) &&
+        registration.team_lead_name
+          .toLowerCase()
+          .includes(inputs.teamLeadName.toLowerCase()) &&
         registration.events.event_name
           .toLowerCase()
           .includes(inputs.eventName.toLowerCase()) &&
@@ -129,8 +146,34 @@ const Page = () => {
           onChange={handleInputChange}
           width="1/3"
         />
+        <FormElement
+          name="Team Lead Name"
+          value={inputs.teamLeadName}
+          type="text"
+          id="teamLeadName"
+          onChange={handleInputChange}
+          width="1/3"
+        />
+        <FormElement
+          name="Team Lead Email"
+          value={inputs.teamLeadEmail}
+          type="text"
+          id="teamLeadEmail"
+          onChange={handleInputChange}
+          width="1/3"
+        />
       </div>
 
+      <div className="flex flex-row flex-wrap font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-green-600">{swcCount}</span>{" "}
+        </h1>
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-red-600">{nonSwcCount} </span>
+        </h1>
+      </div>
       {loading ? (
         <div className="min-h-[60vh] flex flex-col justify-center items-center">
           <PuffLoader size={40} color="#000" />{" "}
@@ -158,6 +201,7 @@ const Page = () => {
                 <th>College</th>
                 <th>Name</th>
                 <th>Team Lead Phone</th>
+                <th>Team Lead Email</th>
                 <th>Transaction ID</th>
                 <th>Registered at</th>
                 <th>SWC</th>
@@ -204,10 +248,13 @@ const Page = () => {
                         {registration.college}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
-                        {registration?.participations[0]?.name!}
+                        {registration?.team_lead_name!}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
                         {registration?.team_lead_phone!}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {registration?.team_lead_email!}
                       </td>
                       <td className="border border-gray-300  py-2">
                         {registration.transaction_id}
