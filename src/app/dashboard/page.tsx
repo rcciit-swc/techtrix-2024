@@ -5,7 +5,7 @@ import { getRegbyUser } from "@/utils/functions/getRegbyUser";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
+// import QRCode from "react-qr-code";
 import { PuffLoader } from "react-spinners";
 
 const EventRegCard = ({ teams }: { teams: any }) => {
