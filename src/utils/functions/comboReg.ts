@@ -16,6 +16,8 @@ export const comboReg = async (inputs: any, eventInputs: any, file: any) => {
             transaction_ss_filename: eventInput.eventName + "-" + file.name!,
             referral_code:
               inputs.referralCode !== "" ? inputs.referralCode : "default",
+            college: inputs.college,
+            reg_mode: inputs.regMode,
           },
         ])
         .select();
