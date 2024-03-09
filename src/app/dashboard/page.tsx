@@ -5,8 +5,7 @@ import { getRegbyUser } from "@/utils/functions/getRegbyUser";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaPowerOff } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
+// import QRCode from "react-qr-code";
 import { PuffLoader } from "react-spinners";
 
 const EventRegCard = ({ teams }: { teams: any }) => {
@@ -37,6 +36,17 @@ const EventRegCard = ({ teams }: { teams: any }) => {
         {eventImage! && (
           <Image src={eventImage!} width={300} height={100} alt="" />
         )}
+
+        <div
+          style={{
+            height: "auto",
+            margin: "0 auto",
+            maxWidth: 64,
+            width: "100%",
+          }}
+        >
+         
+        </div>
         <div className="flex flex-row items-center gap-2 flex-wrap">
           <h1>Event :</h1> <span>{event!}</span>
         </div>
