@@ -11,8 +11,11 @@ export const getRegistrations = async () => {
         filteredData.push(res);
         const { data: swcCleared, error } = await supabase
           .from("users")
-          .select("swc,college")
+          .select("swc,college,name,phone,email")
           .eq("phone", res.team_lead_phone);
+
+        res["team_lead_name"] = swcCleared![0]?.name;
+        res["team_lead_email"] = swcCleared![0]?.email;
 
         res["college"] = swcCleared![0]?.college;
         if (swcCleared![0]?.swc!) {
