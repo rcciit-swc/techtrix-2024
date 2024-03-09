@@ -19,14 +19,14 @@ const teamData = [
     name: "Graphics Team",
     path: "/team/graphics",
   },
-  // {
-  //   name: "Sponsorship Team",
-  //   path: "/team/sponsorship",
-  // },
-  // {
-  //   name: "Coverage Team",
-  //   path: "/team/coverage",
-  // },
+   {
+     name: "Sponsorship Team",
+     path: "/team/sponsorship",
+   },
+   {
+     name: "Coverage Team",
+     path: "/team/coverage",
+   },
   {
     name: "Coordinators",
     path: "/team/coordinators",
