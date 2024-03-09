@@ -144,10 +144,10 @@ const Page = () => {
           width="1/3"
         />
       </div>
-      <div className="font-semibold flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
+      {/* <div className="font-semibold flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
         <h1>For Offline Registration :</h1>
         <button onClick={()=>setOfflineReg(true)} className="bg-black border border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black">Registration</button>
-      </div>
+      </div> */}
       {loading ? (
         <div className="min-h-[60vh] flex flex-col justify-center">
           <PuffLoader color={"#000"} size={100} />
