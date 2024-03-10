@@ -206,9 +206,17 @@ const EventDetails = ({
                     }
                     setRegOpen(true);
                   }}
-                  className="flex flex-row items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
+                  className="flex flex-row  items-center font-semibold border-2 border-black px-5 py-2 hover:bg-black hover:text-white rounded-xl bg-white text-black gap-2 text-xl "
                 >
                   Register Now
+                </button>
+              )}
+              {!eventInfo!.is_open && (
+                <button
+                  disabled={!eventInfo.is_open}
+                  className="flex flex-row items-center cursor-pointer font-semibold border-2 border-red-500 px-5 py-2 hover:text-red-500 rounded-xl bg-white text-red-500 gap-2 text-xl "
+                >
+                  Registration Closed
                 </button>
               )}
 
