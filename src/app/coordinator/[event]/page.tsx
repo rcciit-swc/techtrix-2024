@@ -9,7 +9,9 @@ import { getRegsByEvent } from "@/utils/functions/getRegsByEvent";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
-
+import { CSVLink } from "react-csv";
+import { dateTime } from "@/utils/functions/dateTime";
+import CsvDownloadButton from "react-json-to-csv";
 const Page = () => {
   let eventId: any = useParams().event;
   const [inputs, setInputs] = useState({
@@ -30,14 +32,12 @@ const Page = () => {
     const getAllEvents = async () => {
       const data = await getRegsByEvent(eventId);
       const res = await getEventInfo(eventId);
-      console.log(res![0]!);
       setEventDetails(res![0]!);
       setRegistrationData(data);
       setLoading(false);
     };
     getAllEvents();
   }, [eventId]);
-
 
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
@@ -167,6 +167,7 @@ const Page = () => {
           width="1/3"
         />
       </div>
+
       <div className="flex flex-row flex-wrap font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
         <h1>
           SWC Paid Registrations :{" "}
@@ -201,6 +202,13 @@ const Page = () => {
         >
           Check SWC
         </button>
+        <CSVLink
+          data={filteredData}
+          filename={`registrations-${dateTime()}.csv`}
+          className="w-fit-content rounded-md bg-blue-500 px-4 py-2 text-white shadow-md hover:bg-blue-600"
+        >
+          Download CSV
+        </CSVLink>
       </div>
 
       {loading ? (

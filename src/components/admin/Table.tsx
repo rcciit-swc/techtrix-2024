@@ -3,6 +3,7 @@ import { supabase } from "@/lib";
 import { getRegsByEvent } from "@/utils/functions/getRegsByEvent";
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
+import AttendanceModal from "./AttendanceModal";
 
 const Table = ({ registrationData }: { registrationData: any[] }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,6 +47,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
     timeZoneName: "short",
   };
 
+  const [isAttendModal, setIsAttendModal] = useState<boolean>(false);
   return (
     <>
       <div className="flex items-center mb-5">
@@ -86,6 +88,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
             <th>Email</th>
             <th>Transaction ID</th>
             <th>SWC</th>
+            <th>Attendance</th>
             <th>Members</th>
             <th>Create At</th>
           </tr>
@@ -133,6 +136,25 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   {registration.swc}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {!registration?.attendance ? (
+                    <button
+                      onClick={() => {
+                        setIsAttendModal(true);
+                      }}
+                      className="font-semibold border-black border hover:bg-white hover:text-black text-center text-xs px-5 py-2 bg-black text-white rounded-xl"
+                    >
+                      Mark Attendance
+                    </button>
+                  ) : (
+                    "Marked"
+                  )}
+                  <AttendanceModal
+                    isOpen={isAttendModal}
+                    onClose={() => setIsAttendModal(false)}
+                    teamData={registration}
+                  />
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   <button

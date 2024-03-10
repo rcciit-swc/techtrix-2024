@@ -31,6 +31,7 @@ export const getRegsByEvent = async (event: string) => {
             team_members: teamMembers.data,
             created_at: team.created_at,
             college: teamLeadDetails!.data![0].college,
+            attendance: team.attendance
         };
     }));
 
