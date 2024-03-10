@@ -144,18 +144,13 @@ const ManualRegModal = ({
     }
   };
 
-  console.log(inputs);
   return (
     <>
       {isOpen && (
         <div className="fixed  inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[50]">
           <div
-            className={`bg-gray-100 p-4 rounded-lg ${
-              maxTeamMember > 1 && eventDetails.register_through_portal
-                ? "h-[80vh] md:h-[70vh]"
-                : eventDetails.register_through_portal
-                ? "h-[70vh]"
-                : ""
+            className={`bg-gray-100 p-4 rounded-lg h-[80vh] md:h-[70vh]
+
             }  w-[95%] flex flex-col items-start lg:w-1/2 lg:px-32 lg:py-8`}
           >
             <div className="w-full flex flex-row mb-2 items-center justify-between">
@@ -173,7 +168,7 @@ const ManualRegModal = ({
               No Registration fees required if SWC paid except Robotics and
               Gaming Category for RCCIIT students !
             </h1>
-            {eventDetails.register_through_portal ? (
+            
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
                 <RegFormElement
                   type="text"
@@ -349,18 +344,8 @@ const ManualRegModal = ({
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="flex items-center justify-center w-full">
-                <Link
-                  href={eventDetails.registration_link}
-                  target="_blank"
-                  className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                >
-                  Fill Form
-                </Link>
-              </div>
-            )}
-            {eventDetails.register_through_portal ? (
+            
+          
               <div className="flex flex-row items-center pt-5 flex-wrap justify-between w-full">
                 <button
                   className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
@@ -375,9 +360,7 @@ const ManualRegModal = ({
                   Submit
                 </button>
               </div>
-            ) : (
-              <></>
-            )}
+          
           </div>
           <Toaster position="bottom-right" richColors />
         </div>

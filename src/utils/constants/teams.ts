@@ -198,6 +198,11 @@ export const teams = [
         image: "https://i.imgur.com/WCxBRN6.jpg",
       },
       {
+        name: "Atalanta Dey",
+        role: "",
+        image: "https://i.postimg.cc/j5mxLnsb/RKS-2055-01-Atalanta-Dey.jpg",
+      },
+      {
         name: "Debdatta Roy",
         role: "",
         image: "https://i.imgur.com/p8EvLbp.jpg",
@@ -402,8 +407,7 @@ export const teams = [
       {
         name: "Anish Jana",
         role: "Photography : Coordinator",
-        image:
-          "https://i.postimg.cc/pTK1Vv84/IMG-20231216-181953-4-Anish-Jana.jpg",
+        image: "https://i.postimg.cc/ryN3Z44Z/anish.jpg",
       },
       {
         name: "Atalanta Dey",
@@ -417,10 +421,9 @@ export const teams = [
           "https://i.postimg.cc/sxXvQGGf/Snapchat-393032163-Shivam-Sharma-1.jpg",
       },
       {
-        name: "Swagat Santra",
-        role: "EAFC 24 : Coordinator",
-        image:
-          "https://i.postimg.cc/SKjjRhWc/Whats-App-Image-2024-01-03-at-17-45-22-5953244c-Swagat-Santra.jpg",
+        name: "Rishav Aich",
+        role: "EAFC 24: Coordinator",
+        image: "https://i.postimg.cc/C1TM788L/IMG-7127-Rishav-Aich.jpg",
       },
       {
         name: "Pritam Das",

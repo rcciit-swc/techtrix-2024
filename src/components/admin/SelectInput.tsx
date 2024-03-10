@@ -21,7 +21,7 @@ const SelectInput = ({
       <select
         name={id}
         id={id}
-        className="py-2 px-2 w-full rounded-xl"
+        className="py-4 px-4 w-full rounded-xl border border-black font-semibold"
         onChange={onChange}
       >
         <option id={id} value=""></option>
