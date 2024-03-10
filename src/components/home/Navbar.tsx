@@ -23,6 +23,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [role, setRole] = useState("");
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showRegisterDashboard, setShowRegisterDashboard] = useState(false);
   const [showConvenorDashboard, setShowConvenorDashboard] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
@@ -62,7 +63,7 @@ const Navbar = () => {
       let isSuperAdmin = false;
       let isCoordinator = false;
       let isConvenor = false;
-
+      let isRegistrar = false;
       if (roleData) {
         for (const obj of roleData!) {
           if (obj.role === "super_admin") {
@@ -74,26 +75,36 @@ const Navbar = () => {
           if (obj.role === "convenor") {
             isConvenor = true;
           }
+          if (obj.role === "registrar") {
+            isRegistrar = true;
+          }
         }
 
         if (isSuperAdmin) {
           setShowAdminDashboard(true);
           setShowConvenorDashboard(true);
+          setShowRegisterDashboard(true);
           setShowCoordinatorDashboard(false);
         } else {
           if (isConvenor) {
             setShowConvenorDashboard(true);
+            setShowRegisterDashboard(true);
             setShowCoordinatorDashboard(false);
             return;
           } else {
             if (isCoordinator) {
               setShowConvenorDashboard(false);
+              setShowRegisterDashboard(true);
               setShowCoordinatorDashboard(true);
             } else if (!isSuperAdmin && !isCoordinator && !isConvenor) {
               setShowCoordinatorDashboard(false);
               setShowConvenorDashboard(false);
             }
           }
+        }
+
+        if (isRegistrar) {
+          setShowRegisterDashboard(true);
         }
 
         setShowDashboard(true);
@@ -230,6 +241,17 @@ const Navbar = () => {
                     }`}
                   >
                     Convenor
+                  </li>
+                </Link>
+              )}
+              {user && showRegisterDashboard && (
+                <Link href={"/register"}>
+                  <li
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
+                      pathname === "/register" && "text-white bg-black"
+                    }`}
+                  >
+                    Register
                   </li>
                 </Link>
               )}
