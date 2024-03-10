@@ -300,7 +300,7 @@ const EventRegForm = ({
                       Use Tracking Codes for exclusive offers ! T&C Apply !
                     </h1>
                     <img
-                      src={"/QR.jpg"}
+                      src={"https://i.imgur.com/Qg2ueWW.jpg"}
                       width={350}
                       className="mx-auto "
                       height={100}
