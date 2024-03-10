@@ -3,13 +3,16 @@ import ApproveModal from "@/components/admin/ApproveModal";
 import FormElement from "@/components/admin/FormElement";
 import ManualRegModal from "@/components/admin/ManualReg";
 import SelectInput from "@/components/admin/SelectInput";
+import { MemberModal } from "@/components/admin/Table";
 import EventDetails from "@/components/events/EventDetails";
 import { supabase } from "@/lib";
 import { getEvents } from "@/utils/functions/getEvents";
 import { getRegistrations } from "@/utils/functions/getRegistrations";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { PuffLoader } from "react-spinners";
+import { Toaster, toast } from "sonner";
 
 const Page = () => {
   const [registrations, setRegistrations] = useState<any>([]);
@@ -25,6 +28,7 @@ const Page = () => {
     swc: "",
     teamLeadName: "",
     teamLeadEmail: "",
+    membersPhone: "",
   });
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
@@ -48,14 +52,13 @@ const Page = () => {
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
   const [events, setEvents] = useState<any>([]);
-  useMemo(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getRegistrations();
         setFilteredResults(data);
         setRegistrations(data);
-        const eventData = await getEvents();
-        setEvents((eventData as any).map((event: any) => event.event_name));
+
         setLoading(false);
         const swcPaidRegistrationsCount = data.filter(
           (res: any) => res.swc === "Yes"
@@ -72,6 +75,13 @@ const Page = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventData = await getEvents();
+      setEvents((eventData as any).map((event: any) => event.event_name));
+    };
+    fetchEvents();
+  }, []);
   const handleSort = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
@@ -94,7 +104,10 @@ const Page = () => {
           .includes(inputs.eventName.toLowerCase()) &&
         new Date(registration.created_at)
           .toLocaleDateString("en-US", options)
-          .includes(inputs.createdAt)
+          .includes(inputs.createdAt) &&
+        registration.participations.some((member: any) =>
+          member.phone.includes(inputs.membersPhone)
+        )
     );
     setFilteredResults(filteredResults);
   }, [inputs, registrations]);
@@ -119,21 +132,37 @@ const Page = () => {
   });
   const handleChangeEvent = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectEvent(e.target.value);
-    const fetchEventDetails = async () => {
-        if (selectEvent !== "") {
-          const data = await getEvents();
-          const filteredData = data!.filter(
-            (event: any) => event.event_name === selectEvent
-          );
-          setEventDetails(filteredData[0]);
-        }
-      };
-      fetchEventDetails();
   };
+
+  useEffect(() => {
+    const fetchEventDetails = async () => {
+      if (selectEvent !== "") {
+        const data = await getEvents();
+        const filteredData = data!.filter(
+          (event: any) => event.event_name === selectEvent
+        );
+        setEventDetails(filteredData[0]);
+      } else {
+        setEventDetails(null);
+      }
+    };
+    fetchEventDetails();
+  }, [selectEvent]);
+
   const [isRegOpen, setIsRegOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
   return (
     <div className="w-full mx-auto  flex flex-col items-center gap-5 ">
-      <h1 className="font-semibold text-4xl text-center">Admin Dashboard</h1>
+      <MemberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        members={modalData}
+      />
+      <Toaster position="bottom-right" richColors />
+      <h1 className="font-semibold text-4xl text-center">
+        Registration Dashboard
+      </h1>
       <div className="flex flex-row items-center gap-5 w-[90%] md:w-full justify-center  flex-wrap">
         <FormElement
           name="Phone"
@@ -191,21 +220,43 @@ const Page = () => {
           onChange={handleInputChange}
           width="1/3"
         />
+        <FormElement
+          name="Member Phone"
+          value={inputs.membersPhone}
+          type="text"
+          id="membersPhone"
+          onChange={handleInputChange}
+          width="1/3"
+        />
       </div>
-      <div className="flex flex-row items-end justify-center gap-5 flex-wrap">
+      <div className="flex flex-row w-full mx-auto items-end justify-center gap-5 flex-wrap">
         <SelectInput
           options={events}
           onChange={handleChangeEvent}
           value={selectEvent}
           name={"Event"}
           id={"selectEvent"}
+          width="80%"
         />
         <button
-          disabled={eventDetails == null && selectEvent === "" ? true : false}
-          onClick={() => setIsRegOpen(true)}
+          onClick={() => {
+            if (eventDetails) {
+              setIsRegOpen(true);
+            } else if (selectEvent === "") {
+              toast.error("Please select an event");
+            }
+          }}
           className="bg-black text-white px-8 py-3 rounded-xl border border-black hover:bg-white hover:text-black text-lg font-semibold"
         >
           Register
+        </button>
+        <button
+          onClick={() => {
+            router.push("/register/swc");
+          }}
+          className="bg-black text-white px-8 py-3 rounded-xl border border-black hover:bg-white hover:text-black text-lg font-semibold"
+        >
+          Check SWC
         </button>
         <ManualRegModal
           isOpen={isRegOpen}
@@ -252,6 +303,7 @@ const Page = () => {
                 <th>Name</th>
                 <th>Team Lead Phone</th>
                 <th>Team Lead Email</th>
+                <th>Members</th>
                 <th>Transaction ID</th>
                 <th>Registered at</th>
                 <th>SWC</th>
@@ -295,7 +347,9 @@ const Page = () => {
                         {registration.team_name}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
-                        {registration.college}
+                        {registration.college === ""
+                          ? registration.team_college
+                          : registration.college}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
                         {registration?.team_lead_name!}
@@ -305,6 +359,17 @@ const Page = () => {
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
                         {registration?.team_lead_email!}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        <button
+                          onClick={() => {
+                            setModalData(registration?.participations);
+                            setIsModalOpen(true);
+                          }}
+                          className="font-semibold border-black border hover:bg-white hover:text-black text-center text-xs px-5 py-2 bg-black text-white rounded-xl"
+                        >
+                          View Members
+                        </button>
                       </td>
                       <td className="border border-gray-300  py-2">
                         {registration.transaction_id}

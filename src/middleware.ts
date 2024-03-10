@@ -2,9 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { checkUserDetails } from "./utils/functions/checkUserDetails";
+import { login } from "./utils/functions";
 
 export async function middleware(request: NextRequest) {
-  const cookieStore = cookies();
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
   const {
@@ -21,33 +21,8 @@ export async function middleware(request: NextRequest) {
     ) {
       return NextResponse.redirect(new URL("/", request.url));
     }
-    if (url.pathname.startsWith("/") && url.searchParams.has("ref")) {
-      const query: any = url.searchParams.get("ref");
-      if (query) {
-        res.cookies.set("ref", query, {
-          secure: true,
-        });
-      }
-    }
   }
   if (session) {
-    if (url.pathname.startsWith("/") && url.searchParams.has("ref")) {
-      const query: any = url.searchParams.get("ref");
-
-      if (query) {
-        res.cookies.set("ref", query, {
-          secure: true,
-        });
-        const { data, error } = await supabase
-          .from("users")
-          .update({
-            referral_code: query,
-          })
-          .eq("id", session?.user.id)
-          .select();
-      }
-    }
-
     if (
       session &&
       session?.user?.email?.includes("@rcciit.org.in" || "@rccinstitue.org")
@@ -76,13 +51,11 @@ export async function middleware(request: NextRequest) {
       .from("roles")
       .select("role")
       .eq("id", session?.user.id);
-    // const superAdmin = userRoles?.data?.[0]?.role?.includes("super_admin");
-    // const eventCoordinator =
-    //   userRoles?.data?.[0]?.role?.includes("event_coordinator");
-    // const convenor = userRoles?.data?.[0]?.role?.includes("convenor");
+
     let superAdmin = false;
     let eventCoordinator = false;
     let convenor = false;
+    let registrar = false;
     for (const obj of userRoles.data!) {
       if (obj.role === "super_admin") {
         superAdmin = true;
@@ -90,14 +63,29 @@ export async function middleware(request: NextRequest) {
         eventCoordinator = true;
       } else if (obj.role === "convenor") {
         convenor = true;
+      } else if (obj.role === "registrar") {
+        registrar = true;
       }
     }
 
-    if (!superAdmin && url.pathname.startsWith("/register")) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-    else if (superAdmin && url.pathname.startsWith("/register")) {
+    if (superAdmin && url.pathname.startsWith("/register")) {
       return NextResponse.next();
+    }
+    if (registrar && url.pathname.startsWith("/register")) {
+      return NextResponse.next();
+    }
+    if (eventCoordinator && url.pathname.startsWith("/register")) {
+      return NextResponse.next();
+    }
+    if (convenor && url.pathname.startsWith("/register")) {
+      return NextResponse.next();
+    }
+
+    if (
+      (!superAdmin || !registrar || !convenor || !eventCoordinator) &&
+      url.pathname.startsWith("/register")
+    ) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
     if (

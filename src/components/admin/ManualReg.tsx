@@ -170,6 +170,7 @@ const ManualRegModal = ({
             </h1>
             
               <div className="flex w-full overflow-x-hidden flex-col  items-start gap-4 overflow-y-scroll text-sm lg:text-lg">
+                <h1 className="text-center font-semibold w-full">Event : {eventDetails?.event_name}</h1>
                 <RegFormElement
                   type="text"
                   name={maxTeamMember > 1 ? "Team Name" : "Name"}
