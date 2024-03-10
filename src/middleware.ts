@@ -92,6 +92,14 @@ export async function middleware(request: NextRequest) {
         convenor = true;
       }
     }
+
+    if (!superAdmin && url.pathname.startsWith("/register")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    else if (superAdmin && url.pathname.startsWith("/register")) {
+      return NextResponse.next();
+    }
+
     if (
       !checkUserDetails(userDetails?.data?.[0]) &&
       url.pathname !== "/registration"
