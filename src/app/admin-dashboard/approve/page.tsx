@@ -21,6 +21,7 @@ const Page = () => {
     swc: "",
     teamLeadName: "",
     teamLeadEmail: "",
+    college: "",
   });
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>
@@ -43,13 +44,15 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
+  const [collegeRegCount, setCollegeRegCount] = useState(0);
+  const [outCollegeRegCount, setOutCollegeRegCount] = useState(0);
   useMemo(() => {
     const fetchData = async () => {
       try {
         const data = await getRegistrations();
         setFilteredResults(data);
         setRegistrations(data);
-
+        console.log(data);
         setLoading(false);
         const swcPaidRegistrationsCount = data.filter(
           (res: any) => res.swc === "Yes"
@@ -59,6 +62,16 @@ const Page = () => {
           (res: any) => res.swc === "No"
         ).length;
         setNonSwcCount(nonswcPaidRegistrationsCount);
+
+        const collegeRegs = data.filter(
+          (res: any) =>
+            res.college.toLowerCase().includes("rcciit") ||
+            res.college
+              .toLowerCase()
+              .includes("rcc institute of information technology")
+        ).length;
+        setOutCollegeRegCount(data.length - collegeRegs);
+        setCollegeRegCount(collegeRegs);
       } catch (error) {
         // console.log(error);
       }
@@ -80,6 +93,9 @@ const Page = () => {
         registration.team_lead_email.includes(inputs.teamLeadEmail) &&
         registration.transaction_id.includes(inputs.transactionId) &&
         registration.swc.toLowerCase().includes(inputs.swc.toLowerCase()) &&
+        registration.college
+          .toLowerCase()
+          .includes(inputs.college.toLowerCase()) &&
         registration.team_lead_name
           .toLowerCase()
           .includes(inputs.teamLeadName.toLowerCase()) &&
@@ -119,6 +135,14 @@ const Page = () => {
           value={inputs.transactionId}
           type="text"
           id="transactionId"
+          onChange={handleInputChange}
+          width="1/3"
+        />
+        <FormElement
+          name="College"
+          value={inputs.college}
+          type="text"
+          id="college"
           onChange={handleInputChange}
           width="1/3"
         />
@@ -172,6 +196,16 @@ const Page = () => {
         <h1>
           SWC Paid Registrations :{" "}
           <span className="text-red-600">{nonSwcCount} </span>
+        </h1>
+      </div>
+      <div className="flex flex-row flex-wrap font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          College Inside Reg :{" "}
+          <span className="text-green-600">{collegeRegCount}</span>{" "}
+        </h1>
+        <h1>
+          College Outside Reg :{" "}
+          <span className="text-red-600">{outCollegeRegCount} </span>
         </h1>
       </div>
       {loading ? (

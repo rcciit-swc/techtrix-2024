@@ -38,6 +38,12 @@ const Page = () => {
     getAllEvents();
   }, [eventId]);
 
+
+  const [swcCount, setSwcCount] = useState(0);
+  const [nonSwcCount, setNonSwcCount] = useState(0);
+  const [collegeRegCount, setCollegeRegCount] = useState(0);
+  const [outCollegeRegCount, setOutCollegeRegCount] = useState(0);
+
   useEffect(() => {
     const filteredData = registrationData.filter(
       (registration: any) =>
@@ -59,6 +65,24 @@ const Page = () => {
           member.phone.includes(inputs.membersPhone)
         )
     );
+    const swcPaidRegistrationsCount = registrationData.filter(
+      (res: any) => res.swc === "Yes"
+    ).length;
+    setSwcCount(swcPaidRegistrationsCount);
+    const nonswcPaidRegistrationsCount = registrationData.filter(
+      (res: any) => res.swc === "No"
+    ).length;
+    setNonSwcCount(nonswcPaidRegistrationsCount);
+
+    const collegeRegs = registrationData.filter(
+      (res: any) =>
+        res.college.toLowerCase().includes("rcciit") ||
+        res.college
+          .toLowerCase()
+          .includes("rcc institute of information technology")
+    ).length;
+    setOutCollegeRegCount(registrationData.length - collegeRegs);
+    setCollegeRegCount(collegeRegs);
     setFilteredData(filteredData);
   }, [inputs, registrationData]);
 
@@ -143,7 +167,27 @@ const Page = () => {
           width="1/3"
         />
       </div>
-      <div className="font-semibold flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
+      <div className="flex flex-row flex-wrap font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-green-600">{swcCount}</span>{" "}
+        </h1>
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-red-600">{nonSwcCount} </span>
+        </h1>
+      </div>
+      <div className="flex flex-row flex-wrap -mt-5 font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          College Inside Reg :{" "}
+          <span className="text-green-600">{collegeRegCount}</span>{" "}
+        </h1>
+        <h1>
+          College Outside Reg :{" "}
+          <span className="text-red-600">{outCollegeRegCount} </span>
+        </h1>
+      </div>
+      <div className="font-semibold justify-center flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
         <h1>For Offline Registration :</h1>
         <button
           onClick={() => setOfflineReg(true)}
