@@ -136,7 +136,10 @@ const Navbar = () => {
   useEffect(() => {
     const sendReferral = async () => {
       if (typeof window !== "undefined" && window.localStorage) {
-        const referral = localStorage.getItem("ref");
+        let referral = localStorage.getItem("ref");
+        if(referral === null || referral === "" || referral === undefined) {
+          referral = "default";
+        };
         await supabase
           .from("users")
           .update({
