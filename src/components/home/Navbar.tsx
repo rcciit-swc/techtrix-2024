@@ -137,7 +137,7 @@ const Navbar = () => {
     const sendReferral = async () => {
       if (typeof window !== "undefined" && window.localStorage) {
         const referral = localStorage.getItem("ref");
-        if(referral === null) return;
+        if(referral === null || referral === "" || referral === undefined) return;
         await supabase
           .from("users")
           .update({
