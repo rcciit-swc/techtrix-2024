@@ -4,10 +4,12 @@ export const getRegistrations = async () => {
   const { data, error } = await supabase
     .from("teams")
     .select("*,participations(*),events(event_name,fest_name,max_team_member)");
+
   let filteredData: any = [];
   await Promise.all(
     (data || []).map(async (res: any) => {
       if (res.events.fest_name === "Techtrix") {
+        res['team_college'] = res.college;
         filteredData.push(res);
         const { data: swcCleared, error } = await supabase
           .from("users")

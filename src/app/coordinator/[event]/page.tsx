@@ -6,7 +6,7 @@ import { Heading } from "@/components/home";
 import { getEventInfo } from "@/utils/functions/getEventsInfo";
 import { getRegisteredTeams } from "@/utils/functions/getRegisteredTeams";
 import { getRegsByEvent } from "@/utils/functions/getRegsByEvent";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
 
@@ -19,7 +19,7 @@ const Page = () => {
     transactionId: "",
     membersPhone: "",
     createdAt: "",
-    swc:"",
+    swc: "",
   });
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState<any>([]);
@@ -38,6 +38,12 @@ const Page = () => {
     getAllEvents();
   }, [eventId]);
 
+
+  const [swcCount, setSwcCount] = useState(0);
+  const [nonSwcCount, setNonSwcCount] = useState(0);
+  const [collegeRegCount, setCollegeRegCount] = useState(0);
+  const [outCollegeRegCount, setOutCollegeRegCount] = useState(0);
+
   useEffect(() => {
     const filteredData = registrationData.filter(
       (registration: any) =>
@@ -51,9 +57,7 @@ const Page = () => {
         registration.team_lead_name
           .toLowerCase()
           .includes(inputs.name.toLowerCase()) &&
-          registration.swc
-          .toLowerCase()
-          .includes(inputs.swc.toLowerCase()) &&
+        registration.swc.toLowerCase().includes(inputs.swc.toLowerCase()) &&
         new Date(registration.created_at)
           .toLocaleDateString("en-US", options)
           .includes(inputs.createdAt) &&
@@ -61,6 +65,24 @@ const Page = () => {
           member.phone.includes(inputs.membersPhone)
         )
     );
+    const swcPaidRegistrationsCount = registrationData.filter(
+      (res: any) => res.swc === "Yes"
+    ).length;
+    setSwcCount(swcPaidRegistrationsCount);
+    const nonswcPaidRegistrationsCount = registrationData.filter(
+      (res: any) => res.swc === "No"
+    ).length;
+    setNonSwcCount(nonswcPaidRegistrationsCount);
+
+    const collegeRegs = registrationData.filter(
+      (res: any) =>
+        res.college.toLowerCase().includes("rcciit") ||
+        res.college
+          .toLowerCase()
+          .includes("rcc institute of information technology")
+    ).length;
+    setOutCollegeRegCount(registrationData.length - collegeRegs);
+    setCollegeRegCount(collegeRegs);
     setFilteredData(filteredData);
   }, [inputs, registrationData]);
 
@@ -82,6 +104,7 @@ const Page = () => {
       [name]: value,
     }));
   };
+  const router = useRouter();
   return (
     <div className="w-full mx-auto min-h-[60vh] overflow-x-hidden flex flex-col items-center gap-10 ">
       <Heading text="Registered Teams" />
@@ -144,10 +167,42 @@ const Page = () => {
           width="1/3"
         />
       </div>
-      {/* <div className="font-semibold flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
+      <div className="flex flex-row flex-wrap font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-green-600">{swcCount}</span>{" "}
+        </h1>
+        <h1>
+          SWC Paid Registrations :{" "}
+          <span className="text-red-600">{nonSwcCount} </span>
+        </h1>
+      </div>
+      <div className="flex flex-row flex-wrap -mt-5 font-semibold items-center text-center text-sm md:text-2xl gap-3  md:gap-10 justify-center">
+        <h1>
+          College Inside Reg :{" "}
+          <span className="text-green-600">{collegeRegCount}</span>{" "}
+        </h1>
+        <h1>
+          College Outside Reg :{" "}
+          <span className="text-red-600">{outCollegeRegCount} </span>
+        </h1>
+      </div>
+      <div className="font-semibold justify-center flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
         <h1>For Offline Registration :</h1>
-        <button onClick={()=>setOfflineReg(true)} className="bg-black border border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black">Registration</button>
-      </div> */}
+        <button
+          onClick={() => setOfflineReg(true)}
+          className="bg-black border border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black"
+        >
+          Registration
+        </button>
+        <button
+          onClick={() => router.push("/register/swc")}
+          className="bg-black border font-semibold  text-sm md:text-xl border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black"
+        >
+          Check SWC
+        </button>
+      </div>
+
       {loading ? (
         <div className="min-h-[60vh] flex flex-col justify-center">
           <PuffLoader color={"#000"} size={100} />
@@ -157,7 +212,11 @@ const Page = () => {
           <Table registrationData={filteredData} />
         </div>
       )}
-     <ManualRegModal isOpen={offlineReg} onClose={()=>setOfflineReg(false)} eventDetails={eventDetails} />
+      <ManualRegModal
+        isOpen={offlineReg}
+        onClose={() => setOfflineReg(false)}
+        eventDetails={eventDetails}
+      />
     </div>
   );
 };

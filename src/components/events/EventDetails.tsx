@@ -24,11 +24,9 @@ const EventRegForm = dynamic(() => import("@/components/events/EventRegForm"), {
 const EventDetails = ({
   eventDetails,
   onCloseEvent,
-
 }: {
   eventDetails: any;
   onCloseEvent: () => void;
-
 }) => {
   const user = useUser((state) => state.user);
   const [registeredEvent, setRegisteredEvent] = useState(false);
@@ -55,17 +53,15 @@ const EventDetails = ({
     getInfo();
   }, [event]);
 
-
   useEffect(() => {
     const getCategory = async () => {
       const { data: category, error } = await supabase
         .from("event_categories")
         .select("name")
         .eq("id", eventDetails.event_category_id);
-     
-      
-        setEventCategory(category![0]?.name)
-    }
+
+      setEventCategory(category![0]?.name);
+    };
     getCategory();
   }, [eventDetails]);
 
@@ -84,7 +80,20 @@ const EventDetails = ({
     }
   });
 
-
+  useEffect(() => {
+    const sendReferral = async () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        const referral = localStorage.getItem("ref");
+        await supabase
+          .from("users")
+          .update({
+            referral_code: referral!,
+          })
+          .eq("id", user?.id!);
+      }
+    };
+    sendReferral();
+  }, [user]);
   return (
     <motion.div className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (
@@ -106,9 +115,16 @@ const EventDetails = ({
               </h1>
 
               <div dangerouslySetInnerHTML={{ __html: eventInfo.desc }}></div>
-              {eventInfo.event_name === "Model and Poster Presentation (Student Innovation)" && 
-              <Link download={true} href="/downloads/Model Template.pptx" className="bg-black text-white border border-black hover:bg-white hover:text-black px-3 py-2 rounded-xl text-sm font-semibold">
-                View Template</Link>}
+              {eventInfo.event_name ===
+                "Model and Poster Presentation (Student Innovation)" && (
+                <Link
+                  download={true}
+                  href="/downloads/Model Template.pptx"
+                  className="bg-black text-white border border-black hover:bg-white hover:text-black px-3 py-2 rounded-xl text-sm font-semibold"
+                >
+                  View Template
+                </Link>
+              )}
               <h1>
                 Team Capacity :{" "}
                 <span className="font-semibold">
@@ -184,7 +200,7 @@ const EventDetails = ({
               {!registeredEvent! && eventInfo! && eventInfo!.is_open && (
                 <button
                   disabled={!eventInfo.is_open}
-                  onClick={() => {
+                  onClick={async () => {
                     if (!user) {
                       login();
                     }
@@ -195,7 +211,7 @@ const EventDetails = ({
                   Register Now
                 </button>
               )}
-           
+
               {registeredEvent! && (
                 <Link href={"/dashboard"}>
                   <h1 className="text-green-600 flex flex-row items-center gap-2 border border-green-600 rounded-xl px-5 py-2 font-semibold">

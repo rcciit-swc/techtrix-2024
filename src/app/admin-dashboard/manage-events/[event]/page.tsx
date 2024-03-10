@@ -111,6 +111,8 @@ const Page = () => {
     }));
   };
 
+  
+
   const handleAddCoordinator = (coordinator: coordinatorType) => {
     setInputs((prevInputs) => ({
       ...prevInputs,

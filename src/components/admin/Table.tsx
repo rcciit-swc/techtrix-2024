@@ -171,7 +171,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
   );
 };
 
-const MemberModal = ({
+export const MemberModal = ({
   isOpen,
   onClose,
   members,

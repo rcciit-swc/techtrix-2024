@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosLogOut } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { navRoutes } from "@/utils/constants/navRoutes";
 import { login } from "@/utils/functions";
@@ -12,6 +12,8 @@ import { checkUserDetails } from "@/utils/functions/checkUserDetails";
 import { checkIfUserRegistered } from "@/utils/functions/checkIfUserRegistered";
 
 const Navbar = () => {
+  const searchParams = useSearchParams();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [userImg, setUserImg] = useState("");
@@ -21,6 +23,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [role, setRole] = useState("");
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [showRegisterDashboard, setShowRegisterDashboard] = useState(false);
   const [showConvenorDashboard, setShowConvenorDashboard] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showCoordinatorDashboard, setShowCoordinatorDashboard] =
@@ -34,6 +37,16 @@ const Navbar = () => {
 
     setUser(undefined);
   };
+  useEffect(() => {
+    const search = searchParams.get("ref");
+    if (
+      typeof window !== "undefined" &&
+      window.localStorage &&
+      search !== null
+    ) {
+      localStorage.setItem("ref", search!);
+    }
+  }, []);
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -50,7 +63,7 @@ const Navbar = () => {
       let isSuperAdmin = false;
       let isCoordinator = false;
       let isConvenor = false;
-
+      let isRegistrar = false;
       if (roleData) {
         for (const obj of roleData!) {
           if (obj.role === "super_admin") {
@@ -62,26 +75,36 @@ const Navbar = () => {
           if (obj.role === "convenor") {
             isConvenor = true;
           }
+          if (obj.role === "registrar") {
+            isRegistrar = true;
+          }
         }
 
         if (isSuperAdmin) {
           setShowAdminDashboard(true);
           setShowConvenorDashboard(true);
+          setShowRegisterDashboard(true);
           setShowCoordinatorDashboard(false);
         } else {
           if (isConvenor) {
             setShowConvenorDashboard(true);
+            setShowRegisterDashboard(true);
             setShowCoordinatorDashboard(false);
             return;
           } else {
             if (isCoordinator) {
               setShowConvenorDashboard(false);
+              setShowRegisterDashboard(true);
               setShowCoordinatorDashboard(true);
             } else if (!isSuperAdmin && !isCoordinator && !isConvenor) {
               setShowCoordinatorDashboard(false);
               setShowConvenorDashboard(false);
             }
           }
+        }
+
+        if (isRegistrar) {
+          setShowRegisterDashboard(true);
         }
 
         setShowDashboard(true);
@@ -104,9 +127,27 @@ const Navbar = () => {
 
   const handleLogin = async () => {
     await login();
+
+    // Show the dashboard and refresh the router
     setShowDashboard(true);
     router.refresh();
   };
+
+  useEffect(() => {
+    const sendReferral = async () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        const referral = localStorage.getItem("ref");
+        await supabase
+          .from("users")
+          .update({
+            referral_code: referral!,
+          })
+          .eq("id", user?.id!);
+      }
+    };
+    sendReferral();
+  }, [user]);
+
   return (
     <>
       <div className="sticky left-0 top-0 z-[40] w-screen lg:w-full overflow-x-hidden ">
@@ -161,7 +202,7 @@ const Navbar = () => {
                   key={index}
                 >
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
                       pathname === link.path && "text-white bg-black"
                     }`}
                   >
@@ -172,7 +213,7 @@ const Navbar = () => {
               {user && showDashboard && (
                 <Link href={"/dashboard"}>
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
                       pathname === "/dashboard" && "text-white bg-black"
                     }`}
                   >
@@ -183,7 +224,7 @@ const Navbar = () => {
               {user && showCoordinatorDashboard && (
                 <Link href={"/coordinator"}>
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
                       pathname === "/coordinator" && "text-white bg-black"
                     }`}
                   >
@@ -195,11 +236,22 @@ const Navbar = () => {
               {user && showConvenorDashboard && (
                 <Link href={"/coordinator"}>
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
                       pathname === "/coordinator" && "text-white bg-black"
                     }`}
                   >
                     Convenor
+                  </li>
+                </Link>
+              )}
+              {user && showRegisterDashboard && (
+                <Link href={"/register"}>
+                  <li
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
+                      pathname === "/register" && "text-white bg-black"
+                    }`}
+                  >
+                    Register
                   </li>
                 </Link>
               )}
@@ -212,7 +264,7 @@ const Navbar = () => {
                   }}
                 >
                   <li
-                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[16px] ${
+                    className={`my-2 pt-2  font-semibold rounded-xl duration-200 ease-linear text-sm md:text-xs lg:text-sm  text-black hover:bg-black py-1 px-2 hover:text-white md:my-0 md:ml-2 md:hover:scale-105  lg:ml-8 xl:text-[14px] ${
                       pathname === "/admin-dashboard" && "text-white bg-black"
                     }`}
                   >

@@ -133,11 +133,26 @@ const Page = () => {
             res.some((regEvent: any) => regEvent.event_name === event)
           )
         );
-        
+
         setComboRegistered(allComboEventsRegistered);
       };
       getRegisteredEvents();
     }
+  }, [user]);
+
+  useEffect(() => {
+    const sendReferral = async () => {
+      if (typeof window !== "undefined" && window.localStorage) {
+        const referral = localStorage.getItem("ref");
+        await supabase
+          .from("users")
+          .update({
+            referral_code: referral!,
+          })
+          .eq("id", user?.id!);
+      }
+    };
+    sendReferral();
   }, [user]);
 
   const eventCardRef = React.useRef(null);
@@ -147,7 +162,7 @@ const Page = () => {
   const [discount, setDiscount] = useState<string>("0");
   let comboEventCategory: any;
   eventsbyCategory = useEventbyCategory((state) => state.events!);
-  
+
   const comboEventDetails: any[] = useMemo(() => {
     let comboEventsArr: any[] = [];
     comboEventCategory =
@@ -188,11 +203,12 @@ const Page = () => {
                   isAllOpen &&
                   !comboRegistered! && (
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         if (!user) {
                           login();
                         }
-                        setComboRegOpen(true)}}
+                        setComboRegOpen(true);
+                      }}
                       className="xl:absolute text-xs xl:text-sm flex flex-row items-center gap-5 top-0 right-0 border border-black bg-black text-white rounded-xl px-10 py-2 font-semibold hover:bg-white hover:text-black"
                     >
                       Combo Registration Offer
@@ -251,7 +267,7 @@ const Page = () => {
         </div>
       )}
       <ComboRegForm
-      discount={discount}
+        discount={discount}
         events={comboEventDetails}
         isOpen={comboRegOpen}
         onClose={() => setComboRegOpen(false)}
