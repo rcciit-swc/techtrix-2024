@@ -152,6 +152,19 @@ const Page = () => {
   const [isRegOpen, setIsRegOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const giveAttendance = async (team_id: string) => {
+    const { error } = await supabase
+      .from("teams")
+      .update({ attendance: true })
+      .eq("team_id", team_id);
+
+    if (error) {
+      toast.error("Failed to mark attendance");
+    } else {
+      toast.success("Attendance marked successfully");
+      router.refresh();
+    }
+  };
   return (
     <div className="w-full mx-auto  flex flex-col items-center gap-5 ">
       <MemberModal
@@ -303,6 +316,7 @@ const Page = () => {
                 <th>Name</th>
                 <th>Team Lead Phone</th>
                 <th>Team Lead Email</th>
+                <th>Attendance</th>
                 <th>Members</th>
                 <th>Transaction ID</th>
                 <th>Registered at</th>
@@ -360,6 +374,18 @@ const Page = () => {
                       <td className="border border-gray-300 px-4 py-2">
                         {registration?.team_lead_email!}
                       </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                  {!registration?.attendance ? (
+                    <button
+                      onClick={() => giveAttendance(registration.team_id)}
+                      className="font-semibold border-black border hover:bg-white hover:text-black text-center text-xs px-5 py-2 bg-black text-white rounded-xl"
+                    >
+                      Mark Attendance
+                    </button>
+                  ) : (
+                    "Marked"
+                  )}
+                </td>
                       <td className="border border-gray-300 px-4 py-2">
                         <button
                           onClick={() => {
