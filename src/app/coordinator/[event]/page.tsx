@@ -12,6 +12,7 @@ import { PuffLoader } from "react-spinners";
 import { CSVLink } from "react-csv";
 import { dateTime } from "@/utils/functions/dateTime";
 import CsvDownloadButton from "react-json-to-csv";
+import { supabase } from "@/lib";
 const Page = () => {
   let eventId: any = useParams().event;
   const [inputs, setInputs] = useState({
@@ -38,6 +39,74 @@ const Page = () => {
     };
     getAllEvents();
   }, [eventId]);
+
+  const [teamsWithMembers, setTeamsWithMembers] = useState<any[]>([]);
+  // useEffect(() => {
+  //   const getTeamRegistrations = async () => {
+  //     const { data: teamData, error: teamError } = await supabase
+  //       .from("teams")
+  //       .select(
+  //         "college,team_id,team_name,team_lead_phone,transaction_verified,attendance"
+  //       )
+  //       .eq("event_id", eventId);
+
+  //     if (teamError) {
+  //       console.error("Error fetching teams:", teamError.message);
+  //       return;
+  //     }
+
+  //     if (teamData) {
+  //       const teamsWithMembers = [];
+
+  //       for (const team of teamData) {
+  //         const { data: memberData, error: memberError } = await supabase
+  //           .from("participations")
+  //           .select("name,phone")
+  //           .eq("team_id", team.team_id);
+
+  //         if (memberError) {
+  //           console.error("Error fetching team members:", memberError.message);
+  //           continue;
+  //         }
+
+  //         if (memberData) {
+  //           const membersWithUserData = [];
+
+  //           for (const member of memberData) {
+  //             const { data: userData, error: userError } = await supabase
+  //               .from("users")
+  //               .select("name,email,college_roll,swc")
+  //               .eq("phone", member.phone);
+
+  //             if (userError) {
+  //               console.error("Error fetching user data:", userError.message);
+  //               continue;
+  //             }
+
+  //             const userDataFirstItem:any = userData?.[0];
+
+  //             membersWithUserData.push({
+  //               phone: member.phone,
+  //               email: userDataFirstItem?.email,
+  //               team_name: team.team_name,
+  //               roll: userDataFirstItem?.college_roll,
+  //               swc: userDataFirstItem?.swc,
+  //               name: userDataFirstItem?.name,
+  //               college: team?.college,
+  //               verified: team.transaction_verified,
+  //             });
+  //           }
+
+  //           teamsWithMembers.push(...membersWithUserData);
+  //         }
+  //       }
+  //       setTeamsWithMembers(teamsWithMembers);
+
+  //     }
+  //   };
+
+  //   getTeamRegistrations();
+  // }, [eventId]);
 
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
