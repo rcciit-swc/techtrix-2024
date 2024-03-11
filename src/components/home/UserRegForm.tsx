@@ -39,7 +39,32 @@ const UserRegForm = () => {
   const handleSubmit = async () => {
     try {
       const validation = validateUserReg(inputs);
-
+      const sendReferral = async () => {
+        if (typeof window !== "undefined" && window.localStorage) {
+          var referral = localStorage.getItem("ref"); // Get referral from localStorage or set default
+          if (referral == null || referral === "") {
+            referral = "default";
+          }
+          if (user && user.id) {
+            const { data } = await supabase
+              .from("users")
+              .select("referral_code")
+              .eq("id", user.id)
+              .single();
+            if (data) {
+              const { referral_code } = data;
+              if (referral_code == null || referral_code === "") {
+                // If referral_code is null or empty, update it with the referral
+                await supabase
+                  .from("users")
+                  .update({ referral_code: referral })
+                  .eq("id", user.id);
+              }
+            }
+          }
+          // Get referral from localStorage or set default
+        }
+      };
 
       const allFieldsEmpty = Object.values(validation).every(
         (value) => value === ""
@@ -61,7 +86,7 @@ const UserRegForm = () => {
             : toast.error("There was an error submitting the form");
           throw error;
         }
-       
+        sendReferral();
         router.push("/events");
         router.refresh();
         toast.success("Registration Successful");
@@ -146,8 +171,12 @@ const UserRegForm = () => {
         width="100%"
         onChange={handleInputChange}
       />
-      <h1 className="text-xs text-red-400 font-semibold text-center">Roll Only for College students.</h1>
-      {errors.roll && <h1 className="text-red-600 font-semibold text-xs">{errors.roll}</h1>}
+      <h1 className="text-xs text-red-400 font-semibold text-center">
+        Roll Only for College students.
+      </h1>
+      {errors.roll && (
+        <h1 className="text-red-600 font-semibold text-xs">{errors.roll}</h1>
+      )}
       <div className="flex flex-row px-3 flex-wrap items-center md:gap-5  font-semibold">
         <label htmlFor="gender">Gender : </label>
         <div className="flex flex-row flex-wrap items-center max-md:justify-between w-full  gap-10  md:items-center md:gap-16 ">
