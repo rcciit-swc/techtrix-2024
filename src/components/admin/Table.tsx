@@ -1,11 +1,11 @@
-"use client";
+import React, { useState, useEffect } from "react";
 import { supabase } from "@/lib";
-import { getRegsByEvent } from "@/utils/functions/getRegsByEvent";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Toaster, toast } from "sonner";
 import { PuffLoader } from "react-spinners";
-import AttendanceModal from "./AttendanceModal";
 
 const Table = ({ registrationData }: { registrationData: any[] }) => {
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -37,6 +37,20 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
     setFilteredResults(filteredData);
   };
 
+  const giveAttendance = async (team_id: string) => {
+    const { error } = await supabase
+      .from("teams")
+      .update({ attendance: true })
+      .eq("team_id", team_id);
+
+    if (error) {
+      toast.error("Failed to mark attendance");
+    } else {
+      toast.success("Attendance marked successfully");
+      router.refresh();
+    }
+  };
+
   const options: any = {
     year: "numeric",
     month: "2-digit",
@@ -47,7 +61,6 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
     timeZoneName: "short",
   };
 
-  const [isAttendModal, setIsAttendModal] = useState<boolean>(false);
   return (
     <>
       <div className="flex items-center mb-5">
@@ -140,9 +153,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
                 <td className="border border-gray-300 px-4 py-2">
                   {!registration?.attendance ? (
                     <button
-                      onClick={() => {
-                        setIsAttendModal(true);
-                      }}
+                      onClick={() => giveAttendance(registration.team_id)}
                       className="font-semibold border-black border hover:bg-white hover:text-black text-center text-xs px-5 py-2 bg-black text-white rounded-xl"
                     >
                       Mark Attendance
@@ -150,11 +161,6 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
                   ) : (
                     "Marked"
                   )}
-                  <AttendanceModal
-                    isOpen={isAttendModal}
-                    onClose={() => setIsAttendModal(false)}
-                    teamData={registration}
-                  />
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   <button
