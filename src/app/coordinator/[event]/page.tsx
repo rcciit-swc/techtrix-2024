@@ -13,6 +13,7 @@ import { CSVLink } from "react-csv";
 import { dateTime } from "@/utils/functions/dateTime";
 import CsvDownloadButton from "react-json-to-csv";
 import { supabase } from "@/lib";
+import Link from "next/link";
 const Page = () => {
   let eventId: any = useParams().event;
   const [inputs, setInputs] = useState({
@@ -265,12 +266,12 @@ const Page = () => {
         >
           Registration
         </button>
-        <button
-          onClick={() => router.push("/register/swc")}
+        <Link href="/register/swc"
+        target="_blank"
           className="bg-black border font-semibold  text-sm md:text-xl border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black"
         >
           Check SWC
-        </button>
+        </Link>
         <CSVLink
           data={filteredData}
           filename={`registrations-${dateTime()}.csv`}

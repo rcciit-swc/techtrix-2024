@@ -263,14 +263,12 @@ const Page = () => {
         >
           Register
         </button>
-        <button
-          onClick={() => {
-            router.push("/register/swc");
-          }}
+        <Link href="/register/swc"
+        target="_blank"
           className="bg-black text-white px-8 py-3 rounded-xl border border-black hover:bg-white hover:text-black text-lg font-semibold"
         >
           Check SWC
-        </button>
+        </Link>
         <ManualRegModal
           isOpen={isRegOpen}
           onClose={() => setIsRegOpen(false)}
