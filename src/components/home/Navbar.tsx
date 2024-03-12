@@ -136,16 +136,27 @@ const Navbar = () => {
   useEffect(() => {
     const sendReferral = async () => {
       if (typeof window !== "undefined" && window.localStorage) {
-        let referral = localStorage.getItem("ref");
-        if(referral === null || referral === "" || referral === undefined) {
+        var referral = localStorage.getItem("ref"); // Get referral from localStorage or set default
+        if (referral == null || referral === "") {
           referral = "default";
-        };
-        await supabase
-          .from("users")
-          .update({
-            referral_code: referral!,
-          })
-          .eq("id", user?.id!);
+        }
+        if (user && user.id) {
+          const { data } = await supabase
+            .from("users")
+            .select("referral_code")
+            .eq("id", user.id)
+            .single();
+          if (data) {
+            const { referral_code } = data;
+            if (!referral_code || referral_code === "") {
+              // If referral_code is null or empty, update it with the referral
+              await supabase
+                .from("users")
+                .update({ referral_code: referral })
+                .eq("id", user.id);
+            }
+          }
+        }
       }
     };
     sendReferral();
