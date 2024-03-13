@@ -80,20 +80,20 @@ const EventDetails = ({
     }
   });
 
-  useEffect(() => {
-    const sendReferral = async () => {
-      if (typeof window !== "undefined" && window.localStorage) {
-        const referral = localStorage.getItem("ref");
-        await supabase
-          .from("users")
-          .update({
-            referral_code: referral!,
-          })
-          .eq("id", user?.id!);
-      }
-    };
-    sendReferral();
-  }, [user]);
+  // useEffect(() => {
+  //   const sendReferral = async () => {
+  //     if (typeof window !== "undefined" && window.localStorage) {
+  //       const referral = localStorage.getItem("ref");
+  //       await supabase
+  //         .from("users")
+  //         .update({
+  //           referral_code: referral!,
+  //         })
+  //         .eq("id", user?.id!);
+  //     }
+  //   };
+  //   sendReferral();
+  // }, [user]);
   return (
     <motion.div className="flex flex-col items-center -mt-10 mx-auto w-full">
       {loading ? (

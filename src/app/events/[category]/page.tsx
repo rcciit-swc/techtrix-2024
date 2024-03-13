@@ -140,20 +140,20 @@ const Page = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    const sendReferral = async () => {
-      if (typeof window !== "undefined" && window.localStorage) {
-        const referral = localStorage.getItem("ref");
-        await supabase
-          .from("users")
-          .update({
-            referral_code: referral!,
-          })
-          .eq("id", user?.id!);
-      }
-    };
-    sendReferral();
-  }, [user]);
+  // useEffect(() => {
+  //   const sendReferral = async () => {
+  //     if (typeof window !== "undefined" && window.localStorage) {
+  //       const referral = localStorage.getItem("ref");
+  //       await supabase
+  //         .from("users")
+  //         .update({
+  //           referral_code: referral!,
+  //         })
+  //         .eq("id", user?.id!);
+  //     }
+  //   };
+  //   sendReferral();
+  // }, [user]);
 
   const eventCardRef = React.useRef(null);
   const handleEventCardClick = (event: any, eventCardRef: any) => {
