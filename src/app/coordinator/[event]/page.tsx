@@ -30,9 +30,12 @@ const Page = () => {
   const [registrationData, setRegistrationData] = useState<any[]>([]);
   const [offlineReg, setOfflineReg] = useState(false);
   const [eventDetails, setEventDetails] = useState<any>({});
+  const [attendesCount, setAttendesCount] = useState(0);
   useEffect(() => {
     const getAllEvents = async () => {
       const data = await getRegsByEvent(eventId);
+      const attendees = data.filter((team: any) => team.attendance == true);
+      setAttendesCount(attendees.length);
       const res = await getEventInfo(eventId);
       setEventDetails(res![0]!);
       setRegistrationData(data);
@@ -42,73 +45,75 @@ const Page = () => {
   }, [eventId]);
 
   const [teamsWithMembers, setTeamsWithMembers] = useState<any[]>([]);
-  // useEffect(() => {
-  //   const getTeamRegistrations = async () => {
-  //     const { data: teamData, error: teamError } = await supabase
-  //       .from("teams")
-  //       .select(
-  //         "college,team_id,team_name,team_lead_phone,transaction_verified,attendance"
-  //       )
-  //       .eq("event_id", eventId);
+  const [downloadableCSV, setDownloadableCSV] = useState<boolean>(false);
+  useEffect(() => {
+    const getTeamRegistrations = async () => {
+      const { data: teamData, error: teamError } = await supabase
+        .from("teams")
+        .select(
+          "college,team_id,team_name,team_lead_phone,transaction_verified,attendance"
+        )
+        .eq("event_id", eventId);
 
-  //     if (teamError) {
-  //       console.error("Error fetching teams:", teamError.message);
-  //       return;
-  //     }
+      if (teamError) {
+        console.error("Error fetching teams:", teamError.message);
+        return;
+      }
 
-  //     if (teamData) {
-  //       const teamsWithMembers = [];
+      if (teamData) {
+        const teamsWithMembers = [];
 
-  //       for (const team of teamData) {
-  //         const { data: memberData, error: memberError } = await supabase
-  //           .from("participations")
-  //           .select("name,phone")
-  //           .eq("team_id", team.team_id);
+        for (const team of teamData) {
+          const { data: memberData, error: memberError } = await supabase
+            .from("participations")
+            .select("name,phone")
+            .eq("team_id", team.team_id);
 
-  //         if (memberError) {
-  //           console.error("Error fetching team members:", memberError.message);
-  //           continue;
-  //         }
+          if (memberError) {
+            console.error("Error fetching team members:", memberError.message);
+            continue;
+          }
 
-  //         if (memberData) {
-  //           const membersWithUserData = [];
+          if (memberData) {
+            const membersWithUserData = [];
 
-  //           for (const member of memberData) {
-  //             const { data: userData, error: userError } = await supabase
-  //               .from("users")
-  //               .select("name,email,college_roll,swc")
-  //               .eq("phone", member.phone);
+            for (const member of memberData) {
+              const { data: userData, error: userError } = await supabase
+                .from("users")
+                .select("name,email,college_roll,swc")
+                .eq("phone", member.phone);
 
-  //             if (userError) {
-  //               console.error("Error fetching user data:", userError.message);
-  //               continue;
-  //             }
+              if (userError) {
+                console.error("Error fetching user data:", userError.message);
+                continue;
+              }
 
-  //             const userDataFirstItem:any = userData?.[0];
+              const userDataFirstItem: any = userData?.[0];
 
-  //             membersWithUserData.push({
-  //               phone: member.phone,
-  //               email: userDataFirstItem?.email,
-  //               team_name: team.team_name,
-  //               roll: userDataFirstItem?.college_roll,
-  //               swc: userDataFirstItem?.swc,
-  //               name: userDataFirstItem?.name,
-  //               college: team?.college,
-  //               verified: team.transaction_verified,
-  //             });
-  //           }
+              membersWithUserData.push({
+                phone: member.phone,
+                email: userDataFirstItem?.email,
+                team_name: team.team_name,
+                roll: userDataFirstItem?.college_roll,
+                swc: userDataFirstItem?.swc,
+                name: userDataFirstItem?.name,
+                college: team?.college,
+                verified: team.transaction_verified,
+              });
+            }
 
-  //           teamsWithMembers.push(...membersWithUserData);
-  //         }
-  //       }
-  //       setTeamsWithMembers(teamsWithMembers);
+            teamsWithMembers.push(...membersWithUserData);
+          }
+        }
+        setTeamsWithMembers(teamsWithMembers);
+        setDownloadableCSV(true);
+      }
+    };
 
-  //     }
-  //   };
+    getTeamRegistrations();
+  }, [eventId]);
 
-  //   getTeamRegistrations();
-  // }, [eventId]);
-
+ 
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
   const [collegeRegCount, setCollegeRegCount] = useState(0);
@@ -155,7 +160,7 @@ const Page = () => {
     setCollegeRegCount(collegeRegs);
     setFilteredData(filteredData);
   }, [inputs, registrationData]);
-
+  
   const options: any = {
     year: "numeric",
     month: "2-digit",
@@ -244,7 +249,7 @@ const Page = () => {
           <span className="text-green-600">{swcCount}</span>{" "}
         </h1>
         <h1>
-          SWC Paid Registrations :{" "}
+          SWC Unpaid Registrations :{" "}
           <span className="text-red-600">{nonSwcCount} </span>
         </h1>
       </div>
@@ -257,6 +262,12 @@ const Page = () => {
           College Outside Reg :{" "}
           <span className="text-red-600">{outCollegeRegCount} </span>
         </h1>
+        <h1>
+          Total Attendees :{" "}
+          <span className="text-green-600">
+            {attendesCount}/{registrationData.length}{" "}
+          </span>
+        </h1>
       </div>
       <div className="font-semibold justify-center flex flex-row items-center flex-wrap gap-5 text-sm md:text-xl">
         <h1>For Offline Registration :</h1>
@@ -266,19 +277,22 @@ const Page = () => {
         >
           Registration
         </button>
-        <Link href="/register/swc"
-        target="_blank"
+        <Link
+          href="/register/swc"
+          target="_blank"
           className="bg-black border font-semibold  text-sm md:text-xl border-black text-white px-10 py-2 rounded-xl hover:bg-white hover:text-black"
         >
           Check SWC
         </Link>
-        <CSVLink
-          data={filteredData}
-          filename={`registrations-${dateTime()}.csv`}
-          className="w-fit-content rounded-md bg-blue-500 px-4 py-2 text-white shadow-md hover:bg-blue-600"
-        >
-          Download CSV
-        </CSVLink>
+        {downloadableCSV && (
+          <CSVLink
+            data={teamsWithMembers}
+            filename={`registrations-${dateTime()}.csv`}
+            className="w-fit-content rounded-md bg-blue-500 px-4 py-2 text-white shadow-md hover:bg-blue-600"
+          >
+            Download CSV
+          </CSVLink>
+        )}
       </div>
 
       {loading ? (

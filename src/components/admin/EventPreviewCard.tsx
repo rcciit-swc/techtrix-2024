@@ -4,19 +4,52 @@ import RulesModal from "./RulesModal";
 import Link from "next/link";
 import { deleteEvent } from "@/utils/functions/deleteEvent";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib";
 
 const EventPreviewCard = ({ event }: { event: any }) => {
+  const [eventRegistrationOpen, setEventRegistrationOpen] =
+    useState<any>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isConfirmOpen, setConfirmOpen] = useState(false);
   const onClose = () => {
     setIsOpen(false);
     setConfirmOpen(false);
   };
+
+  const toggleRegistrationOpen = async () => {
+    setEventRegistrationOpen(!eventRegistrationOpen);
+    const { data, error } = await supabase
+      .from("events")
+      .update({
+        is_open: !eventRegistrationOpen,
+      })
+      .eq("id", event.id);
+  };
+
+  useEffect(() => {
+    setEventRegistrationOpen(event.is_open);
+  }, [event.is_open]);
+
   return (
     <>
       <div className="border-2 border-black rounded-xl flex flex-col-reverse lg:flex-row  items-center lg:items-start px-5 py-5 gap-10 justify-between w-[95%] mx-1 md:w-[80%]">
         <div className="flex flex-col items-start gap-5 font-semibold">
-          <h1 className="text-3xl  tracking-wider">{event.event_name}</h1>
+          <div className="flex flex-col  w-full justify-between">
+            <h1 className="text-3xl  tracking-wider">{event.event_name}</h1>
+
+            <label className="inline-flex items-center gap-2 cursor-pointer">
+              <h1 className="text-lg">Registration Open :</h1>
+              <input
+                checked={eventRegistrationOpen == true ? true : false}
+                onChange={toggleRegistrationOpen}
+                value={eventRegistrationOpen}
+                type="checkbox"
+                className="sr-only peer"
+              />
+              <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-black dark:peer-focus:ring-black rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-black"></div>
+            </label>
+          </div>
+
           <h1>Category: {event.event_categories.name}</h1>
           <div className="flex flex-row items-center gap-2 md:gap-10 w-full justify-between flex-wrap">
             <h1>Date: {event.date}</h1>
