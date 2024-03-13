@@ -113,6 +113,7 @@ const Page = () => {
     getTeamRegistrations();
   }, [eventId]);
 
+ 
   const [swcCount, setSwcCount] = useState(0);
   const [nonSwcCount, setNonSwcCount] = useState(0);
   const [collegeRegCount, setCollegeRegCount] = useState(0);
@@ -159,7 +160,7 @@ const Page = () => {
     setCollegeRegCount(collegeRegs);
     setFilteredData(filteredData);
   }, [inputs, registrationData]);
-
+  
   const options: any = {
     year: "numeric",
     month: "2-digit",

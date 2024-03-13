@@ -20,7 +20,7 @@ const Table = ({ registrationData }: { registrationData: any[] }) => {
         : b.transaction_verified - a.transaction_verified
     );
     setFilteredResults(sortedResults);
-  }, [sortOrder, registrationData]);
+  }, [sortOrder, JSON.stringify(registrationData)]);
 
   const handleSort = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
