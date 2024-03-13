@@ -24,7 +24,6 @@ const EventPreviewCard = ({ event }: { event: any }) => {
         is_open: !eventRegistrationOpen,
       })
       .eq("id", event.id);
-    console.log(data, error);
   };
 
   useEffect(() => {

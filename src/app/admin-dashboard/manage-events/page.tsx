@@ -21,7 +21,6 @@ const Page = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       const data = await getEvents();
-      console.log(data);
       setEvents(data);
     };
     fetchEvents();
