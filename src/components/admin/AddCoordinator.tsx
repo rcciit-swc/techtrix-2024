@@ -102,17 +102,17 @@ const AddCoordinator = ({
               />
             </div>
             <div className="flex flex-row flex-wrap justify-between w-full">
+            <button
+                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
+                onClick={onClose}
+              >
+                Close
+              </button>
               <button
                 className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
                 onClick={submitCoordinator}
               >
                 Submit
-              </button>
-              <button
-                className="border-2 mt-3 border-black px-5 py-1 rounded-full font-semibold bg-black text-white hover:bg-white hover:text-black"
-                onClick={onClose}
-              >
-                Close
               </button>
             </div>
           </div>

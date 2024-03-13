@@ -3,7 +3,7 @@ import EventPreviewCard from "./EventPreviewCard";
 
 const EventPreview = ({ events }: { events: any }) => {
   return (
-    <div className="flex flex-col items-center mx-auto gap-10 md:w-[80%]">
+    <div className="flex flex-col w-[90%] mt-5 items-center mx-auto gap-10 md:w-[80%]">
       {events.length > 0 ? (
         events.map((event: any, index: number) => {
           return <EventPreviewCard key={index} event={event} />;
