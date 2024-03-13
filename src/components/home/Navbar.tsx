@@ -37,16 +37,16 @@ const Navbar = () => {
 
     setUser(undefined);
   };
-  useEffect(() => {
-    const search = searchParams.get("ref");
-    if (
-      typeof window !== "undefined" &&
-      window.localStorage &&
-      search !== null
-    ) {
-      localStorage.setItem("ref", search!);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const search = searchParams.get("ref");
+  //   if (
+  //     typeof window !== "undefined" &&
+  //     window.localStorage &&
+  //     search !== null
+  //   ) {
+  //     localStorage.setItem("ref", search!);
+  //   }
+  // }, []);
   useEffect(() => {
     const readUserSession = async () => {
       const { data } = await supabase.auth.getSession();
