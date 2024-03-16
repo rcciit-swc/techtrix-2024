@@ -35,6 +35,11 @@ export const teams = [
         image: "https://i.imgur.com/Mb6P81R.jpg",
       },
       {
+        name: "Shourya Shikhar Ghosh",
+        role: "",
+        image: "https://i.postimg.cc/D0TtD5DL/shourya.png",
+      },
+      {
         name: "Alimpan De",
         role: "",
         image: "https://i.imgur.com/hVrOFvB.jpg",
@@ -210,7 +215,7 @@ export const teams = [
       {
         name: "Amit Roy Chowdhury",
         role: "",
-        image: "https://i.postimg.cc/bw37ryTw/amit.png",
+        image: "https://i.imgur.com/0Fo5RNM.png",
       },
       {
         name: "Shreya Sarkar",
@@ -220,7 +225,7 @@ export const teams = [
       {
         name: "Urbi Chakraborty",
         role: "",
-        image: "https://i.postimg.cc/YSRxN0PJ/urbi.jpg",
+        image: "https://i.imgur.com/RtcOYRK.jpg",
       },
       {
         name: "Hirak Sabui",
@@ -230,7 +235,7 @@ export const teams = [
       {
         name: "Esha Tokedar",
         role: "",
-        image: "https://i.postimg.cc/MHtfCsM9/esha.jpg",
+        image: "https://i.imgur.com/zlPkyS6.jpg",
       },
       {
         name: "Sattamedha Chowdhury",
