@@ -35,8 +35,12 @@ const ApproveModal = ({
           fileName: data.transaction_ss_filename,
         });
         if (image) {
-          // console.log(image);
+         if(!(image.publicUrl.includes(".jpg" || ".jpeg" || ".png" || ".gif" || ".svg"))){
+          setImageUrl(image.publicUrl+".png");
+         }
           setImageUrl(image.publicUrl);
+        
+          console.log(imageUrl)
         }
       } catch (error) {
         // console.log(error);
@@ -121,14 +125,14 @@ const ApproveModal = ({
                 Team Lead Phone : {data.participations[0]?.phone!}
               </h1>
 
-              <Image
-                src={imageUrl}
+              {imageUrl && <img
+                src={imageUrl && imageUrl}
                 alt="Team Image"
                 width={300}
                 height={300}
                 onLoad={() => setLoaded(true)}
                 className="border-2 border-gray-600 mx-auto  rounded-lg object-cover"
-              />
+              />}
             </div>
             <div className="mt-5 w-full flex flex-row items-center justify-center gap-5">
               <button
