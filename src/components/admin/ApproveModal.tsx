@@ -35,12 +35,7 @@ const ApproveModal = ({
           fileName: data.transaction_ss_filename,
         });
         if (image) {
-         if(!(image.publicUrl.includes(".jpg" || ".jpeg" || ".png" || ".gif" || ".svg"))){
-          setImageUrl(image.publicUrl+".png");
-         }
           setImageUrl(image.publicUrl);
-        
-          console.log(imageUrl)
         }
       } catch (error) {
         // console.log(error);
