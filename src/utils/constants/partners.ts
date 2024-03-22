@@ -31,6 +31,11 @@ export const partners: partnerType[] = [
     logo: "/mlsa.jpeg",
     type: "Sessions Partner",
   },
+  {
+    name: "Reel2Real",
+    logo: "/assets/partners/r2r.png",
+    type: "Merchandise Partner",
+  },
 
 ];
 
