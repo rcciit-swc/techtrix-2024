@@ -265,7 +265,7 @@ const Navbar = () => {
                       pathname === "/register" && "text-white bg-black"
                     }`}
                   >
-                    Register
+                    Registrar
                   </li>
                 </Link>
               )}
@@ -289,7 +289,7 @@ const Navbar = () => {
               <div className="flex flex-row items-center gap-5  md:ml-10 ">
                 {user && (
                   <Link href={"/registration"}>
-                    <Image
+                    <img
                       src={userImg}
                       alt="user"
                       width={40}

@@ -77,8 +77,8 @@ const Footer = () => {
           . All Rights Reserved.
         </div>
         <p>
-          Made with <span className="text-red-600">&hearts;</span> by Techtrix
-          tech team
+          Made with <span className="text-red-600">&hearts;</span> by <Link href={"/team/tech"}>Techtrix
+          tech team</Link>
         </p>
       </div>
     </div>

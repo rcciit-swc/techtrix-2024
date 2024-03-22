@@ -437,7 +437,7 @@ export const teams = [
       {
         name: "Amit Roy Chowdhury",
         role: "Valorant : Coordinator",
-        image: "https://i.postimg.cc/bw37ryTw/amit.png",
+        image: "https://i.imgur.com/0Fo5RNM.png",
       },
       {
         name: "Shivam Kumar Sharma",

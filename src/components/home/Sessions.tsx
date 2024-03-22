@@ -5,6 +5,21 @@ import Link from "next/link";
 
 const sessions = [
   {
+    image: "/assets/sessions/event2.png",
+    link: "https://lu.ma/ms-azure-day",
+    time: "03/11/2024, 12:00:00",
+  },
+  {
+    image: "/assets/sessions/event1.png",
+    link: "https://lu.ma/ms-azure-day",
+    time: "03/11/2024, 12:00:00",
+  },
+  {
+    image: "/assets/sessions/event3.jpg",
+    link: "https://lu.ma/ms-azure-day",
+    time: "03/11/2024, 12:00:00",
+  },
+  {
     image: "/assets/sessions/event4.jpg",
     link: "https://lu.ma/ms-azure-day",
     time: "03/11/2024, 12:00:00",
@@ -17,10 +32,10 @@ const SessionCard = ({ session }: { session: any }) => {
         src={session.image}
         alt="football"
         className="rounded-xl"
-        width={500}
+        width={400}
         height={120}
       />
-      <div className="card-body rounded-xl absolute bottom-[-100%] hidden  hover:flex h-full w-full flex-col items-center justify-center bg-[#1f3d4738] px-3 backdrop-blur-[5px] duration-500">
+      {/* <div className="card-body rounded-xl absolute bottom-[-100%] hidden  hover:flex h-full w-full flex-col items-center justify-center bg-[#1f3d4738] px-3 backdrop-blur-[5px] duration-500">
         <Link
           href={session.link}
           target="_blank"
@@ -28,7 +43,7 @@ const SessionCard = ({ session }: { session: any }) => {
         >
           Register
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -53,7 +68,8 @@ const Sessions = () => {
 
           return (
             <div key={index}>
-              {expiryTime > Date.now() && <SessionCard session={session} />}
+              {/* {expiryTime > Date.now() && <SessionCard session={session} />} */}
+              <SessionCard session={session} />
             </div>
           );
         })}

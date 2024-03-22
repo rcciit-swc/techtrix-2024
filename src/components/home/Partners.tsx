@@ -44,23 +44,6 @@ const Partners = () => {
           })}
         </div>
       </div>
-
-      <div className="mx-auto flex flex-col justify-center my-5 items-center gap-10">
-        <Heading text="Community Parnters" />
-
-        <div className="flex flex-row items-end justify-center gap-16 flex-wrap">
-          {communityPartners.map((partner, index) => {
-            return (
-              <PartnerCard
-                key={index}
-                name={partner.name}
-                logo={partner.logo}
-                type={partner.type}
-              />
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 };
