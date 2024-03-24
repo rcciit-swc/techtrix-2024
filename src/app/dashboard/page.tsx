@@ -176,7 +176,7 @@ const Page = () => {
     <div className="w-full flex flex-col lg:flex-row items-start fixed justify-between gap-2  bg-[#F5F5F5] lg:-mt-10">
       <div className="hidden lg:flex  sticky top-0 h-screen   flex-col  lg:w-[30%] px-2 items-center  gap-10  border-r-2 border-black">
         <div className="flex flex-col items-center gap-10 mt-10">
-          <Image
+        <img
             src={userImage!}
             width={200}
             height={100}
